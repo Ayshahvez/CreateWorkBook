@@ -26,8 +26,10 @@ public class ValidationChecks {
 
 Utility utility = new Utility();
 
-    public void Check_For_Duplicates() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+    public String Check_For_Duplicates(String filePathValData) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+       // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+        FileInputStream fileInputStream = new FileInputStream(filePathValData);
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
@@ -103,6 +105,12 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
                         System.out.println();
                         FindIt = 0;
                         //  break;
+                        stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
+                        stringBuilder.append("Last Name: " + b1Val_LN+"\n");
+                        stringBuilder.append("First Name: " + c1Val_FN+"\n");
+                        stringBuilder.append("DOB: " + dF.format(f1Val_DOB)+"\n");
+                        stringBuilder.append("Please Contact Administrator"+"\n");
+                        stringBuilder.append("----------------------------------\n");
                     }
                 }
 
@@ -112,6 +120,8 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
 
         }
         System.out.println("********All records were checked!********");
+        stringBuilder.append("********All records were checked!********");
+        return String.valueOf(stringBuilder+"\n");
     }
 
     public void Check_FivePercent_PS() throws IOException {
@@ -119,13 +129,13 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
         //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
         FileInputStream fs = null;
         try {
-            fs = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Pensionable Salary - HAS.xlsx");
+            fs = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Pensionable Salary - HAS.xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -153,7 +163,7 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
         int years = utility.getDiffYears(startDate, endDate);
         FileInputStream fsRecon = null;
         try {
-            fsRecon = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            fsRecon = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -380,14 +390,14 @@ if (check!=h1) {
 
         }// END OF LOOP YEARS
 
-    //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Updated_Actives_Sheet.xlsx"));
+    //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Updated_Actives_Sheet.xlsx"));
    //     workbook.write(outFile);
    //     fileInputStream.close();
     //    outFile.close();
     }
 
     public void Check_Plan_EntryDate_empDATE() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
@@ -442,8 +452,9 @@ if (check!=h1) {
         System.out.println("********All records were checked!********");
     }
 
-    public void Check_DateofBirth() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+    public String Check_DateofBirth(String workindDir) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Hose Valuation Data (Actuary's copy).xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
@@ -500,14 +511,32 @@ if (check!=h1) {
                 System.out.println("Status Date: " + dF.format(i1Val_SD));
                 System.out.println("Decision: Contact the administrator");
                 System.out.println();
+
+                stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
+                stringBuilder.append("Last Name: " + b1Val_LN+"\n");
+                stringBuilder.append("First Name: " + c1Val_FN+"\n");
+                stringBuilder.append("Date of Birth: " + dF.format(f1Val_DOB)+"\n");
+                stringBuilder.append("Plan Entry: " + dF.format(g1Val_PE)+"\n");
+                stringBuilder.append("Employment Date: " + dF.format(h1Val_EM)+"\n");
+                stringBuilder.append("Status Date: " + dF.format(i1Val_SD)+"\n");
+                stringBuilder.append("Please Contact Administrator"+"\n");
+                stringBuilder.append("-------------------------------------------------------\n");
+
             }
 
 
         }
-        System.out.println("********All records were checked!********");
+
+        System.out.println("Notice: The Date of Birth Check Process has now been completed.");
+        stringBuilder.append("Notice: The Date of Birth Check Process has now been completed.\n");
+
+        return String.valueOf(stringBuilder);
     }
 
-    public void Check_Age() throws IOException {
+    public String Check_Age(String filePathValData) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+//        FileInputStream fileInputStream = new FileInputStream(filePathValData);
+    //    FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
         FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
@@ -558,11 +587,22 @@ if (check!=h1) {
               //  System.out.println("Employment Date: " + dF.format(h1Val_PE));
                 System.out.println("Decision: Please Contact the administrator");
                 System.out.println();
+
+                //for gui
+                stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
+                stringBuilder.append("Last Name: " + b1Val_LN+"\n");
+                stringBuilder.append("First Name: " + c1Val_FN+"\n");
+                stringBuilder.append("DOB: " + dF.format(g1Val_DOB)+"\n");
+                stringBuilder.append("Please Contact Administrator"+"\n");
+                stringBuilder.append("-------------------------------------------------------\n");
             }
 
 
         }
-        System.out.println("********All records were checked!********");
+        System.out.println("Notice: The Age Check Process has now been completed.");
+        stringBuilder.append("Notice: The Age Check Process has now been completed.\n");
+
+        return String.valueOf(stringBuilder);
     }
 
 }

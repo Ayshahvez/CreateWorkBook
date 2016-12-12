@@ -46,7 +46,7 @@ public class TemplateSheets {
         return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
-    public static void  Create_Template_Active_Sheet(Date StartDate, Date EndDate, String PensionPlanName) throws IOException {
+    public static void  Create_Template_Active_Sheet(Date StartDate, Date EndDate, String PensionPlanName, String workingDir) throws IOException {
         try {
             LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -221,7 +221,7 @@ public class TemplateSheets {
 
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
-                    new File("C:\\Users\\akonowalchuk\\GFRAM\\Template_Active_Sheet.xlsx"));
+                    new File(workingDir + "\\Template_Active_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -232,7 +232,7 @@ public class TemplateSheets {
         }
     }
 
-    public static void  Create_Template_Terminee_Sheet(Date StartDate, Date EndDate, String PensionPlanname) throws IOException {
+    public static void  Create_Template_Terminee_Sheet(Date StartDate, Date EndDate, String PensionPlanname, String workingDir) throws IOException {
         try {
 
             LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -413,7 +413,8 @@ public class TemplateSheets {
 
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
-                    new File("C:\\Users\\akonowalchuk\\GFRAM\\Template_Terminee_Sheet.xlsx"));
+                  //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
+            new File(workingDir+"\\Template_Terminee_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();

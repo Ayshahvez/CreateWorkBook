@@ -1,3 +1,6 @@
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -14,7 +17,40 @@ import static java.util.Calendar.YEAR;
 /**
  * Created by Ayshahvez on 12/7/2016.
  */
-public class Utility {
+public class Utility extends Component {
+
+    public String getFilePath(){
+        String filePath=null;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Excel Files", "xlsx","xls");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    //   chooser.getSelectedFile().getName());
+                    chooser.getSelectedFile().getAbsolutePath());
+            filePath= chooser.getSelectedFile().getAbsolutePath();
+        }
+        return filePath;
+    }
+
+
+    public String getWorkingDir(){
+        String filePathWorkingDir=null;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Excel Files, PDF", "xlsx","xls","pdf","doc","docx");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    //   chooser.getSelectedFile().getName());
+                    chooser.getSelectedFile().getParent());
+            filePathWorkingDir= chooser.getSelectedFile().getParent();
+        }
+        return filePathWorkingDir;
+    }
 
     public static String getStartDate(int year, int month, int day){
 
@@ -76,9 +112,9 @@ public class Utility {
         int age =0;
 
         birthDate.setTime(dateofBirth);
-        if(birthDate.after(today)){
-            throw new IllegalArgumentException("You cannot be born in the future");
-        }
+      //  if(birthDate.after(today)){
+      //      throw new IllegalArgumentException("You cannot be born in the future");
+     //   }
 
         age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
 

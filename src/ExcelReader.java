@@ -77,7 +77,7 @@ static Utility utility = new Utility();
 
         double TActiveSum = 0;
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
             XSSFSheet Demosheet = workbook.getSheet("DEMO");
@@ -237,7 +237,7 @@ static Utility utility = new Utility();
 
         double ActiveSum = 0;
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
             XSSFSheet Demosheet = workbook.getSheet("DEMO");
@@ -479,9 +479,12 @@ static Utility utility = new Utility();
         return ActiveSum;
     }
 
-    public void Separate_Actives_Terminees() throws IndexOutOfBoundsException {
+    public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+          //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+         //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            FileInputStream fileInputStream = new FileInputStream(filePathValData);
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("DEMO");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -493,8 +496,10 @@ static Utility utility = new Utility();
             int num = rowCount;
             //  int noOfColumns = sheet.getRow(num).getLastCellNum();
 
+         //   FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\template.xlsx");
 
-            FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\template.xlsx");
+         //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
+            FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -576,6 +581,15 @@ try {
                     System.out.print(" I1: " + i1Val);
                     System.out.print(" J1: " + j1Val);
 
+                    stringBuilder.append("Employee Number: " + a1Val + "\n");
+                    stringBuilder.append("Last Name: " + c1Val + "\n");
+                    stringBuilder.append("First Name: " + d1Val + "\n");
+                    stringBuilder.append("Date of Birth: " + f1Val + "\n");
+                    stringBuilder.append("Plan Entry: " + g1Val + "\n");
+                    stringBuilder.append("Employment Date: " + h1Val + "\n");
+                    stringBuilder.append("Status Date: " + i1Val + "\n");
+                    stringBuilder.append("Status: " + j1Val + "\n");
+                    stringBuilder.append("----------------------------------\n");
 
                     System.out.println();
 
@@ -615,6 +629,17 @@ try {
                     System.out.print(" H1: " + h1Val);
                     System.out.print(" I1: " + i1Val);
                     System.out.print(" J1: " + j1Val);
+
+                    stringBuilder.append("Employee Number: " + a1Val + "\n");
+                    stringBuilder.append("Last Name: " + c1Val + "\n");
+                    stringBuilder.append("First Name: " + d1Val + "\n");
+                    stringBuilder.append("Date of Birth: " + f1Val + "\n");
+                    stringBuilder.append("Plan Entry: " + g1Val + "\n");
+                    stringBuilder.append("Employment Date: " + h1Val + "\n");
+                    stringBuilder.append("Status Date: " + i1Val + "\n");
+                    stringBuilder.append("Status: " + j1Val + "\n");
+                    stringBuilder.append("----------------------------------\n");
+
                   /*  try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
@@ -651,7 +676,8 @@ try {
 
                 }
 
-                FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
+            //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
+               FileOutputStream outFile = new FileOutputStream(new File(WorkingDir + "\\Output.xlsx"));
                 workbookR.write(outFile);
                 fileR.close();
                 outFile.close();
@@ -666,11 +692,17 @@ try {
             e.printStackTrace();
 
     }
+
+    return String.valueOf(stringBuilder);
     }
 
-    public void Create_Actives_Sheet() throws IndexOutOfBoundsException {
+    public String Create_Actives_Sheet(String workingDir) throws IndexOutOfBoundsException {
+       StringBuilder stringBuilder = new StringBuilder();
+        SimpleDateFormat dF1 = new SimpleDateFormat();
+        dF1.applyPattern("dd-MMM-yy");
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx");
+           // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Actives");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -682,7 +714,7 @@ try {
             int num = rowCount;
             //  int noOfColumns = sheet.getRow(num).getLastCellNum();
 
-            FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Template_Active_Sheet.xlsx");
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Active_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -744,16 +776,24 @@ try {
                 String j1Val = cellJ1.getStringCellValue();
 
                 if (j1Val.equals("ACTIVE") && !(d1Val.equals("KEY"))) {
-                    System.out.print("A1: " + a1Val);
-                        System.out.print(" B1: " + b1Val);
-                    System.out.print(" C1: " + c1Val);
+                //    System.out.print("A1: " + a1Val);
+                    //     System.out.print(" B1: " + b1Val);
+            /*        System.out.print(" C1: " + c1Val);
                     System.out.print(" D1: " + d1Val);
                     System.out.print(" E1: " + e1Val);
                     System.out.print(" F1: " + f1Val);
                     System.out.print(" G1: " + g1Val);
                     System.out.print(" H1: " + h1Val);
                     System.out.print(" I1: " + i1Val);
-                    System.out.print(" J1: " + j1Val);
+                    System.out.print(" J1: " + j1Val);*/
+
+                    stringBuilder.append("Employee ID: " + a1Val+"\n");
+                    stringBuilder.append("Last Name: " + c1Val+"\n");
+                    stringBuilder.append("First Name: " + d1Val+"\n");
+                    stringBuilder.append("DOB: " + f1Val+"\n");
+                    stringBuilder.append("Status Date: "+i1Val+"\n");
+                    stringBuilder.append("Status: "+j1Val+"\n");
+                    stringBuilder.append("-------------------------------------------------------\n");
 
 
                     System.out.println();
@@ -781,7 +821,7 @@ try {
                         cellR.setCellValue(String.valueOf(arraylist.get(Col)));
                     }
                     //PENSIONABLE SALARY*****************************
-                    FileInputStream F = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Pensionable Salary - HAS.xlsx");
+                    FileInputStream F = new FileInputStream(workingDir + "\\Pensionable Salary - HAS.xlsx");  //pensionable salary sheet
                     XSSFWorkbook workbookF = new XSSFWorkbook(F);
                     XSSFSheet sheetF = workbookF.getSheetAt(0);
                     int PensionableRow = sheetF.getPhysicalNumberOfRows();
@@ -934,11 +974,10 @@ try {
                 cellR.setCellValue(dF.format((utility.betweenDates(startDate1, endDate1)/365.25)));
 
             }
-            FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Actives_Sheet.xlsx"));
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Actives_Sheet.xlsx"));
             workbookR.write(outFile);
             fileR.close();
             outFile.close();
-            System.out.println("***************************Active Sheet was created successful**********************************");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -949,9 +988,30 @@ try {
             e.printStackTrace();
 
         }
+        return String.valueOf(stringBuilder);
     }// end of create active sheet
 
-    public void Create_Terminee_Sheet() throws IndexOutOfBoundsException {
+    public String Create_Terminee_Sheet(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IndexOutOfBoundsException {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+ /*
         int EndYear = 2015;
         int EndMonth = 12;
         int EndDay = 31;
@@ -959,8 +1019,7 @@ try {
         int StartYear = 2004;
         int StartMonth = 01;
         int StartDay = 01;
-
-
+*/
 /*
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
@@ -978,7 +1037,7 @@ try {
 
         try {
 
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Output.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -989,7 +1048,7 @@ try {
             int num = rowCount;
             //  int noOfColumns = sheet.getRow(num).getLastCellNum();
 
-            FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Template_Terminee_Sheet.xlsx");
+            FileInputStream fileR = new FileInputStream(workingDir+"\\Template_Terminee_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -1081,6 +1140,13 @@ try {
                     System.out.print(" J1: " + j1Val);
 */
 
+                       stringBuilder.append("Employee ID: " + a1Val+"\n");
+                       stringBuilder.append("Last Name: " + c1Val+"\n");
+                       stringBuilder.append("First Name: " + d1Val+"\n");
+                       stringBuilder.append("DOB: " + f1Val+"\n");
+                       stringBuilder.append("Status Date: "+i1Val+"\n");
+                       stringBuilder.append("Status: "+j1Val+"\n");
+                       stringBuilder.append("-------------------------------------------------------\n");
                        //      System.out.println();
 
                        Date statusDate = null;
@@ -1199,7 +1265,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             StartYear++;
            }//end years loop
 
-            FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Terminees_Sheet.xlsx"));
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Terminees_Sheet.xlsx"));
             workbookR.write(outFile);
             fileR.close();
             outFile.close();
@@ -1213,27 +1279,45 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
+
+        return String.valueOf(stringBuilder);
     }
 
-    public void Create_Activee_Contribution() throws IOException {
-/*        FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Actives_Sheet.xlsx");
+    public void Create_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+/*        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
         XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
         XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);*/
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
         //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Actives_Sheet.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Actives_Sheet.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet ActiveSheet = workbook.getSheet("Actives");
 
-        int EndYear = 2015;
-        int EndMonth = 12;
-        int EndDay = 31;
 
-        int StartYear = 2004;
-        int StartMonth = 01;
-        int StartDay = 01;
+
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+     // System.out.println(StartYear + "." + StartMonth + "." + StartDay);
+     //  System.out.println(EndYear + "." + EndMonth + "." + EndDay);
 
         int WriteAt =26;
 
@@ -1265,7 +1349,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
         FileInputStream fs = null;
         try {
-            fs = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            fs = new FileInputStream(workingDir+"\\Hose Valuation Data (Actuary's copy).xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1433,28 +1517,49 @@ int Crow = 8;
 
        }// END OF LOOP YEARS
 
-        FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Updated_Actives_Sheet.xlsx"));
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Actives_Sheet.xlsx"));
         workbook.write(outFile);
         fileInputStream.close();
         outFile.close();
     }
 
-    public void Create_Terminee_Contribution() throws IOException {
+    public void Create_Terminee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
         //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Terminees_Sheet.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Terminees_Sheet.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet TermineeSheet = workbook.getSheet("Terminees");
 
-        int EndYear = 2015;
+
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+
+    /*    int EndYear = 2015;
         int EndMonth = 12;
         int EndDay = 31;
 
         int StartYear = 2004;
         int StartMonth = 01;
-        int StartDay = 01;
+        int StartDay = 01;*/
 
         int WriteAt = 23;
 
@@ -1485,7 +1590,7 @@ int Crow = 8;
 
             FileInputStream fs = null;
             try {
-                fs = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+                fs = new FileInputStream(workingDir+ "\\Hose Valuation Data (Actuary's copy).xlsx");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -1629,7 +1734,7 @@ int Crow = 8;
 
         }// END OF LOOP YEARS
 
-        FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Updated_Terminee_Sheet.xlsx"));
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Terminee_Sheet.xlsx"));
         workbook.write(outFile);
         fileInputStream.close();
         outFile.close();
