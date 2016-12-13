@@ -105,25 +105,29 @@ public class Utility extends Component {
         return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("dd-MMM-yy"));
     }
 
-    public static int getAge(Date dateofBirth){
-        Calendar today = Calendar.getInstance();
+    public static int getAge(Date dateofBirth, Date PlanEntry){
+      //  Calendar today = Calendar.getInstance();
+
+        Calendar PlanEntryDate = Calendar.getInstance();
+
         Calendar birthDate = Calendar.getInstance();
 
         int age =0;
 
         birthDate.setTime(dateofBirth);
+        PlanEntryDate.setTime(PlanEntry);
       //  if(birthDate.after(today)){
       //      throw new IllegalArgumentException("You cannot be born in the future");
      //   }
 
-        age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+        age =  PlanEntryDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
 
-        if((birthDate.get(Calendar.DAY_OF_YEAR) - today.get(Calendar.DAY_OF_YEAR)>3 ||
-                (birthDate.get(Calendar.MONTH) > today.get(Calendar.MONTH)))){
+        if((birthDate.get(Calendar.DAY_OF_YEAR) -  PlanEntryDate.get(Calendar.DAY_OF_YEAR)>3 ||
+                (birthDate.get(Calendar.MONTH) > PlanEntryDate.get(Calendar.MONTH)))){
             age--;
 
-        }else if((birthDate.get(Calendar.MONTH)==today.get(Calendar.MONTH)) &&
-        (birthDate.get(Calendar.DAY_OF_MONTH) > today.get(Calendar.DAY_OF_MONTH))){
+        }else if((birthDate.get(Calendar.MONTH)== PlanEntryDate.get(Calendar.MONTH)) &&
+        (birthDate.get(Calendar.DAY_OF_MONTH) >  PlanEntryDate.get(Calendar.DAY_OF_MONTH))){
     age--;
         }
         return age;

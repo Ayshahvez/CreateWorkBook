@@ -24,17 +24,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ExcelReader.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ExcelReader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="955" column="17" lean-forward="true" selection-start-line="955" selection-start-column="17" selection-end-line="955" selection-end-column="17" />
+            <state relative-caret-position="272">
+              <caret line="701" column="91" lean-forward="false" selection-start-line="701" selection-start-column="91" selection-end-line="701" selection-end-column="91" />
               <folding>
                 <element signature="docComment;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Results#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#TermineeSumReader#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#ActiveSumReader#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Separate_Actives_Terminees#0;class#ExcelReader#0" expanded="false" />
+                <element signature="method#Create_Actives_Sheet#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Terminee_Sheet#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Activee_Contribution#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Terminee_Contribution#0;class#ExcelReader#0" expanded="false" />
@@ -46,13 +47,10 @@
       <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="361" column="17" lean-forward="true" selection-start-line="361" selection-start-column="17" selection-end-line="361" selection-end-column="17" />
+            <state relative-caret-position="-49">
+              <caret line="303" column="41" lean-forward="false" selection-start-line="303" selection-start-column="33" selection-end-line="303" selection-end-column="41" />
               <folding>
                 <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
-                <element signature="method#initiliazeComponents#0;class#MainWindow#0" expanded="false" />
-                <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
-                <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -63,7 +61,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
               <caret line="11" column="125" lean-forward="false" selection-start-line="11" selection-start-column="125" selection-end-line="11" selection-end-column="125" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,13 +71,14 @@
       <file leaf-file-name="Utility.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Utility.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
-              <caret line="116" column="7" lean-forward="false" selection-start-line="116" selection-start-column="7" selection-end-line="116" selection-end-column="7" />
+            <state relative-caret-position="501">
+              <caret line="129" column="62" lean-forward="false" selection-start-line="129" selection-start-column="62" selection-end-line="129" selection-end-column="62" />
               <folding>
                 <element signature="method#getWorkingDir#0;class#Utility#0" expanded="false" />
                 <element signature="method#getStartDate#0;class#Utility#0" expanded="false" />
                 <element signature="method#getDiffYears#0;class#Utility#0" expanded="false" />
                 <element signature="method#getCalendar#0;class#Utility#0" expanded="false" />
+                <element signature="method#getDate#0;class#Utility#0" expanded="false" />
                 <element signature="method#get1YearDateFromNow#0;class#Utility#0" expanded="false" />
                 <element signature="method#getEndDate#0;class#Utility#0" expanded="false" />
               </folding>
@@ -88,12 +89,12 @@
       <file leaf-file-name="ValidationChecks.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ValidationChecks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="593">
-              <caret line="137" column="9" lean-forward="false" selection-start-line="137" selection-start-column="9" selection-end-line="137" selection-end-column="9" />
+            <state relative-caret-position="159">
+              <caret line="463" column="105" lean-forward="false" selection-start-line="463" selection-start-column="105" selection-end-line="463" selection-end-column="105" />
               <folding>
                 <element signature="docComment;class#ValidationChecks#0" expanded="false" />
+                <element signature="method#Check_For_Duplicates#0;class#ValidationChecks#0" expanded="false" />
                 <element signature="method#Check_FivePercent_PS#0;class#ValidationChecks#0" expanded="false" />
-                <element signature="method#Check_Plan_EntryDate_empDATE#0;class#ValidationChecks#0" expanded="false" />
                 <element signature="method#Check_DateofBirth#0;class#ValidationChecks#0" expanded="false" />
                 <element signature="method#Check_Age#0;class#ValidationChecks#0" expanded="false" />
               </folding>
@@ -113,17 +114,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TemplateSheets.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TemplateSheets.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="234" column="147" lean-forward="false" selection-start-line="234" selection-start-column="147" selection-end-line="234" selection-end-column="147" />
+            <state relative-caret-position="17">
+              <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="false" />
                 <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#getDiffYears#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
-                <element signature="method#Create_Template_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
               </folding>
             </state>
@@ -234,14 +233,14 @@
         <option value="$PROJECT_DIR$/src/MemberModel.java" />
         <option value="$PROJECT_DIR$/src/TitleData.java" />
         <option value="$PROJECT_DIR$/src/MemberInfo.java" />
-        <option value="$PROJECT_DIR$/src/Utility.java" />
         <option value="$PROJECT_DIR$/src/DatePicker.java" />
         <option value="$PROJECT_DIR$/src/TemplateSheets.java" />
         <option value="$PROJECT_DIR$/src/CreateWorkBook.java" />
-        <option value="$PROJECT_DIR$/src/ValidationChecks.java" />
         <option value="$PROJECT_DIR$/src/ResultsWindow.java" />
         <option value="$PROJECT_DIR$/src/ExcelReader.java" />
         <option value="$PROJECT_DIR$/src/MainWindow.java" />
+        <option value="$PROJECT_DIR$/src/Utility.java" />
+        <option value="$PROJECT_DIR$/src/ValidationChecks.java" />
       </list>
     </option>
   </component>
@@ -289,7 +288,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -301,38 +299,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="External Libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CreateWorkBook" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CreateWorkBook" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CreateWorkBook" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CreateWorkBook" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -361,6 +327,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -641,21 +608,21 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.308094" sideWeight="0.47013888" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3067885" sideWeight="0.39930555" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20887728" sideWeight="0.56458336" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2075718" sideWeight="0.6354167" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20887728" sideWeight="0.43541667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2075718" sideWeight="0.36458334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32898173" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19236112" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20208333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50391644" sideWeight="0.49583334" order="3" side_tool="false" content_ui="tabs" />
@@ -774,13 +741,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ValidationChecks.java</url>
-          <line>567</line>
+          <line>591</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ValidationChecks.java</url>
-          <line>563</line>
+          <line>587</line>
           <properties />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
@@ -1085,21 +1052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="116" column="7" lean-forward="false" selection-start-line="116" selection-start-column="7" selection-end-line="116" selection-end-column="7" />
-          <folding>
-            <element signature="method#getWorkingDir#0;class#Utility#0" expanded="false" />
-            <element signature="method#getStartDate#0;class#Utility#0" expanded="false" />
-            <element signature="method#getDiffYears#0;class#Utility#0" expanded="false" />
-            <element signature="method#getCalendar#0;class#Utility#0" expanded="false" />
-            <element signature="method#get1YearDateFromNow#0;class#Utility#0" expanded="false" />
-            <element signature="method#getEndDate#0;class#Utility#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DatePicker.java" />
     <entry file="file://$PROJECT_DIR$/src/MemberInfo.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1159,6 +1111,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ResultsWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="125" lean-forward="false" selection-start-line="11" selection-start-column="125" selection-end-line="11" selection-end-column="125" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/CreateWorkBook.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1169,69 +1131,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="234" column="147" lean-forward="false" selection-start-line="234" selection-start-column="147" selection-end-line="234" selection-end-column="147" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#getDiffYears#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ValidationChecks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="137" column="9" lean-forward="false" selection-start-line="137" selection-start-column="9" selection-end-line="137" selection-end-column="9" />
-          <folding>
-            <element signature="docComment;class#ValidationChecks#0" expanded="false" />
-            <element signature="method#Check_FivePercent_PS#0;class#ValidationChecks#0" expanded="false" />
-            <element signature="method#Check_Plan_EntryDate_empDATE#0;class#ValidationChecks#0" expanded="false" />
-            <element signature="method#Check_DateofBirth#0;class#ValidationChecks#0" expanded="false" />
-            <element signature="method#Check_Age#0;class#ValidationChecks#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ResultsWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="125" lean-forward="false" selection-start-line="11" selection-start-column="125" selection-end-line="11" selection-end-column="125" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="361" column="17" lean-forward="true" selection-start-line="361" selection-start-column="17" selection-end-line="361" selection-end-column="17" />
-          <folding>
-            <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#initiliazeComponents#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="955" column="17" lean-forward="true" selection-start-line="955" selection-start-column="17" selection-end-line="955" selection-end-column="17" />
+        <state relative-caret-position="272">
+          <caret line="701" column="91" lean-forward="false" selection-start-line="701" selection-start-column="91" selection-end-line="701" selection-end-column="91" />
           <folding>
             <element signature="docComment;class#ExcelReader#0" expanded="false" />
             <element signature="method#Results#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#TermineeSumReader#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#ActiveSumReader#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Separate_Actives_Terminees#0;class#ExcelReader#0" expanded="false" />
+            <element signature="method#Create_Actives_Sheet#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Terminee_Sheet#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Activee_Contribution#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Terminee_Contribution#0;class#ExcelReader#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="129" column="62" lean-forward="false" selection-start-line="129" selection-start-column="62" selection-end-line="129" selection-end-column="62" />
+          <folding>
+            <element signature="method#getWorkingDir#0;class#Utility#0" expanded="false" />
+            <element signature="method#getStartDate#0;class#Utility#0" expanded="false" />
+            <element signature="method#getDiffYears#0;class#Utility#0" expanded="false" />
+            <element signature="method#getCalendar#0;class#Utility#0" expanded="false" />
+            <element signature="method#getDate#0;class#Utility#0" expanded="false" />
+            <element signature="method#get1YearDateFromNow#0;class#Utility#0" expanded="false" />
+            <element signature="method#getEndDate#0;class#Utility#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-49">
+          <caret line="303" column="41" lean-forward="false" selection-start-line="303" selection-start-column="33" selection-end-line="303" selection-end-column="41" />
+          <folding>
+            <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ValidationChecks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="463" column="105" lean-forward="false" selection-start-line="463" selection-start-column="105" selection-end-line="463" selection-end-column="105" />
+          <folding>
+            <element signature="docComment;class#ValidationChecks#0" expanded="false" />
+            <element signature="method#Check_For_Duplicates#0;class#ValidationChecks#0" expanded="false" />
+            <element signature="method#Check_FivePercent_PS#0;class#ValidationChecks#0" expanded="false" />
+            <element signature="method#Check_DateofBirth#0;class#ValidationChecks#0" expanded="false" />
+            <element signature="method#Check_Age#0;class#ValidationChecks#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#getDiffYears#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -34,6 +34,8 @@ public class MainWindow extends JFrame implements ActionListener{
 //main MenuBar
 JMenuBar menuBar;
 
+
+
 JMenu MenuEditor;
 JMenuItem MenuItemClearScreen;
 
@@ -89,11 +91,11 @@ JMenuItem MenuItemClearScreen;
 
     private JMenuItem MenuItemWorkingDir;
 
-
+    JLabel imgLabel;
 
 private JTextField txtVal,txtWelcome;
 private JButton btnBrowse;
-private JPanel jPanel,panWelcome;
+private JPanel jPanel,panWelcome,eastPanel,westPanel;
 
     public MainWindow() {
         super("GFRAM Pension Automation Process Beta");
@@ -118,6 +120,12 @@ private JPanel jPanel,panWelcome;
 
 
     public void initiliazeComponents () {
+        eastPanel = new JPanel(new FlowLayout());
+        westPanel = new JPanel(new FlowLayout());
+
+        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+
+
         MenuEditor = new JMenu("Editor");
         MenuItemClearScreen = new JMenuItem("Clear Screen");
 
@@ -167,11 +175,11 @@ private JPanel jPanel,panWelcome;
 
 
         txtVal = new JTextField("Valuation Data Workbook");
-        txtWelcome = new JTextField("GFRAM Pension Automation Process Beta");
+        txtWelcome = new JTextField("\t\tGFRAM Pension Automation Process Beta");
         txtWelcome.setEditable(false);
         btnBrowse = new JButton("Browse");
         jPanel = new JPanel(new FlowLayout());
-        panWelcome = new JPanel(new FlowLayout());
+        panWelcome = new JPanel(new BorderLayout());
 
         LoadValDataWorkBook = new JMenuItem("Browse for Valuation Data Workbook");
         LoadPensionableSalaryWorkBook = new JMenuItem("Browse for Pensionable Salary Workbook");
@@ -204,7 +212,9 @@ private JPanel jPanel,panWelcome;
         MenuStart_End_Dates.add(MenuItemStartDate);
         MenuStart_End_Dates.add(MenuItemEndDate);
 
-        panWelcome.add(txtWelcome);
+     //   panWelcome.add(txtWelcome,BorderLayout.NORTH);
+        panWelcome.add(imgLabel,BorderLayout.SOUTH);
+      //  panWelcome.a
 
         menuSingleCheck.add(CheckDuplicate);
         menuSingleCheck.add(CheckAge);
@@ -239,6 +249,8 @@ private JPanel jPanel,panWelcome;
         this.add(panWelcome,BorderLayout.NORTH);
         this.add(jPanel,BorderLayout.SOUTH);
         this.add(scrollPane,BorderLayout.CENTER);
+        this.add(eastPanel,BorderLayout.EAST);
+        this.add(westPanel,BorderLayout.WEST);
     }
 
 
@@ -385,6 +397,7 @@ private JPanel jPanel,panWelcome;
 
         if(e.getSource().equals(MenuItemWorkingDir)){
             filePathWorkingDir = utility.getWorkingDir();
+            JOptionPane.showMessageDialog(null,"You have set the working directory to: "+filePathWorkingDir,"Success",JOptionPane.PLAIN_MESSAGE);
         }
 
        if(e.getSource().equals(MenuItemCreateActiveSheetTemplate)){

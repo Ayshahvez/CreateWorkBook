@@ -461,7 +461,7 @@ if (check!=h1) {
                 System.out.println("Employment Date: " + dF.format(h1Val_PE));
                 System.out.println("Please Contact Administrator");
 
-                stringBuilder.append("\nResult: This member cannot enter the plan before Employment date at "+dF.format(h1Val_PE)+"\n");
+                stringBuilder.append("\nResult: This member's plan entry date at "+dF.format(g1Val_PE)+" is before their employment date at "+ dF.format(h1Val_PE)+"\n");
                 stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
                 stringBuilder.append("Last Name: " + b1Val_LN+"\n");
                 stringBuilder.append("First Name: " + c1Val_FN+"\n");
@@ -531,7 +531,30 @@ if (check!=h1) {
             SimpleDateFormat dF = new SimpleDateFormat();
             dF.applyPattern("dd-MMM-yy");
 
-            if(f1Val_DOB.after(g1Val_PE) || f1Val_DOB.after(h1Val_EM)|| f1Val_DOB.after(h1Val_EM)|| f1Val_DOB.after(i1Val_SD)){
+            if(f1Val_DOB.after(g1Val_PE) || f1Val_DOB.after(h1Val_EM)|| f1Val_DOB.after(i1Val_SD)){
+                String choice = null;
+
+                if(f1Val_DOB.after(g1Val_PE)){
+                    choice="Plan Entry Date ";
+                } if(f1Val_DOB.after(h1Val_EM)){
+                    choice="Employment Date ";
+                }if(f1Val_DOB.after(i1Val_SD)){
+                    choice="Status Date ";
+                }
+                if(f1Val_DOB.after(g1Val_PE) && f1Val_DOB.after(h1Val_EM)){
+                    choice="Plan Entry Date & Employment Date ";
+                }
+                if(f1Val_DOB.after(i1Val_SD) && f1Val_DOB.after(g1Val_PE)){
+                    choice="Plan Entry Date & Status Date ";
+                }
+
+                if(f1Val_DOB.after(h1Val_EM) && f1Val_DOB.after(i1Val_SD)){
+                    choice="Employment Date & Status Date ";
+                }
+                if(f1Val_DOB.after(h1Val_EM) && f1Val_DOB.after(i1Val_SD)&& f1Val_DOB.after(g1Val_PE)){
+                    choice="Employment Date & Status Date & Plan Entry Date ";
+                }
+
                 System.out.println("Employee ID: " + a1Val_EM);
                 System.out.println("Last Name: " + b1Val_LN);
                 System.out.println("First Name: " + c1Val_FN);
@@ -542,7 +565,8 @@ if (check!=h1) {
                 System.out.println("Decision: Contact the administrator");
                 System.out.println();
 
-                stringBuilder.append("\nResult: This member's date of birth must be before date of employment and enrollment to the plan"+"\n");
+              //  stringBuilder.append("\nResult: This member's date of birth is not before date of employment and enrollment to the plan"+"\n");
+                stringBuilder.append("\nResult: This member's date of birth is not before the " + choice+"\n");
                 stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
                 stringBuilder.append("Last Name: " + b1Val_LN+"\n");
                 stringBuilder.append("First Name: " + c1Val_FN+"\n");
@@ -602,6 +626,9 @@ if (check!=h1) {
             XSSFCell cellG1_DOB= DemoRow.getCell((short) 5);   //dob
             Date g1Val_DOB= cellG1_DOB.getDateCellValue();
 
+            XSSFCell cellPlantry= DemoRow.getCell((short) 6);   //plan entry
+            Date PlanEntry= cellPlantry.getDateCellValue();
+
 
             XSSFCell cellH1_PE= DemoRow.getCell((short) 7);   //emp date
             Date h1Val_PE = cellH1_PE.getDateCellValue();
@@ -609,7 +636,7 @@ if (check!=h1) {
             SimpleDateFormat dF = new SimpleDateFormat();
             dF.applyPattern("dd-MMM-yy");
 
-            int age = utility.getAge(g1Val_DOB);
+            int age = utility.getAge(g1Val_DOB,PlanEntry);
 
             if(age<15){
                 System.out.println("Employee ID: " + a1Val_EM);
@@ -617,11 +644,11 @@ if (check!=h1) {
                 System.out.println("First Name: " + c1Val_FN);
                 System.out.println("Date of Birth: " +dF.format(g1Val_DOB));
               //  System.out.println("Employment Date: " + dF.format(h1Val_PE));
-                System.out.println("Result: This member age is "+age);
+               // System.out.println("Result: This member age is "+age +"as at their Plan Entry date " + dF.format(cellPlantry));
                 System.out.println();
 
                 //for gui
-                stringBuilder.append("\nResult: This member's age is "+age +"\n");
+                stringBuilder.append("Result: This member age is "+age +" as at their Plan Entry date " + dF.format(PlanEntry)+"\n");
                 stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
                 stringBuilder.append("Last Name: " + b1Val_LN+"\n");
                 stringBuilder.append("First Name: " + c1Val_FN+"\n");
