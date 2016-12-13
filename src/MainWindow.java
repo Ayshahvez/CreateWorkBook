@@ -34,6 +34,9 @@ public class MainWindow extends JFrame implements ActionListener{
 //main MenuBar
 JMenuBar menuBar;
 
+JMenu MenuEditor;
+JMenuItem MenuItemClearScreen;
+
     JPanel codePanel = new JPanel(new BorderLayout());
   ResultsWindow resultsWindow = new ResultsWindow();
     JScrollPane scrollPane;
@@ -106,7 +109,7 @@ private JPanel jPanel,panWelcome;
 
     private void setWindowProperties() {
         // TODO Auto-generated method stub
-        this.setSize(700, 700);
+        this.setSize(700, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
      //   this.pack();
@@ -115,6 +118,9 @@ private JPanel jPanel,panWelcome;
 
 
     public void initiliazeComponents () {
+        MenuEditor = new JMenu("Editor");
+        MenuItemClearScreen = new JMenuItem("Clear Screen");
+
         MenuItemWorkingDir = new JMenuItem("Set default working directory");
 
 
@@ -216,6 +222,9 @@ private JPanel jPanel,panWelcome;
         menuBar.add(MenuTemplateSheet);
         menuBar.add(MenuValidationChecks);
         menuBar.add(MenuCreateWorkBook);
+        menuBar.add(MenuEditor);
+
+        MenuEditor.add(MenuItemClearScreen);
 
         MenuCreateWorkBook.add(MenuItemCreateActiveSheet);
         MenuCreateWorkBook.add(MenuItemCreateTermineeSheet);
@@ -235,17 +244,62 @@ private JPanel jPanel,panWelcome;
 
     public void actionPerformed(ActionEvent e) {
         Color LINES = new Color(130, 125, 127);
-        if (e.getSource().equals(CheckAge)) {
-            JOptionPane.showMessageDialog(null, "Now Performing Age Check, Press Ok to Continue", "Age Check", JOptionPane.PLAIN_MESSAGE);
+
+        if(e.getSource().equals(MenuItemClearScreen)){
+            resultsWindow.ClearScreen(resultsWindow);
+        }
+
+        if(e.getSource().equals(CheckAll)) {
+            JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
             String result = null;
             try {
-                result = validationChecks.Check_Age(filePathValData);
+                result = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                result+= validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                result+=validationChecks.Check_Age(filePathWorkingDir);
+                result += validationChecks.Check_DateofBirth(filePathWorkingDir);
+                result+=validationChecks.Check_FivePercent_PS(filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-
         }
+
+
+        if(e.getSource().equals(CheckPlanEntry)) {
+            JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
+            String result = null;
+            try {
+                result = validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+
+        if(e.getSource().equals(CheckEmployeePS)) {
+            JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
+            String result = null;
+            try {
+                result = validationChecks.Check_FivePercent_PS(filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+
+        if (e.getSource().equals(CheckAge)) {
+            JOptionPane.showMessageDialog(null, "Now Performing Age Check, Press Ok to Continue", "Age Check", JOptionPane.PLAIN_MESSAGE);
+            String result = null;
+            try {
+                result = validationChecks.Check_Age(filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
 
         if (e.getSource().equals(CheckDateofBirth)) {
             JOptionPane.showMessageDialog(null, "Now Performing Date of Birth Check, Press Ok to Continue", "Date of Birth Check", JOptionPane.PLAIN_MESSAGE);
@@ -256,20 +310,21 @@ private JPanel jPanel,panWelcome;
                 e1.printStackTrace();
             }
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-
         }
+
 
         if (e.getSource().equals(CheckDuplicate)) {
 
             JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
             String s = null;
             try {
-                s = validationChecks.Check_For_Duplicates(filePathValData);
+                s = validationChecks.Check_For_Duplicates(filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             resultsWindow.appendToPane(resultsWindow, s + "\n", LINES, true);
         }
+
 
         if(e.getSource().equals(LoadValDataWorkBook)){
             JFileChooser chooser = new JFileChooser();
@@ -288,9 +343,11 @@ private JPanel jPanel,panWelcome;
         if(e.getSource().equals(MenuItemSeperateMembers)){
          //   excelReader.Separate_Actives_Terminees(filePathValData);
 
-            String s = null;
-            s = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
-            resultsWindow.appendToPane(resultsWindow, s + "\n", LINES, true);
+            String result = null;
+       //     result = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
+            result = excelReader.Separate_Actives_Terminees(filePathWorkingDir);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+            JOptionPane.showMessageDialog(null,"Active and Terminated Members now separated, Please remember to input date of refunds for Terminee members","Success", JOptionPane.PLAIN_MESSAGE);
         }
 
         if(e.getSource().equals(MenuItemPensionPlanName)){
@@ -336,6 +393,7 @@ private JPanel jPanel,panWelcome;
            } catch (IOException e1) {
                e1.printStackTrace();
            }
+           JOptionPane.showMessageDialog(null,"The Active Sheet Template was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
        }
 
         if(e.getSource().equals(MenuItemCreateTermineeSheetTemplate)){
@@ -344,7 +402,7 @@ private JPanel jPanel,panWelcome;
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            JOptionPane.showMessageDialog(null,"The Terminee Template Sheet was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null,"The Terminee Sheet  Template was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
         }
 
         if(e.getSource().equals(MenuItemCreateActiveSheet)){
@@ -370,15 +428,21 @@ private JPanel jPanel,panWelcome;
             JOptionPane.showMessageDialog(null,"The Terminee Sheet was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
         }
 
+
+
+
     }
 
 
     private void registerListener() {
+        MenuItemClearScreen.addActionListener(this);
+
         CheckDuplicate.addActionListener(this);
         CheckAge.addActionListener(this);
         CheckDateofBirth.addActionListener(this);
         CheckEmployeePS.addActionListener(this);
         CheckPlanEntry.addActionListener(this);
+        CheckAll.addActionListener(this);
 
 
        LoadValDataWorkBook.addActionListener(this);

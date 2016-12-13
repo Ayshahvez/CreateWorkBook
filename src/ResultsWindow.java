@@ -25,6 +25,13 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
         tp.setCharacterAttributes(aSet, false);
      //   tp.replaceSelection(" ");
         tp.replaceSelection(msg+"\n");
+      //  tp.
+   //     tp.removeAll();
+
+    }
+
+    public void ClearScreen(JTextPane tp){
+       tp.setText("");
 
     }
 }

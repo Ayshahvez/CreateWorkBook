@@ -479,12 +479,14 @@ static Utility utility = new Utility();
         return ActiveSum;
     }
 
-    public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
+    public String Separate_Actives_Terminees(String workingDir) throws IndexOutOfBoundsException {
+   // public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
         try {
           //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
          //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
-            FileInputStream fileInputStream = new FileInputStream(filePathValData);
+       //     FileInputStream fileInputStream = new FileInputStream(filePathValData);
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Hose Valuation Data (Actuary's copy).xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("DEMO");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -499,7 +501,8 @@ static Utility utility = new Utility();
          //   FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\template.xlsx");
 
          //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
-            FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
+        //    FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
+            FileInputStream fileR = new FileInputStream(workingDir+ "\\template.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -677,7 +680,7 @@ try {
                 }
 
             //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
-               FileOutputStream outFile = new FileOutputStream(new File(WorkingDir + "\\Output.xlsx"));
+               FileOutputStream outFile = new FileOutputStream(new File(workingDir + "\\Output.xlsx"));
                 workbookR.write(outFile);
                 fileR.close();
                 outFile.close();
