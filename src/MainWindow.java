@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by Ayshahvez konowalchuk xbox one on 12/11/2016.
+ * Created by Ayshahvez konowalchuk xbox one XL on 12/11/2016.
  */
 public class MainWindow extends JFrame implements ActionListener{
     ExcelReader excelReader = new ExcelReader();
