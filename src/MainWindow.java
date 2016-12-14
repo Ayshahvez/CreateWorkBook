@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by Ayshahvez on 12/11/2016.
+ * Created by Ayshahvez konowalchuk xbox one on 12/11/2016.
  */
 public class MainWindow extends JFrame implements ActionListener{
     ExcelReader excelReader = new ExcelReader();
@@ -123,7 +123,8 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
-        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+      //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+        imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
 
         MenuEditor = new JMenu("Editor");
@@ -440,8 +441,6 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
             JOptionPane.showMessageDialog(null,"The Terminee Sheet was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
         }
-
-
 
 
     }
