@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
@@ -131,5 +133,98 @@ public class Utility extends Component {
     age--;
         }
         return age;
+    }
+
+
+
+    public void writeDefaultsToFile(String type, String workingDir, String content){
+        try {
+            FileWriter fr = null;
+            switch (type) {
+                case "WD":
+                    fr = new FileWriter(workingDir + "//WD.txt");
+
+                    break;
+
+                case "PN":
+                    fr = new FileWriter(workingDir + "//PN.txt");
+                    break;
+
+                case "SD":
+                    fr = new FileWriter(workingDir + "//SD.txt");
+                    break;
+
+                case "ED":
+                    fr = new FileWriter(workingDir + "//ED.txt");
+                    break;
+
+                default:
+                    System.out.println("Error no selection");
+            }
+
+
+            fr.write(content); // warning: this will REPLACE your old file content!
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+public String read() throws IOException {
+        String content = null;
+    File f = new File("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt");
+    if(f.exists()) {
+        // do something
+       content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt")));
+    }
+    return content;
+}
+    public String read(String workingDir) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(workingDir + "\\WD.txt")));
+    }
+
+    public String readFile(String type,String workingDir) throws IOException {
+        String content = null;
+
+        File f = new File(workingDir+"\\"+type+".txt");
+        if(f.exists()) {
+            try {
+                switch (type) {
+                    case "WD":
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//WD.txt")));
+                        System.out.print(content);
+                        break;
+
+                    case "PN":
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//PN.txt")));
+                        System.out.print(content);
+                        break;
+
+                    case "SD":
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//SD.txt")));
+                        System.out.print(content);
+                        break;
+
+                    case "ED":
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//ED.txt")));
+                        System.out.print(content);
+                        break;
+
+                    default:
+                        System.out.println("Error no selection");
+                        content = null;
+                }
+
+                //   line32 = Files.readAllLines(Paths.get("C://Users//akonowalchuk//GFRAM//test.txt")).get(0);
+
+            } catch (NoSuchFileException e) {
+                //    e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return content;
     }
 }

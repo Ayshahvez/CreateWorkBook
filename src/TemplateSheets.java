@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -47,12 +48,22 @@ public class TemplateSheets {
         return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
-    public static void  Create_Template_Active_Sheet(Date StartDate, Date EndDate, String PensionPlanName, String workingDir) throws IOException {
+    public static void  Create_Template_Active_Sheet(String StartDate,String EndDate, String PensionPlanName, String workingDir) throws IOException {
         try {
-            LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            String str[] = StartDate.split("/");
+            int StartDay= Integer.parseInt(str[0]);
+            int StartMonth = Integer.parseInt(str[1]);
+            int StartYear = Integer.parseInt(str[2]);
+
+            String str2[] = EndDate.split("/");
+            int EndDay= Integer.parseInt(str2[0]);
+            int EndMonth = Integer.parseInt(str2[1]);
+            int EndYear = Integer.parseInt(str2[2]);
+
+   /*         LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-
+*/
 
           /*  int EndYear = 2015;
             int EndMonth = 12;
@@ -62,14 +73,17 @@ public class TemplateSheets {
             int StartMonth=01;
             int StartDay= 01;*/
 
-           int EndYear = localEndDate.getYear();
+
+           /*int EndYear = localEndDate.getYear();
             int EndMonth = localEndDate.getMonthValue();
             int EndDay=localEndDate.getDayOfMonth();
 
             int StartYear=localStartDate.getYear();
             int StartMonth=localStartDate.getMonthValue();
-            int StartDay= localStartDate.getDayOfMonth();
+            int StartDay= localStartDate.getDayOfMonth();*/
 
+            System.out.print(StartDay +"/"+ StartMonth +"/" + StartYear);
+           System.out.print(EndDay +"/"+ EndMonth +"/" + EndYear);
             XSSFWorkbook workbook = new XSSFWorkbook();
             MemberModel model = new MemberModel();
 
@@ -105,7 +119,7 @@ public class TemplateSheets {
 
             int years= getDiffYears(startDate,endDate);
 
-            for(int h=0;h<=years+1;h++){
+            for(int h=0;h<years;h++){
                 PensionableSalary.add(h,StartYear+h);
             }
 
@@ -114,7 +128,7 @@ public class TemplateSheets {
 
             GregorianCalendar cal = new GregorianCalendar();
 
-            for(int t=0;t<=years+1;t++){
+            for(int t=0;t<years;t++){
 
                 rowHeading2.createCell(8+t).setCellValue("Pensionable Salary Earned " + (PensionableSalary.get(t))+"."+StartMonth+"."+StartDay +" to "
                         + getDate(PensionableSalary.get(t), StartMonth, StartDay));
@@ -137,12 +151,12 @@ public class TemplateSheets {
             sheet2.addMergedRegion(new CellRangeAddress(5, 5,StartCol,LastCol));
             newIndex+=4; //jump over 4 cell
             int tmp = newIndex;
-            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartMonth, StartDay));
+            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartDay,StartMonth ));
 
             for(int h=0;h<PensionableSalary.size()-1;h++){
                 tmp+=4;
 
-                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth, StartDay));
+                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartDay,StartMonth));
                 StartCol = tmp;
                 LastCol = tmp + 3;
                 sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
@@ -233,20 +247,27 @@ public class TemplateSheets {
         }
     }
 
-    public static void  Create_Template_Terminee_Sheet(Date StartDate, Date EndDate, String PensionPlanname, String workingDir) throws IOException {
+    public static void  Create_Template_Terminee_Sheet(String StartDate, String EndDate, String PensionPlanname, String workingDir) throws IOException {
         try {
+     /*       LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();*/
+            String str[] = StartDate.split("/");
+            int StartDay= Integer.parseInt(str[0]);
+            int StartMonth = Integer.parseInt(str[1]);
+            int StartYear = Integer.parseInt(str[2]);
 
-            LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String str2[] = EndDate.split("/");
+            int EndDay= Integer.parseInt(str2[0]);
+            int EndMonth = Integer.parseInt(str2[1]);
+            int EndYear = Integer.parseInt(str2[2]);
 
-
-            int EndYear = localEndDate.getYear();
+        /*    int EndYear = localEndDate.getYear();
             int EndMonth = localEndDate.getMonthValue();
             int EndDay=localEndDate.getDayOfMonth();
 
             int StartYear=localStartDate.getYear();
             int StartMonth=localStartDate.getMonthValue();
-            int StartDay= localStartDate.getDayOfMonth();
+            int StartDay= localStartDate.getDayOfMonth();*/
 
         /*    int EndYear = 2015;
             int EndMonth = 12;
@@ -301,7 +322,7 @@ public class TemplateSheets {
 
             int years= getDiffYears(startDate,endDate);
 
-            for(int h=0;h<=years+1;h++){
+            for(int h=0;h<years;h++){
                 PensionableSalary.add(h,StartYear+h);
             }
 
@@ -323,8 +344,6 @@ public class TemplateSheets {
             int j=0;
             for(int h=0;h<PensionableSalary.size()-1;h++){
                 tmp+=4;
-
-
                 rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth, StartDay));
                 StartCol = tmp;
                 LastCol = tmp + 3;

@@ -1842,6 +1842,7 @@ int Crow = 8;
         }
         return String.valueOf(stringBuilder);
     }// end of view active sheet
+
     public String View_Terminee_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Terminee Members present as at "+endDate+" \n\n");
@@ -1940,7 +1941,6 @@ int Crow = 8;
         }
         return String.valueOf(stringBuilder);
     }// end of view active sheet
-
 
 
 }
