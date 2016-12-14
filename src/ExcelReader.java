@@ -1743,4 +1743,204 @@ int Crow = 8;
         outFile.close();
     }
 
+    public String View_Actives_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("The following is a list of Active Members present as at "+endDate+" \n\n");
+        SimpleDateFormat dF1 = new SimpleDateFormat();
+        dF1.applyPattern("dd-MMM-yy");
+        try {
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+            XSSFSheet worksheet = workbook.getSheet("Actives");
+            //   XSSFSheet sheet = workbook.getSheetAt(0);
+
+            int rowCount = worksheet.getPhysicalNumberOfRows();
+
+
+            SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
+
+
+            for (int row = 0; row < rowCount; row++) {
+                int Row = row;
+
+                if (Row == 0) {
+                    row = 1;  //start reading from second row
+                }
+                XSSFRow row1 = worksheet.getRow(row);
+
+                XSSFCell cellA1 = row1.getCell((short) 0);  //employee number
+                String result = cellA1.getStringCellValue();
+                String a1Val = result.replaceAll("[-]", "");
+
+                XSSFCell cellB1 = row1.getCell((short) 1);
+                String b1Val = cellB1.getStringCellValue();
+
+                XSSFCell cellC1 = row1.getCell((short) 2);    //last name
+                String c1Val = cellC1.getStringCellValue();
+
+                XSSFCell cellD1 = row1.getCell((short) 3); //first name
+                String d1Val = cellD1.getStringCellValue();
+
+                XSSFCell cellE1 = row1.getCell((short) 4);  //sex
+                String e1Val = cellE1.getStringCellValue();
+
+                XSSFCell cellF1 = row1.getCell((short) 5); //dob
+                //  Date f1Vall = cellF1.getDateCellValue();
+                //String f1Val =datetemp.format( cellF1.getDateCellValue());
+                String f1Val = cellF1.getStringCellValue();
+
+
+                XSSFCell cellG1 = row1.getCell((short) 6); //plan entry
+                // String g1Val =datetemp.format( cellG1.getDateCellValue());
+                String g1Val = cellG1.getStringCellValue();
+
+                XSSFCell cellH1 = row1.getCell((short) 7); //emp date
+                //    String h1Val = datetemp.format( cellH1.getDateCellValue());
+                String h1Val = cellH1.getStringCellValue();
+
+                XSSFCell cellI1 = row1.getCell((short) 8);  //status date
+                // String i1Val = datetemp.format( cellI1.getDateCellValue());
+                String i1Val = cellI1.getStringCellValue();
+
+                XSSFCell cellJ1 = row1.getCell((short) 9); //status
+                String j1Val = cellJ1.getStringCellValue();
+
+                if (j1Val.equals("ACTIVE") && !(d1Val.equals("KEY"))) {
+                        System.out.print("A1: " + a1Val);
+                         System.out.print(" B1: " + b1Val);
+                   System.out.print(" C1: " + c1Val);
+                    System.out.print(" D1: " + d1Val);
+                    System.out.print(" E1: " + e1Val);
+                    System.out.print(" F1: " + f1Val);
+                    System.out.print(" G1: " + g1Val);
+                    System.out.print(" H1: " + h1Val);
+                    System.out.print(" I1: " + i1Val);
+                    System.out.print(" J1: " + j1Val);
+
+                    stringBuilder.append("Employee ID: " + a1Val + "\n");
+                    stringBuilder.append("Last Name: " + c1Val + "\n");
+                    stringBuilder.append("First Name: " + d1Val + "\n");
+                    stringBuilder.append("DOB: " + f1Val + "\n");
+                    stringBuilder.append("Employment Date: " + h1Val + "\n");
+                    stringBuilder.append("Plan Entry Date: " + g1Val + "\n");
+                    stringBuilder.append("Status Date: " + i1Val + "\n");
+                    stringBuilder.append("Status: " + j1Val + "\n");
+                    stringBuilder.append("-------------------------------------------------------\n");
+
+                    System.out.println();
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+
+        }
+        return String.valueOf(stringBuilder);
+    }// end of view active sheet
+    public String View_Terminee_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("The following is a list of Terminee Members present as at "+endDate+" \n\n");
+        SimpleDateFormat dF1 = new SimpleDateFormat();
+        dF1.applyPattern("dd-MMM-yy");
+        try {
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+            XSSFSheet worksheet = workbook.getSheet("Terminees");
+            //   XSSFSheet sheet = workbook.getSheetAt(0);
+
+            int rowCount = worksheet.getPhysicalNumberOfRows();
+
+
+            SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
+
+            for (int row = 0; row < rowCount; row++) {
+                int Row = row;
+
+                if (Row == 0) {
+                    row = 1;  //start reading from second row
+                }
+                XSSFRow row1 = worksheet.getRow(row);
+
+                XSSFCell cellA1 = row1.getCell((short) 0);  //employee number
+                String result = cellA1.getStringCellValue();
+                String a1Val = result.replaceAll("[-]", "");
+
+                XSSFCell cellB1 = row1.getCell((short) 1);
+                String b1Val = cellB1.getStringCellValue();
+
+                XSSFCell cellC1 = row1.getCell((short) 2);    //last name
+                String c1Val = cellC1.getStringCellValue();
+
+                XSSFCell cellD1 = row1.getCell((short) 3); //first name
+                String d1Val = cellD1.getStringCellValue();
+
+                XSSFCell cellE1 = row1.getCell((short) 4);  //sex
+                String e1Val = cellE1.getStringCellValue();
+
+                XSSFCell cellF1 = row1.getCell((short) 5); //dob
+                //  Date f1Vall = cellF1.getDateCellValue();
+                //String f1Val =datetemp.format( cellF1.getDateCellValue());
+                String f1Val = cellF1.getStringCellValue();
+
+
+                XSSFCell cellG1 = row1.getCell((short) 6); //plan entry
+                // String g1Val =datetemp.format( cellG1.getDateCellValue());
+                String g1Val = cellG1.getStringCellValue();
+
+                XSSFCell cellH1 = row1.getCell((short) 7); //emp date
+                //    String h1Val = datetemp.format( cellH1.getDateCellValue());
+                String h1Val = cellH1.getStringCellValue();
+
+                XSSFCell cellI1 = row1.getCell((short) 8);  //status date
+                // String i1Val = datetemp.format( cellI1.getDateCellValue());
+                String i1Val = cellI1.getStringCellValue();
+
+                XSSFCell cellJ1 = row1.getCell((short) 9); //status
+                String j1Val = cellJ1.getStringCellValue();
+
+                if ((j1Val.equals("DEFERRED")||j1Val.equals("RETIREMENT")|| j1Val.equals("DEATH")||j1Val.equals("TERMINATED")) && !(d1Val.equals("KEY"))) {
+                    System.out.print("A1: " + a1Val);
+                    System.out.print(" B1: " + b1Val);
+                    System.out.print(" C1: " + c1Val);
+                    System.out.print(" D1: " + d1Val);
+                    System.out.print(" E1: " + e1Val);
+                    System.out.print(" F1: " + f1Val);
+                    System.out.print(" G1: " + g1Val);
+                    System.out.print(" H1: " + h1Val);
+                    System.out.print(" I1: " + i1Val);
+                    System.out.print(" J1: " + j1Val);
+
+                    stringBuilder.append("Employee ID: " + a1Val + "\n");
+                    stringBuilder.append("Last Name: " + c1Val + "\n");
+                    stringBuilder.append("First Name: " + d1Val + "\n");
+                    stringBuilder.append("DOB: " + f1Val + "\n");
+                    stringBuilder.append("Employment Date: " + h1Val + "\n");
+                    stringBuilder.append("Plan Entry Date: " + g1Val + "\n");
+                    stringBuilder.append("Status Date: " + i1Val + "\n");
+                    stringBuilder.append("Status: " + j1Val + "\n");
+                    stringBuilder.append("-------------------------------------------------------\n");
+
+                    System.out.println();
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+
+        }
+        return String.valueOf(stringBuilder);
+    }// end of view active sheet
+
+
+
 }

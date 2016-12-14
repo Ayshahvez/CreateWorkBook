@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -39,15 +40,14 @@ public class Utility extends Component {
     public String getWorkingDir(){
         String filePathWorkingDir=null;
         JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //to get only folders
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Excel Files, PDF", "xlsx","xls","pdf","doc","docx");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
+        int returnVal = chooser.showSaveDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    //   chooser.getSelectedFile().getName());
-                    chooser.getSelectedFile().getParent());
-            filePathWorkingDir= chooser.getSelectedFile().getParent();
+            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getPath());
+           filePathWorkingDir= chooser.getSelectedFile().getPath();
         }
         return filePathWorkingDir;
     }

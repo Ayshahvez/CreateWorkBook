@@ -1,6 +1,7 @@
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -425,4 +426,66 @@ public class TemplateSheets {
         }
     }
 
+    public static void Create_Template_Active_Terminee_Sheet(String workingDir) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        XSSFSheet ActiveSheet = workbook.createSheet("Actives");
+        XSSFSheet TermineeSheet = workbook.createSheet("Terminees");
+
+        XSSFRow ActiveHeading = ActiveSheet.createRow(0);
+        XSSFRow TermineeHeading = TermineeSheet.createRow(0);
+
+        ActiveHeading.createCell(0).setCellValue("KEY");
+        ActiveHeading.createCell(1).setCellValue("CORP");
+        ActiveHeading.createCell(2).setCellValue("LAST NAME");
+        ActiveHeading.createCell(3).setCellValue("FIRST NAME");
+        ActiveHeading.createCell(4).setCellValue("SEX");
+        ActiveHeading.createCell(5).setCellValue("BIRTHDATE");
+        ActiveHeading.createCell(6).setCellValue("PLAN ENTRY");
+        ActiveHeading.createCell(7).setCellValue("EMP.DATE");
+        ActiveHeading.createCell(8).setCellValue("STATUS DATE");
+        ActiveHeading.createCell(9).setCellValue("STATUS");
+
+        TermineeHeading.createCell(0).setCellValue("KEY");
+        TermineeHeading.createCell(1).setCellValue("CORP");
+        TermineeHeading.createCell(2).setCellValue("LAST NAME");
+        TermineeHeading.createCell(3).setCellValue("FIRST NAME");
+        TermineeHeading.createCell(4).setCellValue("SEX");
+        TermineeHeading.createCell(5).setCellValue("BIRTHDATE");
+        TermineeHeading.createCell(6).setCellValue("PLAN ENTRY");
+        TermineeHeading.createCell(7).setCellValue("EMP.DATE");
+        TermineeHeading.createCell(8).setCellValue("STATUS DATE");
+        TermineeHeading.createCell(9).setCellValue("STATUS");
+        TermineeHeading.createCell(10).setCellValue("DATE OF REFUND");
+
+
+
+//autofit
+        for(int x=0;x<10;x++){
+            //   sheet.autoSizeColumn(x);
+            ActiveSheet.autoSizeColumn(x);
+
+        }
+
+        for(int x=0;x<10;x++){
+            //   sheet.autoSizeColumn(x);
+           TermineeSheet.autoSizeColumn(x);
+
+        }
+
+        try {
+            //Write the workbook in file system
+            FileOutputStream out = new FileOutputStream(
+                    //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
+                    new File(workingDir + "\\Template_Separated.xlsx"));
+            workbook.write(out);
+
+        out.close();
+        workbook.close();
+    }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Template_Separated.xlsx" );
+    }
 }

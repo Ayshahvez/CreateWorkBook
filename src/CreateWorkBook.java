@@ -24,7 +24,8 @@ public class CreateWorkBook
             JOptionPane.showMessageDialog(null,"The answer is"+ sum,"Title",JOptionPane.PLAIN_MESSAGE);
             new MainWindow();*/
             //create objects
-          //  TemplateSheets templateSheets = new TemplateSheets();
+           /* TemplateSheets templateSheets = new TemplateSheets();
+            templateSheets.Create_Template_Active_Terminee_Sheet("C:\\Users\\akonowalchuk\\GFRAM");*/
         //    ExcelReader reader = new ExcelReader();
 
             //create templates

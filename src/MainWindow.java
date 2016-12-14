@@ -123,15 +123,14 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
-      //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-        imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+    //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
 
         MenuEditor = new JMenu("Editor");
         MenuItemClearScreen = new JMenuItem("Clear Screen");
 
-        MenuItemWorkingDir = new JMenuItem("Set default working directory");
-
+        MenuItemWorkingDir = new JMenuItem("Set Default Working Directory");
 
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
         MenuStart_End_Dates = new JMenu("Set Start and End Date");
@@ -159,9 +158,9 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
         MenuItemLoadTemplateActiveSheet = new JMenuItem("Load Template Sheet for Active Members");
         MenuItemLoadTemplateTermineeSheet = new JMenuItem("Load Template Sheet for Terminee Members");
 
-
-        MenuItemCreateActiveSheet = new JMenuItem("Create Active Sheet");
-        MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Sheet");
+        MenuItemSeperateMembers = new JMenuItem("Create Active & Terminee Members Sheet");
+        MenuItemCreateActiveSheet = new JMenuItem("Create Active Members Sheet");
+        MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Members Sheet");
 
 
         scrollPane = new JScrollPane(resultsWindow);
@@ -186,7 +185,7 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
         LoadPensionableSalaryWorkBook = new JMenuItem("Browse for Pensionable Salary Workbook");
 
         MenuMembers = new JMenu("Members");
-        MenuItemSeperateMembers = new JMenuItem("Seperate Active & Terminee Members");
+
         MenuItemViewActiveMember = new JMenuItem("View Active Members");
         MenuItemViewTermineeMember = new JMenuItem("View Terminated Members");
         MenuItemViewAllMembers = new JMenuItem("View All Members");
@@ -195,21 +194,24 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
 
     private void addComponentsTopanels() {
         MenuTemplateSheet.add(MenuCreateTemplateSheet);
+    //    MenuTemplateSheet.add(MenuLoadTemplateSheet);
+
         MenuCreateTemplateSheet.add(MenuItemCreateActiveSheetTemplate);
         MenuCreateTemplateSheet.add(MenuItemCreateTermineeSheetTemplate);
-        MenuTemplateSheet.add(MenuLoadTemplateSheet);
+
         MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
         MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
         MenuLoadTemplateSheet.add(MenuItemLoadTemplateTermineeSheet);
 
-        MenuMembers.add(MenuItemSeperateMembers);
+
         MenuMembers.add(MenuItemViewActiveMember);
         MenuMembers.add(MenuItemViewTermineeMember);
         MenuMembers.add(MenuItemViewAllMembers);
 
+        MenuSetPlanRequirements.add(MenuItemWorkingDir);
         MenuSetPlanRequirements.add(MenuItemPensionPlanName);
         MenuSetPlanRequirements.add(MenuStart_End_Dates);
-        MenuSetPlanRequirements.add(MenuItemWorkingDir);
+
         MenuStart_End_Dates.add(MenuItemStartDate);
         MenuStart_End_Dates.add(MenuItemEndDate);
 
@@ -227,16 +229,17 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
 
 
 
-        menuBar.add(MenuLoadWorkbook);
+   //    menuBar.add(MenuLoadWorkbook);
         menuBar.add(MenuSetPlanRequirements);
-        menuBar.add(MenuMembers);
         menuBar.add(MenuTemplateSheet);
+        menuBar.add(MenuMembers);
         menuBar.add(MenuValidationChecks);
         menuBar.add(MenuCreateWorkBook);
         menuBar.add(MenuEditor);
 
         MenuEditor.add(MenuItemClearScreen);
 
+        MenuCreateWorkBook.add(MenuItemSeperateMembers);
         MenuCreateWorkBook.add(MenuItemCreateActiveSheet);
         MenuCreateWorkBook.add(MenuItemCreateTermineeSheet);
 
@@ -442,13 +445,35 @@ private JPanel jPanel,panWelcome,eastPanel,westPanel;
             JOptionPane.showMessageDialog(null,"The Terminee Sheet was created Successfully","Success",JOptionPane.PLAIN_MESSAGE);
         }
 
+        if(e.getSource().equals(MenuItemViewActiveMember)){
+           String result= excelReader.View_Actives_Members(filePathWorkingDir,PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null,"Please wait for the list of the Active Members as at " + PensionPlanEndDate,"Success",JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
 
+        if(e.getSource().equals(MenuItemViewTermineeMember)){
+            String result= excelReader.View_Terminee_Members(filePathWorkingDir,PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null,"Please wait for the list of the Terminee Members as at " + PensionPlanEndDate,"Success",JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+        if(e.getSource().equals(MenuItemViewAllMembers)){
+            String result= excelReader.View_Actives_Members(filePathWorkingDir,PensionPlanEndDate);
+            result += excelReader.View_Terminee_Members(filePathWorkingDir,PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null,"Please wait for the list of all the Members as at " + PensionPlanEndDate,"Success",JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
     }
 
 
     private void registerListener() {
-        MenuItemClearScreen.addActionListener(this);
+        //MEMBERS LISTENERS
+        MenuItemViewActiveMember.addActionListener(this);
+        MenuItemViewTermineeMember.addActionListener(this);
+        MenuItemViewAllMembers.addActionListener(this);
 
+
+        MenuItemClearScreen.addActionListener(this);
         CheckDuplicate.addActionListener(this);
         CheckAge.addActionListener(this);
         CheckDateofBirth.addActionListener(this);
