@@ -13,13 +13,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/TitleModel.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/TitleModel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/ValidationChecks.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/ValidationChecks.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CreateWorkBook.java" afterPath="$PROJECT_DIR$/src/CreateWorkBook.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExcelReader.java" afterPath="$PROJECT_DIR$/src/ExcelReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainWindow.java" afterPath="$PROJECT_DIR$/src/MainWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TemplateSheets.java" afterPath="$PROJECT_DIR$/src/TemplateSheets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Utility.java" afterPath="$PROJECT_DIR$/src/Utility.java" />
     </list>
     <ignored path="CreateWorkBook.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -507,7 +501,14 @@
       <option name="project" value="LOCAL" />
       <updated>1481729576415</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Still needs debugging">
+      <created>1481752678727</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1481752678727</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -603,7 +604,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Test" />
     <MESSAGE value="Added functionality for View Active and Terminated Members, also took out unNecessary buttons for now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added functionality for View Active and Terminated Members, also took out unNecessary buttons for now" />
+    <MESSAGE value="Still needs debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Still needs debugging" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
