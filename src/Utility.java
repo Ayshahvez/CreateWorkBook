@@ -135,8 +135,6 @@ public class Utility extends Component {
         return age;
     }
 
-
-
     public void writeDefaultsToFile(String type, String workingDir, String content){
         try {
             FileWriter fr = null;
@@ -174,13 +172,16 @@ public class Utility extends Component {
 
 public String read() throws IOException {
         String content = null;
-    File f = new File("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt");
+ //   File f = new File("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt");
+    File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
     if(f.exists()) {
         // do something
-       content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt")));
+     //  content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt")));
+        content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
     }
     return content;
 }
+
     public String read(String workingDir) throws IOException {
         return new String(Files.readAllBytes(Paths.get(workingDir + "\\WD.txt")));
     }

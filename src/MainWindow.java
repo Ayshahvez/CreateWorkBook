@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by Ayshahvez konowalchuk xbox one XL on 12/11/2016.
+ * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
  */
 public class MainWindow extends JFrame implements ActionListener {
     ExcelReader excelReader = new ExcelReader();
@@ -430,7 +430,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (e.getSource().equals(MenuItemCreateActiveSheetTemplate)) {
             try {
-                templateSheets.Create_Template_Active_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
+                TemplateSheets.Create_Template_Active_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -439,7 +439,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (e.getSource().equals(MenuItemCreateTermineeSheetTemplate)) {
             try {
-                templateSheets.Create_Template_Terminee_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
+                TemplateSheets.Create_Template_Terminee_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

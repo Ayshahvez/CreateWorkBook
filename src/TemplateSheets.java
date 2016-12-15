@@ -45,20 +45,20 @@ public class TemplateSheets {
 
     public static String getDate(int year, int month, int day){
 
-        return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        return LocalDate.of(year, month,day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
     public static void  Create_Template_Active_Sheet(String StartDate,String EndDate, String PensionPlanName, String workingDir) throws IOException {
         try {
 
             String str[] = StartDate.split("/");
-            int StartDay= Integer.parseInt(str[0]);
-            int StartMonth = Integer.parseInt(str[1]);
+            int StartMonth= Integer.parseInt(str[0]);
+            int  StartDay= Integer.parseInt(str[1]);
             int StartYear = Integer.parseInt(str[2]);
 
             String str2[] = EndDate.split("/");
-            int EndDay= Integer.parseInt(str2[0]);
-            int EndMonth = Integer.parseInt(str2[1]);
+            int EndMonth= Integer.parseInt(str2[0]);
+            int  EndDay= Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
    /*         LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -117,8 +117,8 @@ public class TemplateSheets {
             Date startDate = df.parse(StartYear+"."+StartMonth+"."+StartDay);
             Date endDate = df.parse(EndYear+"."+EndMonth+"."+EndDay);
 
-            int years= getDiffYears(startDate,endDate);
-
+            int years= getDiffYears(startDate,endDate)+2;
+System.out.println("years:"+ years);
             for(int h=0;h<years;h++){
                 PensionableSalary.add(h,StartYear+h);
             }
@@ -151,12 +151,12 @@ public class TemplateSheets {
             sheet2.addMergedRegion(new CellRangeAddress(5, 5,StartCol,LastCol));
             newIndex+=4; //jump over 4 cell
             int tmp = newIndex;
-            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartDay,StartMonth ));
+            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartMonth,StartDay ));
 
             for(int h=0;h<PensionableSalary.size()-1;h++){
                 tmp+=4;
 
-                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartDay,StartMonth));
+                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth,StartDay));
                 StartCol = tmp;
                 LastCol = tmp + 3;
                 sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
@@ -252,13 +252,13 @@ public class TemplateSheets {
      /*       LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();*/
             String str[] = StartDate.split("/");
-            int StartDay= Integer.parseInt(str[0]);
-            int StartMonth = Integer.parseInt(str[1]);
+            int StartMonth= Integer.parseInt(str[0]);
+            int StartDay = Integer.parseInt(str[1]);
             int StartYear = Integer.parseInt(str[2]);
 
             String str2[] = EndDate.split("/");
-            int EndDay= Integer.parseInt(str2[0]);
-            int EndMonth = Integer.parseInt(str2[1]);
+            int EndMonth= Integer.parseInt(str2[0]);
+            int EndDay = Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
         /*    int EndYear = localEndDate.getYear();
@@ -320,7 +320,7 @@ public class TemplateSheets {
             Date startDate = df.parse(StartYear+"."+StartMonth+"."+StartDay);
             Date endDate = df.parse(EndYear+"."+EndMonth+"."+EndDay);
 
-            int years= getDiffYears(startDate,endDate);
+            int years= getDiffYears(startDate,endDate)+2;
 
             for(int h=0;h<years;h++){
                 PensionableSalary.add(h,StartYear+h);
