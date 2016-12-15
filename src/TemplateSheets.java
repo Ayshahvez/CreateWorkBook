@@ -6,9 +6,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -233,7 +236,6 @@ System.out.println("years:"+ years);
 
             }
 
-
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
                     new File(workingDir + "\\Template_Active_Sheet.xlsx"));
@@ -241,9 +243,10 @@ System.out.println("years:"+ years);
             out.close();
             workbook.close();
             System.out.println("Template_Active_Sheet.xlsx written successfully" );
+        } catch (NoSuchFileException e1){
+            JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
-            e.printStackTrace();
-            //  System.out.print(e.getMessage());
+           e.printStackTrace();
         }
     }
 
@@ -439,9 +442,10 @@ System.out.println("years:"+ years);
             out.close();
             workbook.close();
             System.out.println("Template_Terminee_Sheet.xlsx written successfully" );
+        } catch (NoSuchFileException e1){
+            JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
-            //  System.out.print(e.getMessage());
         }
     }
 
@@ -502,9 +506,11 @@ System.out.println("years:"+ years);
         out.close();
         workbook.close();
     }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+     catch (NoSuchFileException e1){
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
         System.out.println("Template_Separated.xlsx" );
     }
 }

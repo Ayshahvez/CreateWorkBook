@@ -6,6 +6,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,9 +32,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private String WorkingDir= utility.read();
     String filePathWorkingDir =  WorkingDir;
-    String PensionPlanName = utility.readFile("PN",filePathWorkingDir);
-    String PensionPlanStartDate =utility.readFile("SD",filePathWorkingDir);
-    String PensionPlanEndDate =utility.readFile("ED",filePathWorkingDir);
+    String PensionPlanName =null;// utility.readFile("PN",filePathWorkingDir);
+    String PensionPlanStartDate =null;//utility.readFile("SD",filePathWorkingDir);
+    String PensionPlanEndDate = null; //utility.readFile("ED",filePathWorkingDir);
 
 
     //main MenuBar
@@ -43,6 +44,8 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenu MenuEditor;
     JMenuItem MenuItemViewPlanDeatils;
     JMenuItem MenuItemClearScreen;
+    JMenuItem MenuItemRefreshData;
+    JMenuItem MenuItemSaveData;
 
     JPanel codePanel = new JPanel(new BorderLayout());
     ResultsWindow resultsWindow = new ResultsWindow();
@@ -87,8 +90,11 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem MenuItemSeperateMembers;
     private JMenuItem MenuItemViewActiveMember;
     private JMenuItem MenuItemViewTermineeMember;
+    private JMenuItem MenuItemViewRetiredMember;
     private JMenuItem MenuItemViewAllMembers;
-
+    private JMenuItem   MenuItemViewDeferredMember;
+    private JMenuItem   MenuItemViewDeceasedMember;
+    private JMenuItem MenuItemViewTerminatedMember;
     //load template sheet menu
     private JMenu MenuCreateTemplateSheet;
     private JMenu MenuLoadTemplateSheet;
@@ -111,8 +117,9 @@ public class MainWindow extends JFrame implements ActionListener {
         this.addPanelsToWindow();
         this.setWindowProperties();
         this.registerListener();
-
     }
+
+
 
     private void setWindowProperties() {
         // TODO Auto-generated method stub
@@ -125,19 +132,20 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
     public void initiliazeComponents() {
-
-
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
-        imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-      //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+      //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
+        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
         //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
 
         MenuEditor = new JMenu("Editor");
         MenuItemClearScreen = new JMenuItem("Clear Screen");
         MenuItemViewPlanDeatils = new JMenuItem("View Current Pension Plan Details");
+        MenuItemRefreshData = new JMenuItem("Refresh Plan Requirements Data");
+        MenuItemSaveData = new JMenuItem("Save Plan Requirement Data");
+
 
         MenuItemWorkingDir = new JMenuItem("Set Default Working Directory");
 
@@ -162,14 +170,12 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuLoadWorkbook = new JMenu("Load WorkBook");
         MenuCreateWorkBook = new JMenu("Create WorkBook");
 
-
         MenuItemLoadTemplateActiveSheet = new JMenuItem("Load Template Sheet for Active Members");
         MenuItemLoadTemplateTermineeSheet = new JMenuItem("Load Template Sheet for Terminee Members");
 
         MenuItemSeperateMembers = new JMenuItem("Create Active & Terminee Members Sheet");
         MenuItemCreateActiveSheet = new JMenuItem("Create Active Members Sheet");
         MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Members Sheet");
-
 
         scrollPane = new JScrollPane(resultsWindow);
         menuBar = new JMenuBar();
@@ -193,9 +199,13 @@ public class MainWindow extends JFrame implements ActionListener {
 
         MenuMembers = new JMenu("Members");
 
-        MenuItemViewActiveMember = new JMenuItem("View Active Members");
-        MenuItemViewTermineeMember = new JMenuItem("View Terminated Members");
+        MenuItemViewActiveMember = new JMenuItem("View all Active Members");
+        MenuItemViewTermineeMember = new JMenuItem("View all Terminee Members");
+        MenuItemViewRetiredMember = new JMenuItem("View Retired Members");
+        MenuItemViewDeferredMember = new JMenuItem("View Deferred Members");
+        MenuItemViewDeceasedMember = new JMenuItem("View Deceased Members");
         MenuItemViewAllMembers = new JMenuItem("View All Members");
+        MenuItemViewTerminatedMember = new JMenuItem("View Terminated Members");
 
     }
 
@@ -212,7 +222,11 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
         MenuMembers.add(MenuItemViewActiveMember);
+        MenuMembers.add(MenuItemViewTerminatedMember);
         MenuMembers.add(MenuItemViewTermineeMember);
+        MenuMembers.add(MenuItemViewRetiredMember);
+        MenuMembers.add(MenuItemViewDeferredMember);
+        MenuMembers.add(MenuItemViewDeceasedMember);
         MenuMembers.add(MenuItemViewAllMembers);
 
         MenuSetPlanRequirements.add(MenuItemWorkingDir);
@@ -244,6 +258,8 @@ public class MainWindow extends JFrame implements ActionListener {
 
         MenuEditor.add(MenuItemClearScreen);
         MenuEditor.add(MenuItemViewPlanDeatils);
+        MenuEditor.add(MenuItemSaveData);
+        MenuEditor.add(MenuItemRefreshData);
 
         MenuCreateWorkBook.add(MenuItemSeperateMembers);
         MenuCreateWorkBook.add(MenuItemCreateActiveSheet);
@@ -271,14 +287,70 @@ public class MainWindow extends JFrame implements ActionListener {
             resultsWindow.ClearScreen(resultsWindow);
         }
 
+
+
         if (e.getSource().equals( MenuItemViewPlanDeatils)) {
+           // try {
+           //     JOptionPane.showMessageDialog(null, "Plan Name: " + utility.readFile("PN",filePathWorkingDir) + "\nStart Date: "+utility.readFile("SD",filePathWorkingDir)+" \nEnd Date: "+utility.readFile("ED",filePathWorkingDir)+"\nCurrent Working Directory: "+utility.readFile("WD",filePathWorkingDir),"Info", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Plan Name: " + PensionPlanName+ "\nStart Date: "+PensionPlanStartDate+" \nEnd Date: "+PensionPlanEndDate+"\nCurrent Working Directory: "+filePathWorkingDir,"Info", JOptionPane.PLAIN_MESSAGE);
+          //  } catch (IOException e1) {
+          //      e1.printStackTrace();
+          //  }
+        }
+
+        if(e.getSource().equals(MenuItemSaveData)){
+
+            if (PensionPlanEndDate != null)
+                utility.writeDefaultsToFile("ED", filePathWorkingDir, PensionPlanEndDate);
+
+            if (PensionPlanStartDate != null)
+                utility.writeDefaultsToFile("SD", filePathWorkingDir, PensionPlanStartDate);
+
+            if (PensionPlanName != null)
+                utility.writeDefaultsToFile("PN", filePathWorkingDir, PensionPlanName);
+
+
+            if (PensionPlanName != null && PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name, Start Date and End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName != null && PensionPlanEndDate != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate != null && PensionPlanEndDate != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate != null && PensionPlanName != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanEndDate != null) {
+                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+            }
+
+        }
+
+
+        if (e.getSource().equals(MenuItemRefreshData)) {
             try {
-                JOptionPane.showMessageDialog(null, "Plan Name: " + utility.readFile("PN",filePathWorkingDir) + "\nStart Date: "+utility.readFile("SD",filePathWorkingDir)+" \nEnd Date: "+utility.readFile("ED",filePathWorkingDir)+"\nCurrent Working Directory: "+utility.readFile("WD",filePathWorkingDir),"Info", JOptionPane.PLAIN_MESSAGE);
+                if(new File(filePathWorkingDir + "\\WD.txt").exists()){
+                    this.filePathWorkingDir = utility.readFile("WD",filePathWorkingDir);
+                }
+
+                if(new File(filePathWorkingDir + "\\PN.txt").exists()){
+                    PensionPlanName = utility.readFile("PN",filePathWorkingDir);
+                }
+                if(new File(filePathWorkingDir + "\\SD.txt").exists()){
+                    this.PensionPlanStartDate =utility.readFile("SD",filePathWorkingDir);
+                }
+
+                if(new File(filePathWorkingDir + "\\ED.txt").exists()){
+                    this.PensionPlanEndDate =utility.readFile("ED",filePathWorkingDir);
+                }
+
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            JOptionPane.showMessageDialog(null, "Refreshed Successfully ", "Success", JOptionPane.PLAIN_MESSAGE);
         }
-
 
 
 
@@ -308,7 +380,6 @@ public class MainWindow extends JFrame implements ActionListener {
             }
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
         }
-
 
         if (e.getSource().equals(CheckEmployeePS)) {
             JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
@@ -384,35 +455,50 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         if (e.getSource().equals(MenuItemPensionPlanName)) {
-            PensionPlanName = JOptionPane.showInputDialog("Please enter the name of the Pension Plan: ");
-            JOptionPane.showMessageDialog(null, "You have entered, the pension plan name as: " + PensionPlanName, "Plan Name", JOptionPane.PLAIN_MESSAGE);
-            utility.writeDefaultsToFile("PN",filePathWorkingDir,PensionPlanName);
+          if(filePathWorkingDir!=null) {
+              PensionPlanName = JOptionPane.showInputDialog("Please enter the name of the Pension Plan: ");
+              JOptionPane.showMessageDialog(null, "You have entered, the pension plan name as: " + PensionPlanName, "Plan Name", JOptionPane.PLAIN_MESSAGE);
+            //   utility.writeDefaultsToFile("PN",filePathWorkingDir,PensionPlanName);
+           }else{
+              JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+          }
+
         }
 
         if (e.getSource().equals(MenuItemStartDate)) {
-            PensionPlanStartDate = JOptionPane.showInputDialog("Please enter the Start Date of the Pension Plan [mm/dd/yyyy]: ");
 
+            if(filePathWorkingDir!=null) {
+                PensionPlanStartDate = JOptionPane.showInputDialog("Please enter the Start Date of the Pension Plan [mm/dd/yyyy]: ");
 
-            try {
-                startDate = new SimpleDateFormat("MM/dd/yyyy").parse(PensionPlanStartDate);
-            } catch (ParseException ee) {
-                ee.printStackTrace();
+                try {
+                    startDate = new SimpleDateFormat("MM/dd/yyyy").parse(PensionPlanStartDate);
+                } catch (ParseException ee) {
+                    ee.printStackTrace();
+                }
+
+                JOptionPane.showMessageDialog(null, "You have entered the Start Date as: " + PensionPlanStartDate, "End Date", JOptionPane.PLAIN_MESSAGE);
+            //    utility.writeDefaultsToFile("SD",filePathWorkingDir,PensionPlanStartDate);
+            }else{
+                JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             }
 
-            JOptionPane.showMessageDialog(null, "You have entered the Start Date as: " + PensionPlanStartDate, "End Date", JOptionPane.PLAIN_MESSAGE);
-            utility.writeDefaultsToFile("SD",filePathWorkingDir,PensionPlanStartDate);
         }
 
         if (e.getSource().equals(MenuItemEndDate)) {
-            PensionPlanEndDate = JOptionPane.showInputDialog("Please enter the End Date of the Pension Plan [mm/dd/yyyy]: ");
-            try {
-                endDate = new SimpleDateFormat("MM/dd/yyyy").parse(PensionPlanEndDate);
-            } catch (ParseException ee) {
-                ee.printStackTrace();
+
+            if(filePathWorkingDir!=null) {
+                PensionPlanEndDate = JOptionPane.showInputDialog("Please enter the End Date of the Pension Plan [mm/dd/yyyy]: ");
+                try {
+                    endDate = new SimpleDateFormat("MM/dd/yyyy").parse(PensionPlanEndDate);
+                } catch (ParseException ee) {
+                    ee.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(null, "You have entered the End Date as: " + PensionPlanEndDate, "End Date", JOptionPane.PLAIN_MESSAGE);
+           //     utility.writeDefaultsToFile("ED",filePathWorkingDir,PensionPlanEndDate);
+            }else{
+                JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             }
-            JOptionPane.showMessageDialog(null, "You have entered the End Date as: " + PensionPlanEndDate, "End Date", JOptionPane.PLAIN_MESSAGE);
-            System.out.print(endDate);
-            utility.writeDefaultsToFile("ED",filePathWorkingDir,PensionPlanEndDate);
+
         }
 
         if (e.getSource().equals(MenuItemLoadOutputTemplate)) {
@@ -423,18 +509,25 @@ public class MainWindow extends JFrame implements ActionListener {
         if (e.getSource().equals(MenuItemWorkingDir)) {
             filePathWorkingDir = utility.getWorkingDir();
             JOptionPane.showMessageDialog(null, "You have set the working directory to: " + filePathWorkingDir, "Success", JOptionPane.PLAIN_MESSAGE);
-        utility.writeDefaultsToFile("WD",filePathWorkingDir,filePathWorkingDir);
+
+                utility.writeDefaultsToFile("WD",filePathWorkingDir,filePathWorkingDir);
+
+
         }
 
 
 
         if (e.getSource().equals(MenuItemCreateActiveSheetTemplate)) {
+         //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
             try {
-                TemplateSheets.Create_Template_Active_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
+                TemplateSheets.Create_Template_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+            //    TemplateSheets.Create_Template_Active_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            JOptionPane.showMessageDialog(null, "The Active Sheet Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+            if (new File(filePathWorkingDir + "//Template_Active_Sheet.xlsx").exists()){
+                JOptionPane.showMessageDialog(null, "The Active Sheet Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+            }
         }
 
         if (e.getSource().equals(MenuItemCreateTermineeSheetTemplate)) {
@@ -481,10 +574,34 @@ public class MainWindow extends JFrame implements ActionListener {
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
         }
 
+        if(e.getSource().equals(MenuItemViewTerminatedMember)){
+            String result = excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminated Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
         if (e.getSource().equals(MenuItemViewAllMembers)) {
             String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
             result += excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
             JOptionPane.showMessageDialog(null, "Please wait for the list of all the Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+        if (e.getSource().equals(MenuItemViewRetiredMember)) {
+            String result = excelReader.View_Retired_Members(filePathWorkingDir, PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null, "Please wait for the list of the Retired Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+        if (e.getSource().equals(MenuItemViewDeceasedMember)) {
+            String result = excelReader.View_Deceased_Members(filePathWorkingDir, PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null, "Please wait for the list of the Deceased Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+        }
+
+        if (e.getSource().equals(MenuItemViewDeferredMember)) {
+            String result = excelReader.View_Deferred_Members(filePathWorkingDir, PensionPlanEndDate);
+            JOptionPane.showMessageDialog(null, "Please wait for the list of the Deferred Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
         }
     }
@@ -495,10 +612,15 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemViewActiveMember.addActionListener(this);
         MenuItemViewTermineeMember.addActionListener(this);
         MenuItemViewAllMembers.addActionListener(this);
-
+        MenuItemViewRetiredMember.addActionListener(this);
+        MenuItemViewDeceasedMember.addActionListener(this);
+        MenuItemViewDeferredMember.addActionListener(this);
+        MenuItemViewTerminatedMember.addActionListener(this);
 
         MenuItemClearScreen.addActionListener(this);
+        MenuItemRefreshData.addActionListener(this);
         MenuItemViewPlanDeatils.addActionListener(this);
+        MenuItemSaveData.addActionListener(this);
 
         CheckDuplicate.addActionListener(this);
         CheckAge.addActionListener(this);
@@ -506,7 +628,6 @@ public class MainWindow extends JFrame implements ActionListener {
         CheckEmployeePS.addActionListener(this);
         CheckPlanEntry.addActionListener(this);
         CheckAll.addActionListener(this);
-
 
         LoadValDataWorkBook.addActionListener(this);
         MenuItemSeperateMembers.addActionListener(this);

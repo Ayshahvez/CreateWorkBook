@@ -24,7 +24,7 @@ import static java.util.Calendar.YEAR;
  */
 public class ValidationChecks {
 
-Utility utility = new Utility();
+    Utility utility = new Utility();
 
     public String Check_For_Duplicates(String workingDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -180,7 +180,7 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
             e.printStackTrace();
         }
 
-        int years = utility.getDiffYears(startDate, endDate);
+        int years = Utility.getDiffYears(startDate, endDate);
         FileInputStream fsRecon = null;
         try {
             fsRecon = new FileInputStream(workindDir+"\\Hose Valuation Data (Actuary's copy).xlsx");
@@ -480,7 +480,6 @@ if (check!=h1) {
         return String.valueOf(stringBuilder);
     }
 
-
     public String Check_DateofBirth(String workindDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: Results of the Date of Birth Check Process: \n");
@@ -636,7 +635,7 @@ if (check!=h1) {
             SimpleDateFormat dF = new SimpleDateFormat();
             dF.applyPattern("dd-MMM-yy");
 
-            int age = utility.getAge(g1Val_DOB,PlanEntry);
+            int age = Utility.getAge(g1Val_DOB,PlanEntry);
 
             if(age<15){
                 System.out.println("Employee ID: " + a1Val_EM);
