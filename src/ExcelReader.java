@@ -480,29 +480,32 @@ static Utility utility = new Utility();
     }
 
     public String Separate_Actives_Terminees(String workingDir) throws IndexOutOfBoundsException {
-   // public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
+        // public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
+        FileOutputStream outFile = null;
+        FileInputStream fileInputStream = null;
+        FileInputStream fileR = null;
         try {
-          //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
-         //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
-       //     FileInputStream fileInputStream = new FileInputStream(filePathValData);
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Hose Valuation Data (Actuary's copy).xlsx");
+            //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            //     FileInputStream fileInputStream = new FileInputStream(filePathValData);
+            fileInputStream = new FileInputStream(workingDir + "\\Hose Valuation Data (Actuary's copy).xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("DEMO");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
 
-            int rowCount=worksheet.getPhysicalNumberOfRows();
+            int rowCount = worksheet.getPhysicalNumberOfRows();
             System.out.println(rowCount);
 
 
             int num = rowCount;
             //  int noOfColumns = sheet.getRow(num).getLastCellNum();
 
-         //   FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\template.xlsx");
+            //   FileInputStream fileR = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\template.xlsx");
 
-         //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
-        //    FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
-            FileInputStream fileR = new FileInputStream(workingDir+ "\\template.xlsx");
+            //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
+            //    FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
+            fileR = new FileInputStream(workingDir + "\\template.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -512,7 +515,7 @@ static Utility utility = new Utility();
 
 
             SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
-           // Date cellValue = null;
+            // Date cellValue = null;
 
             //    cellValue = datetemp.parse("1994-01-01");
 
@@ -545,29 +548,29 @@ static Utility utility = new Utility();
 
                 XSSFCell cellE1 = row1.getCell((short) 4);
                 String e1Val = cellE1.getStringCellValue();
-                String f1Val=null;
-try {
-    XSSFCell cellF1 = row1.getCell((short) 5);
-    //  Date f1Vall = cellF1.getDateCellValue();
-    f1Val = datetemp.format(cellF1.getDateCellValue());
-}catch(NullPointerException N){
+                String f1Val = null;
+                try {
+                    XSSFCell cellF1 = row1.getCell((short) 5);
+                    //  Date f1Vall = cellF1.getDateCellValue();
+                    f1Val = datetemp.format(cellF1.getDateCellValue());
+                } catch (NullPointerException N) {
 
-}
+                }
 
                 XSSFCell cellG1 = row1.getCell((short) 6);
-                String g1Val =datetemp.format( cellG1.getDateCellValue());
+                String g1Val = datetemp.format(cellG1.getDateCellValue());
 
                 XSSFCell cellH1 = row1.getCell((short) 7);
-               String h1Val = datetemp.format( cellH1.getDateCellValue());
+                String h1Val = datetemp.format(cellH1.getDateCellValue());
 
-             //   Date cellValue = null;
-               XSSFCell cellI1 = row1.getCell((short) 8);
+                //   Date cellValue = null;
+                XSSFCell cellI1 = row1.getCell((short) 8);
         /*        try {
                     cellValue = datetemp.parse(String.valueOf(cellI1.getDateCellValue()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }*/
-                    String i1Val = datetemp.format( cellI1.getDateCellValue());
+                String i1Val = datetemp.format(cellI1.getDateCellValue());
 
                 XSSFCell cellJ1 = row1.getCell((short) 9);
                 String j1Val = cellJ1.getStringCellValue();
@@ -679,24 +682,33 @@ try {
 
                 }
 
-            //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
-               FileOutputStream outFile = new FileOutputStream(new File(workingDir + "\\Output.xlsx"));
-                workbookR.write(outFile);
-                fileR.close();
-                outFile.close();
+                //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
+
+
             }
+            outFile = new FileOutputStream(new File(workingDir + "\\Output.xlsx"));
+            workbookR.write(outFile);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-     catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
 
-    }
+        }
+        finally {
+            try {
+                fileR.close();
+                outFile.close();
+                fileInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-    return String.valueOf(stringBuilder);
+        }
+        return String.valueOf(stringBuilder);
     }
 
     public String Create_Actives_Sheet(String workingDir) throws IndexOutOfBoundsException {
@@ -1125,6 +1137,10 @@ try {
                    Date k1Val = null;
                  //  try {
                        XSSFCell cellK1 = row1.getCell((short) 10); //date of refund
+                  // if (cellK1 == null){
+                 //      cellK1 = row1.createCell(10);
+                    //  cellK1.setCellValue(11/11/1111);
+                 //  }
 
                        k1Val = cellK1.getDateCellValue();
                   // }catch (NullPointerException e){

@@ -379,14 +379,14 @@ if (check!=h1) {
 
         System.out.println("Result: 5% of " +  dF.format(d[x])+ " is not " + h1+"\n");
         stringBuilder.append("Result: 5% of " +  dF.format(d[x])+ " is not " + h1+"\n");
+        stringBuilder.append("-------------------------------------------------------\n");
         System.out.println("Decision: Please contact administrator");
     }
 
     System.out.println();
 
 
-    stringBuilder.append("-------------------------------------------------------\n");
-    stringBuilder.append("\nNotice: The Pensionable Check Process has now been completed.\n");
+
       }
 
                             }
@@ -406,6 +406,8 @@ if (check!=h1) {
             counter=1;
 
         }// END OF LOOP YEARS
+     //   stringBuilder.append("-------------------------------------------------------\n");
+        stringBuilder.append("\nNotice: The Pensionable Check Process has now been completed.\n");
         return String.valueOf(stringBuilder);
     }
 

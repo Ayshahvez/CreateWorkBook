@@ -51,17 +51,17 @@ public class TemplateSheets {
         return LocalDate.of(year, month,day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
-    public static void  Create_Template_Active_Sheet(String StartDate,String EndDate, String PensionPlanName, String workingDir) throws IOException {
+    public static void Create_Template_Active_Sheet(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException {
         try {
 
             String str[] = StartDate.split("/");
-            int StartMonth= Integer.parseInt(str[0]);
-            int  StartDay= Integer.parseInt(str[1]);
+            int StartMonth = Integer.parseInt(str[0]);
+            int StartDay = Integer.parseInt(str[1]);
             int StartYear = Integer.parseInt(str[2]);
 
             String str2[] = EndDate.split("/");
-            int EndMonth= Integer.parseInt(str2[0]);
-            int  EndDay= Integer.parseInt(str2[1]);
+            int EndMonth = Integer.parseInt(str2[0]);
+            int EndDay = Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
    /*         LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -85,8 +85,8 @@ public class TemplateSheets {
             int StartMonth=localStartDate.getMonthValue();
             int StartDay= localStartDate.getDayOfMonth();*/
 
-            System.out.print(StartDay +"/"+ StartMonth +"/" + StartYear);
-           System.out.print(EndDay +"/"+ EndMonth +"/" + EndYear);
+            //   System.out.print(StartDay +"/"+ StartMonth +"/" + StartYear);
+            //    System.out.print(EndDay +"/"+ EndMonth +"/" + EndYear);
             XSSFWorkbook workbook = new XSSFWorkbook();
             MemberModel model = new MemberModel();
 
@@ -96,7 +96,7 @@ public class TemplateSheets {
             XSSFRow rowHeading1 = sheet2.createRow(0);
             rowHeading1.createCell(0).setCellValue(PensionPlanName);
             XSSFRow row2 = sheet2.createRow(1);
-            row2.createCell(0).setCellValue("ACTUARIAL FUNDING VALUATION AS AT "+EndYear+"."+EndMonth+"."+EndDay);
+            row2.createCell(0).setCellValue("ACTUARIAL FUNDING VALUATION AS AT " + EndYear + "." + EndMonth + "." + EndDay);
             XSSFRow row3 = sheet2.createRow(2);
             row3.createCell(0).setCellValue("ACCUMULATION OF ACTIVE MEMBERS' ACCOUNT BALANCES");
 
@@ -117,62 +117,61 @@ public class TemplateSheets {
 
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
             // Date startDate = df.parse("2012.01.01");
-            Date startDate = df.parse(StartYear+"."+StartMonth+"."+StartDay);
-            Date endDate = df.parse(EndYear+"."+EndMonth+"."+EndDay);
+            Date startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            Date endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
 
-            int years= getDiffYears(startDate,endDate)+2;
-System.out.println("years:"+ years);
-            for(int h=0;h<years;h++){
-                PensionableSalary.add(h,StartYear+h);
+            int years = getDiffYears(startDate, endDate) + 2;
+            System.out.println("years:" + years);
+            for (int h = 0; h < years; h++) {
+                PensionableSalary.add(h, StartYear + h);
             }
 
-            int Contindex=0;
-            int leap=0;
+            int Contindex = 0;
+            int leap = 0;
 
             GregorianCalendar cal = new GregorianCalendar();
 
-            for(int t=0;t<years;t++){
+            for (int t = 0; t < years; t++) {
 
-                rowHeading2.createCell(8+t).setCellValue("Pensionable Salary Earned " + (PensionableSalary.get(t))+"."+StartMonth+"."+StartDay +" to "
+                rowHeading2.createCell(8 + t).setCellValue("Pensionable Salary Earned " + (PensionableSalary.get(t)) + "." + StartMonth + "." + StartDay + " to "
                         + getDate(PensionableSalary.get(t), StartMonth, StartDay));
 
                 // LocalDate.of(StartYear, StartMonth, StartDay).plus(365, ChronoUnit.DAYS);
-                Contindex = 8+t;
+                Contindex = 8 + t;
             }
 
             //Members Age Col
-            rowHeading2.createCell(Contindex++).setCellValue("Members Age as at "  + EndYear + "." + EndMonth + "." + EndDay);
-            rowHeading2.createCell(Contindex++).setCellValue("Pensionable Service as at "  + EndYear + "." + EndMonth + "." + EndDay);
+            rowHeading2.createCell(Contindex++).setCellValue("Members Age as at " + EndYear + "." + EndMonth + "." + EndDay);
+            rowHeading2.createCell(Contindex++).setCellValue("Pensionable Service as at " + EndYear + "." + EndMonth + "." + EndDay);
 
             XSSFRow rowHeading3 = sheet2.createRow(5);
             int newIndex = Contindex;
 
             rowHeading3.createCell(newIndex).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + StartYear + "." + StartMonth + "." + StartDay);
 
-            int StartCol=newIndex;
-            int LastCol=newIndex+3;
-            sheet2.addMergedRegion(new CellRangeAddress(5, 5,StartCol,LastCol));
-            newIndex+=4; //jump over 4 cell
+            int StartCol = newIndex;
+            int LastCol = newIndex + 3;
+            sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
+            newIndex += 4; //jump over 4 cell
             int tmp = newIndex;
-            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartMonth,StartDay ));
+            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(0), StartMonth, StartDay));
 
-            for(int h=0;h<PensionableSalary.size()-1;h++){
-                tmp+=4;
+            for (int h = 0; h < PensionableSalary.size() - 1; h++) {
+                tmp += 4;
 
-                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth,StartDay));
+                rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth, StartDay));
                 StartCol = tmp;
                 LastCol = tmp + 3;
                 sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
                 newIndex += 4; //jump over 4 cell
-                tmp+=4;
+                tmp += 4;
 
-                if(h==PensionableSalary.size()-2)
-                {
+                if (h == PensionableSalary.size() - 2) {
                     rowHeading3.createCell(tmp).setCellValue("Account Balance as at " + EndYear + "." + EndMonth + "." + EndDay);
 
                     break;
                 }
-                rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h+1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h+1), StartMonth, StartDay));
+                rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h + 1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h + 1), StartMonth, StartDay));
 
                 StartCol = tmp;
                 LastCol = tmp + 3;
@@ -181,9 +180,9 @@ System.out.println("years:"+ years);
             }
 
 
-            for(int k=0;k<(PensionableSalary.size())*2;k++) {
+            for (int k = 0; k < (PensionableSalary.size()) * 2; k++) {
                 //Members Age Col
-                if(k==(PensionableSalary.size()*2)-1) break;
+                if (k == (PensionableSalary.size() * 2) - 1) break;
                 rowHeading2.createCell(Contindex++).setCellValue("Employees Basic");
                 rowHeading2.createCell(Contindex++).setCellValue("Employees' Optional");
                 rowHeading2.createCell(Contindex++).setCellValue("Employers' Required");
@@ -191,8 +190,8 @@ System.out.println("years:"+ years);
                 //    rowHeading2.createCell(Contindex++).setCellValue("Fees");
             }
 
-            int r=7;
-            for(MemberInfo M : model.findAll()){
+            int r = 7;
+            for (MemberInfo M : model.findAll()) {
                 Row row = sheet2.createRow(r);
 
                 //id col
@@ -230,7 +229,7 @@ System.out.println("years:"+ years);
             }
 
             //autofit
-            for(int x=0;x<Contindex;x++){
+            for (int x = 0; x < Contindex; x++) {
                 //   sheet.autoSizeColumn(x);
                 sheet2.autoSizeColumn(x);
 
@@ -242,25 +241,25 @@ System.out.println("years:"+ years);
             workbook.write(out);
             out.close();
             workbook.close();
-            System.out.println("Template_Active_Sheet.xlsx written successfully" );
-        } catch (NoSuchFileException e1){
+            System.out.println("Template_Active_Sheet.xlsx written successfully");
+        } catch (NoSuchFileException e1) {
             JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
-    public static void  Create_Template_Terminee_Sheet(String StartDate, String EndDate, String PensionPlanname, String workingDir) throws IOException {
+    public static void Create_Template_Terminee_Sheet(String StartDate, String EndDate, String PensionPlanname, String workingDir) throws IOException {
         try {
      /*       LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();*/
             String str[] = StartDate.split("/");
-            int StartMonth= Integer.parseInt(str[0]);
+            int StartMonth = Integer.parseInt(str[0]);
             int StartDay = Integer.parseInt(str[1]);
             int StartYear = Integer.parseInt(str[2]);
 
             String str2[] = EndDate.split("/");
-            int EndMonth= Integer.parseInt(str2[0]);
+            int EndMonth = Integer.parseInt(str2[0]);
             int EndDay = Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
@@ -290,7 +289,7 @@ System.out.println("years:"+ years);
             XSSFRow rowHeading1 = sheet2.createRow(0);
             rowHeading1.createCell(0).setCellValue(PensionPlanname);
             XSSFRow row2 = sheet2.createRow(1);
-            row2.createCell(0).setCellValue("ACTUARIAL FUNDING VALUATION AS AT "+EndYear+"."+EndMonth+"."+EndDay);
+            row2.createCell(0).setCellValue("ACTUARIAL FUNDING VALUATION AS AT " + EndYear + "." + EndMonth + "." + EndDay);
             XSSFRow row3 = sheet2.createRow(2);
             row3.createCell(0).setCellValue("ACCUMULATION OF ACTIVE MEMBERS' ACCOUNT BALANCES");
 
@@ -320,16 +319,16 @@ System.out.println("years:"+ years);
 
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
             // Date startDate = df.parse("2012.01.01");
-            Date startDate = df.parse(StartYear+"."+StartMonth+"."+StartDay);
-            Date endDate = df.parse(EndYear+"."+EndMonth+"."+EndDay);
+            Date startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            Date endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
 
-            int years= getDiffYears(startDate,endDate)+2;
+            int years = getDiffYears(startDate, endDate) + 2;
 
-            for(int h=0;h<years;h++){
-                PensionableSalary.add(h,StartYear+h);
+            for (int h = 0; h < years; h++) {
+                PensionableSalary.add(h, StartYear + h);
             }
 
-            int Contindex=rowHeading2.getLastCellNum();
+            int Contindex = rowHeading2.getLastCellNum();
 
 
             XSSFRow rowHeading3 = sheet2.createRow(5);
@@ -338,27 +337,27 @@ System.out.println("years:"+ years);
 
             rowHeading3.createCell(newIndex).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + StartYear + "." + StartMonth + "." + StartDay);
 
-            int StartCol=newIndex;
-            int LastCol=newIndex+3;
-            sheet2.addMergedRegion(new CellRangeAddress(5, 5,StartCol,LastCol));
-            newIndex+=4; //jump over 4 cell
+            int StartCol = newIndex;
+            int LastCol = newIndex + 3;
+            sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
+            newIndex += 4; //jump over 4 cell
             int tmp = newIndex;
-            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0)+"."+StartMonth+"." +StartDay+ " to " + getDate(PensionableSalary.get(0), StartMonth, StartDay));
-            int j=0;
-            for(int h=0;h<PensionableSalary.size()-1;h++){
-                tmp+=4;
+            rowHeading3.createCell(newIndex).setCellValue("Contributions During Plan Year " + PensionableSalary.get(0) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(0), StartMonth, StartDay));
+            int j = 0;
+            for (int h = 0; h < PensionableSalary.size() - 1; h++) {
+                tmp += 4;
                 rowHeading3.createCell(tmp).setCellValue("Acc'd Cont'ns. Plus Credited Interest up to " + getDate(PensionableSalary.get(h), StartMonth, StartDay));
                 StartCol = tmp;
                 LastCol = tmp + 3;
                 sheet2.addMergedRegion(new CellRangeAddress(5, 5, StartCol, LastCol));
                 newIndex += 4; //jump over 4 cell
-                tmp+=4;
+                tmp += 4;
 
-                if(h==PensionableSalary.size()-2) //when it gets to end of loop
+                if (h == PensionableSalary.size() - 2) //when it gets to end of loop
                 {
-                    for(int k=0;k<(PensionableSalary.size())*2;k++) {
+                    for (int k = 0; k < (PensionableSalary.size()) * 2; k++) {
                         //Members Age Col
-                        if(k==(PensionableSalary.size()*2)-1) break;
+                        if (k == (PensionableSalary.size() * 2) - 1) break;
                         rowHeading2.createCell(Contindex++).setCellValue("Employees Basic");
                         rowHeading2.createCell(Contindex++).setCellValue("Employees' Optional");
                         rowHeading2.createCell(Contindex++).setCellValue("Employers' Required");
@@ -366,8 +365,8 @@ System.out.println("years:"+ years);
                         //    rowHeading2.createCell(Contindex++).setCellValue("Fees");
                     }
                     rowHeading3.createCell(tmp++).setCellValue("Vested Balances at Date of Refund as Computed by GFRAM");
-                    rowHeading3.createCell(tmp+=2).setCellValue("Amounts Refunded to Member Upon Termination, based n Data Submitted");
-                    rowHeading3.createCell(tmp+=2).setCellValue("Under/Over Payment at Date of Refund");
+                    rowHeading3.createCell(tmp += 2).setCellValue("Amounts Refunded to Member Upon Termination, based n Data Submitted");
+                    rowHeading3.createCell(tmp += 2).setCellValue("Under/Over Payment at Date of Refund");
                     rowHeading2.createCell(Contindex++).setCellValue("Employees' Basic Contributions plus Credited Interest");
                     rowHeading2.createCell(Contindex++).setCellValue("Employees Optional Plus Credited Interest");
                     rowHeading2.createCell(Contindex++).setCellValue("Employer's Contributions Plus Credited Interest");
@@ -380,7 +379,7 @@ System.out.println("years:"+ years);
                     rowHeading2.createCell(Contindex++).setCellValue("Employees Optional Plus Credited Interest");
                     break;
                 }
-                rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h+1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h+1), StartMonth, StartDay));
+                rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h + 1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h + 1), StartMonth, StartDay));
 
                 StartCol = tmp;
                 LastCol = tmp + 3;
@@ -388,8 +387,8 @@ System.out.println("years:"+ years);
                 newIndex += 4; //jump over 4 cell
 
             }
-            int r=7;
-            for(MemberInfo M : model.findAll()){
+            int r = 7;
+            for (MemberInfo M : model.findAll()) {
                 Row row = sheet2.createRow(r);
 
                 //id col
@@ -427,7 +426,7 @@ System.out.println("years:"+ years);
             }
 
             //autofit
-            for(int x=0;x<Contindex;x++){
+            for (int x = 0; x < Contindex; x++) {
                 //   sheet.autoSizeColumn(x);
                 sheet2.autoSizeColumn(x);
 
@@ -436,13 +435,13 @@ System.out.println("years:"+ years);
 
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
-                  //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
-            new File(workingDir+"\\Template_Terminee_Sheet.xlsx"));
+                    //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
+                    new File(workingDir + "\\Template_Terminee_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
-            System.out.println("Template_Terminee_Sheet.xlsx written successfully" );
-        } catch (NoSuchFileException e1){
+            System.out.println("Template_Terminee_Sheet.xlsx written successfully");
+        } catch (NoSuchFileException e1) {
             JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
