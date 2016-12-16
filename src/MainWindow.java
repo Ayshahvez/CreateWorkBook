@@ -18,10 +18,12 @@ import java.util.GregorianCalendar;
  * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
  */
 public class MainWindow extends JFrame implements ActionListener {
+
     ExcelReader excelReader = new ExcelReader();
     TemplateSheets templateSheets = new TemplateSheets();
     ValidationChecks validationChecks = new ValidationChecks();
     Utility utility = new Utility();
+
     //GLOBAL VARIABLES NEEDED FOR NOW
     String filePathValData = null;
     String filePathOutputTemplate = null;
@@ -42,6 +44,7 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenuItem MenuItemClearScreen;
     JMenuItem MenuItemRefreshData;
     JMenuItem MenuItemSaveData;
+    JMenuItem MenuItemDeleteData;
 
     JPanel codePanel = new JPanel(new BorderLayout());
     ResultsWindow resultsWindow = new ResultsWindow();
@@ -61,7 +64,6 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem MenuItemPensionPlanName;
     private JMenuItem MenuItemStartDate;
     private JMenuItem MenuItemEndDate;
-
 
     private JMenuItem CheckDuplicate;
     private JMenuItem CheckAge;
@@ -141,6 +143,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemViewPlanDeatils = new JMenuItem("View Current Pension Plan Details");
         MenuItemRefreshData = new JMenuItem("Refresh Plan Requirements Data");
         MenuItemSaveData = new JMenuItem("Save Plan Requirement Data");
+        MenuItemDeleteData = new JMenuItem("Delete Plan Requirement Data");
 
 
         MenuItemWorkingDir = new JMenuItem("Set Default Working Directory");
@@ -254,8 +257,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
         MenuEditor.add(MenuItemClearScreen);
         MenuEditor.add(MenuItemViewPlanDeatils);
-        MenuEditor.add(MenuItemSaveData);
         MenuEditor.add(MenuItemRefreshData);
+        MenuEditor.add(MenuItemSaveData);
+        MenuEditor.add(MenuItemDeleteData);
 
         MenuCreateWorkBook.add(MenuItemSeperateMembers);
         MenuCreateWorkBook.add(MenuItemCreateActiveSheet);
@@ -281,6 +285,26 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (e.getSource().equals(MenuItemClearScreen)) {
             resultsWindow.ClearScreen(resultsWindow);
+        }
+
+        if (e.getSource().equals(MenuItemDeleteData)) {
+            if (new File(filePathWorkingDir + "\\PN.txt").exists() || new File(filePathWorkingDir + "\\SD.txt").exists() || new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                if (new File(filePathWorkingDir + "\\PN.txt").exists()) {
+                    new File(filePathWorkingDir + "\\PN.txt").delete();
+                }
+
+                if (new File(filePathWorkingDir + "\\SD.txt").exists()) {
+                    new File(filePathWorkingDir + "\\SD.txt").delete();
+                }
+
+                if (new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                    new File(filePathWorkingDir + "\\ED.txt").delete();
+                }
+
+                JOptionPane.showMessageDialog(null, "Saved Data Was Successfully Deleted!" , "Notice", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "There was no Saved Data to be Deleted!" , "Notice", JOptionPane.PLAIN_MESSAGE);
+            }
         }
 
 
@@ -818,6 +842,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemRefreshData.addActionListener(this);
         MenuItemViewPlanDeatils.addActionListener(this);
         MenuItemSaveData.addActionListener(this);
+        MenuItemDeleteData.addActionListener(this);
 
         CheckDuplicate.addActionListener(this);
         CheckAge.addActionListener(this);

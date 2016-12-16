@@ -574,6 +574,7 @@ static Utility utility = new Utility();
 
                 XSSFCell cellJ1 = row1.getCell((short) 9);
                 String j1Val = cellJ1.getStringCellValue();
+                j1Val= j1Val.toUpperCase();
 
                 if (j1Val.equals("ACTIVE") && !(d1Val.equals("KEY"))) {
                     System.out.print("A1: " + a1Val);
