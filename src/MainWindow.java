@@ -22,24 +22,20 @@ public class MainWindow extends JFrame implements ActionListener {
     TemplateSheets templateSheets = new TemplateSheets();
     ValidationChecks validationChecks = new ValidationChecks();
     Utility utility = new Utility();
-
     //GLOBAL VARIABLES NEEDED FOR NOW
     String filePathValData = null;
     String filePathOutputTemplate = null;
     Date startDate = null;
     Date endDate = null;
     //  WorkingDir
-
     private String WorkingDir = utility.read();
     String filePathWorkingDir = WorkingDir;
     String PensionPlanName = null;// utility.readFile("PN",filePathWorkingDir);
     String PensionPlanStartDate = null;//utility.readFile("SD",filePathWorkingDir);
     String PensionPlanEndDate = null; //utility.readFile("ED",filePathWorkingDir);
 
-
     //main MenuBar
     JMenuBar menuBar;
-
 
     JMenu MenuEditor;
     JMenuItem MenuItemViewPlanDeatils;
@@ -121,6 +117,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
     private void setWindowProperties() {
+
         // TODO Auto-generated method stub
         this.setSize(700, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -297,59 +294,76 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         if (e.getSource().equals(MenuItemSaveData)) {
+            if (filePathWorkingDir == null) {
+                JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else {
 
-            if (PensionPlanEndDate != null)
-                utility.writeDefaultsToFile("ED", filePathWorkingDir, PensionPlanEndDate);
+                if (PensionPlanEndDate != null)
+                    utility.writeDefaultsToFile("ED", filePathWorkingDir, PensionPlanEndDate);
 
-            if (PensionPlanStartDate != null)
-                utility.writeDefaultsToFile("SD", filePathWorkingDir, PensionPlanStartDate);
+                if (PensionPlanStartDate != null)
+                    utility.writeDefaultsToFile("SD", filePathWorkingDir, PensionPlanStartDate);
 
-            if (PensionPlanName != null)
-                utility.writeDefaultsToFile("PN", filePathWorkingDir, PensionPlanName);
+                if (PensionPlanName != null)
+                    utility.writeDefaultsToFile("PN", filePathWorkingDir, PensionPlanName);
 
+                if (filePathWorkingDir != null)
+                    utility.writeDefaultsToFile("WD", filePathWorkingDir, filePathWorkingDir);
 
-            if (PensionPlanName != null && PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name, Start Date and End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanName != null && PensionPlanEndDate != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanStartDate != null && PensionPlanEndDate != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanStartDate != null && PensionPlanName != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanName != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanStartDate != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanEndDate != null) {
-                JOptionPane.showMessageDialog(null, "You have successfully stored the Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                if (PensionPlanName != null && PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name, Start Date and End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanName != null && PensionPlanEndDate != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanStartDate != null && PensionPlanEndDate != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanStartDate != null && PensionPlanName != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date and Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanName != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Name for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanStartDate != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan Start Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else if (PensionPlanEndDate != null) {
+                    JOptionPane.showMessageDialog(null, "You have successfully stored the Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "There was no Data to be Saved!", "Success", JOptionPane.PLAIN_MESSAGE);
+                }
+
             }
-
         }
-
 
         if (e.getSource().equals(MenuItemRefreshData)) {
-            try {
-                if (new File(filePathWorkingDir + "\\WD.txt").exists()) {
-                    this.filePathWorkingDir = utility.readFile("WD", filePathWorkingDir);
-                }
 
-                if (new File(filePathWorkingDir + "\\PN.txt").exists()) {
-                    PensionPlanName = utility.readFile("PN", filePathWorkingDir);
-                }
-                if (new File(filePathWorkingDir + "\\SD.txt").exists()) {
-                    this.PensionPlanStartDate = utility.readFile("SD", filePathWorkingDir);
-                }
+            if (filePathWorkingDir == null) {
+                JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else {
 
-                if (new File(filePathWorkingDir + "\\ED.txt").exists()) {
-                    this.PensionPlanEndDate = utility.readFile("ED", filePathWorkingDir);
-                }
 
-            } catch (IOException e1) {
-                e1.printStackTrace();
+                if (!new File(filePathWorkingDir + "\\PN.txt").exists() && !new File(filePathWorkingDir + "\\SD.txt").exists() && !new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                    JOptionPane.showMessageDialog(null, "Sorry, There was no Data to Load, Please Input all the Plan Requirements Data ", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    try {
+                        if (new File(filePathWorkingDir + "\\WD.txt").exists()) {
+                            this.filePathWorkingDir = utility.readFile("WD", filePathWorkingDir);
+                        }
+
+                        if (new File(filePathWorkingDir + "\\PN.txt").exists()) {
+                            PensionPlanName = utility.readFile("PN", filePathWorkingDir);
+                        }
+                        if (new File(filePathWorkingDir + "\\SD.txt").exists()) {
+                            this.PensionPlanStartDate = utility.readFile("SD", filePathWorkingDir);
+                        }
+
+                        if (new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                            this.PensionPlanEndDate = utility.readFile("ED", filePathWorkingDir);
+                        }
+
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    JOptionPane.showMessageDialog(null, "Refreshed Successfully ", "Success", JOptionPane.PLAIN_MESSAGE);
+                }
             }
-            JOptionPane.showMessageDialog(null, "Refreshed Successfully ", "Success", JOptionPane.PLAIN_MESSAGE);
         }
-
 
         if (e.getSource().equals(CheckAll)) {
             if (filePathWorkingDir == null) {
@@ -362,7 +376,7 @@ public class MainWindow extends JFrame implements ActionListener {
                     result += validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
                     result += validationChecks.Check_Age(filePathWorkingDir);
                     result += validationChecks.Check_DateofBirth(filePathWorkingDir);
-                    result += validationChecks.Check_FivePercent_PS(filePathWorkingDir);
+                    result += validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -392,7 +406,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                    result = validationChecks.Check_FivePercent_PS(filePathWorkingDir);
+                    result = validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -463,16 +477,15 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                       if(new File(filePathWorkingDir+"\\Hose Valuation Data (Actuary's copy).xlsx ").exists()) {
-                           String result = null;
-                           //     result = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
-                           result = excelReader.Separate_Actives_Terminees(filePathWorkingDir);
-                           resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                           JOptionPane.showMessageDialog(null, "Active and Terminated Members now separated, Please remember to input date of refunds for Terminee members", "Success", JOptionPane.PLAIN_MESSAGE);
-                       }
-                       else{
-                           JOptionPane.showMessageDialog(null, "Please ensure the Valuation Data Workbook is present in the Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
-                       }
+                if (new File(filePathWorkingDir + "\\Hose Valuation Data (Actuary's copy).xlsx ").exists()) {
+                    String result = null;
+                    //     result = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
+                    result = excelReader.Separate_Actives_Terminees(filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    JOptionPane.showMessageDialog(null, "Active and Terminated Members now separated, Please remember to input date of refunds for Terminee members", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please ensure the Valuation Data Workbook is present in the Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                }
             }
         }
         if (e.getSource().equals(MenuItemPensionPlanName)) {
@@ -543,7 +556,6 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
-
         if (e.getSource().equals(MenuItemCreateActiveSheetTemplate)) {
             //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
             if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
@@ -563,7 +575,6 @@ public class MainWindow extends JFrame implements ActionListener {
             } else if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please Ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             }
-
 
             if (PensionPlanStartDate != null && PensionPlanEndDate != null && PensionPlanName != null) {
                 try {
@@ -602,23 +613,27 @@ public class MainWindow extends JFrame implements ActionListener {
 
             if (PensionPlanStartDate != null && PensionPlanEndDate != null && PensionPlanName != null) {
                 try {
-                    TemplateSheets.Create_Template_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);;
+                    TemplateSheets.Create_Template_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+                    ;
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "The Terminee Sheet  Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
             }
         }//end
+
         if (e.getSource().equals(MenuItemCreateActiveSheet)) {
-            String result=null;
+            String result = null;
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Template_Active_Sheet.xlsx ").exists()) {
 
-                    if(PensionPlanEndDate!=null && PensionPlanStartDate!=null) {
+                    if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
                         result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
-                    //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+
+                        //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+
                         try {
                             excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
@@ -626,17 +641,18 @@ public class MainWindow extends JFrame implements ActionListener {
                         }
                         resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         JOptionPane.showMessageDialog(null, "The Active Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
-                    }  else{
+                    } else if (new File(filePathWorkingDir + "\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    } else if (!new File(filePathWorkingDir + "\\PN.txt").exists() || !new File(filePathWorkingDir + "\\SD.txt").exists() || !new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
-                } else {
 
+                } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Active Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
 
             }
-                }
-
+        }
 
         if (e.getSource().equals(MenuItemCreateTermineeSheet)) {
             String result = null;
@@ -644,26 +660,27 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Template_Terminee_Sheet.xlsx ").exists()) {
-                        if(PensionPlanEndDate!=null && PensionPlanStartDate!=null){
-                            result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                    if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                        result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
 
 
-                    if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx ").exists()) {
-                        try {
-                            excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                        if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx ").exists()) {
+                            try {
+                                excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                            JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
-                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                        JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                    } else if (new File(filePathWorkingDir + "\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                        JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    } else if (!new File(filePathWorkingDir + "\\PN.txt").exists() || !new File(filePathWorkingDir + "\\SD.txt").exists() || !new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    }
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        }
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Terminee Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -676,9 +693,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-
                 if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
-
 
                     String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -694,19 +709,16 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-
                 if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
 
                     String result = excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminee Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
-
 
         if (e.getSource().equals(MenuItemViewTerminatedMember)) {
             if (filePathWorkingDir == null) {
@@ -758,6 +770,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 }
             }
         }
+
         if (e.getSource().equals(MenuItemViewDeceasedMember)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);

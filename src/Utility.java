@@ -38,7 +38,6 @@ public class Utility extends Component {
         return filePath;
     }
 
-
     public String getWorkingDir(){
         String filePathWorkingDir=null;
         JFileChooser chooser = new JFileChooser();
@@ -63,7 +62,6 @@ public class Utility extends Component {
     {
         return ChronoUnit.DAYS.between(firstDate.toInstant(), secondDate.toInstant());
     }
-
 
     public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
         if ((birthDate != null) && (currentDate != null)) {
@@ -90,12 +88,10 @@ public class Utility extends Component {
         return cal;
     }
 
-
     public static String getDate(int year, int month, int day){
 
         return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
-
 
     public static String get1YearDateFromNow(int year, int month, int day){
 

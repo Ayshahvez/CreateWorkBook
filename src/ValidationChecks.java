@@ -141,7 +141,7 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
         return String.valueOf(stringBuilder+"\n");
     }
 
-    public String Check_FivePercent_PS(String workindDir) throws IOException {
+    public String Check_FivePercent_PS(String PensionPlanStartDate, String PensionPlanEndDate, String workindDir) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: Results of the Pensionable Salary Check Process:\n\n");
@@ -161,14 +161,32 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
         }
         XSSFWorkbook WB = new XSSFWorkbook(fs);
 
-        int EndYear = 2015;
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+     /*   int EndYear = 2015;
         int EndMonth = 12;
         int EndDay = 31;
 
         int StartYear = 2004;
         int StartMonth = 01;
-        int StartDay = 01;
-        int WriteAt =26;
+        int StartDay = 01;*/
+     //   int WriteAt =26;
 
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
