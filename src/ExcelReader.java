@@ -77,7 +77,7 @@ static Utility utility = new Utility();
 
         double TActiveSum = 0;
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
             XSSFSheet Demosheet = workbook.getSheet("DEMO");
@@ -237,7 +237,7 @@ static Utility utility = new Utility();
 
         double ActiveSum = 0;
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
             XSSFSheet Demosheet = workbook.getSheet("DEMO");
@@ -486,10 +486,10 @@ static Utility utility = new Utility();
         FileInputStream fileInputStream = null;
         FileInputStream fileR = null;
         try {
-            //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
-            //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Hose Valuation Data (Actuary's copy).xlsx");
+            //  FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
+            //   FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\GFRAM\\Valuation Data.xlsx");
             //     FileInputStream fileInputStream = new FileInputStream(filePathValData);
-            fileInputStream = new FileInputStream(workingDir + "\\Hose Valuation Data (Actuary's copy).xlsx");
+            fileInputStream = new FileInputStream(workingDir + "\\Valuation Data.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("DEMO");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -505,7 +505,7 @@ static Utility utility = new Utility();
 
             //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
             //    FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
-            fileR = new FileInputStream(workingDir + "\\template.xlsx");
+            fileR = new FileInputStream(workingDir + "\\Template_Separated.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -683,13 +683,15 @@ static Utility utility = new Utility();
 
                 }
 
-                //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Output.xlsx"));
-
-
+                //    FileOutputStream outFile = new FileOutputStream(new File("C:\\Users\\akonowalchuk\\GFRAM\\Seperated Members.xlsx"));
             }
-            outFile = new FileOutputStream(new File(workingDir + "\\Output.xlsx"));
+            //Auto size all the columns
+            for (int x = 0; x < sheetW.getRow(0).getPhysicalNumberOfCells(); x++) {
+                sheetW.autoSizeColumn(x);
+                sheetR.autoSizeColumn(x);
+            }
+            outFile = new FileOutputStream(new File(workingDir + "\\Seperated Members.xlsx"));
             workbookR.write(outFile);
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -717,8 +719,8 @@ static Utility utility = new Utility();
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-           // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+           // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Actives");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -1053,7 +1055,7 @@ static Utility utility = new Utility();
 
         try {
 
-            FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Output.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -1368,7 +1370,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
         FileInputStream fs = null;
         try {
-            fs = new FileInputStream(workingDir+"\\Hose Valuation Data (Actuary's copy).xlsx");
+            fs = new FileInputStream(workingDir+"\\Valuation Data.xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1609,7 +1611,7 @@ int Crow = 8;
 
             FileInputStream fs = null;
             try {
-                fs = new FileInputStream(workingDir+ "\\Hose Valuation Data (Actuary's copy).xlsx");
+                fs = new FileInputStream(workingDir+ "\\Valuation Data.xlsx");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -1765,8 +1767,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Actives");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -1865,8 +1867,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -1964,8 +1966,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -2063,8 +2065,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -2162,8 +2164,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);
@@ -2261,8 +2263,8 @@ int Crow = 8;
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
-            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Output.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Output.xlsx");
+            // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
             //   XSSFSheet sheet = workbook.getSheetAt(0);

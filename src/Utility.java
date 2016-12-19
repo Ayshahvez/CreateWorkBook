@@ -93,7 +93,6 @@ public class Utility extends Component {
         return LocalDate.of(year, month, day).plusYears(1).minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
-
     public static String get1YearDateFromNow(int year, int month, int day){
 
         return LocalDate.of(year, month, day).plusYears(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
@@ -169,12 +168,12 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
-  // File f = new File("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt");
-    File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
+   File f = new File("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt");
+ //   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
     if(f.exists()) {
         // do something
-//      content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt")));
-       content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
+      content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\GFRAM\\WD.txt")));
+  //     content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
     }
     return content;
 }

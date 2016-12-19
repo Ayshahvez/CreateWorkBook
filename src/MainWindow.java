@@ -14,13 +14,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static java.awt.SystemColor.menu;
+
 /**
  * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
  */
 public class MainWindow extends JFrame implements ActionListener {
 
     ExcelReader excelReader = new ExcelReader();
-    TemplateSheets templateSheets = new TemplateSheets();
     ValidationChecks validationChecks = new ValidationChecks();
     Utility utility = new Utility();
 
@@ -29,6 +30,7 @@ public class MainWindow extends JFrame implements ActionListener {
     String filePathOutputTemplate = null;
     Date startDate = null;
     Date endDate = null;
+
     //  WorkingDir
     private String WorkingDir = utility.read();
     String filePathWorkingDir = WorkingDir;
@@ -55,6 +57,7 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenu menuSingleCheck;
 
     JMenu MenuTemplateSheet;
+    private JMenuItem MenuItemCreateSeperatedTemplate;
     private JMenu MenuValidationChecks;
     private JMenu MenuCreateWorkBook;
 
@@ -108,6 +111,15 @@ public class MainWindow extends JFrame implements ActionListener {
 
     public MainWindow() throws IOException {
         super("GFRAM Pension Automation Process Beta");
+        try {
+         //   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            Font f = new Font("Default", Font.PLAIN, 14);
+            UIManager.put("Menu.font", f);
+            UIManager.put("MenuItem.font", f);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //   this.curcon = curcon;
         this.setLayout(new BorderLayout());
         this.initiliazeComponents();
@@ -115,28 +127,76 @@ public class MainWindow extends JFrame implements ActionListener {
         this.addPanelsToWindow();
         this.setWindowProperties();
         this.registerListener();
+        // Add separator
+  //       menuBar.add(new JSeparator());
     }
-
-
 
     private void setWindowProperties() {
-
-        // TODO Auto-generated method stub
-        this.setSize(700, 800);
+        //TODO Auto-generated method stub
+        this.setSize(800, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        //   this.pack();
+       //  this.pack();
         this.setResizable(true);
+        resultsWindow.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
+        resultsWindow.setEditable(false);
     }
 
-
     public void initiliazeComponents() {
+
+        jPanel = new JPanel(new FlowLayout());
+        panWelcome = new JPanel(new BorderLayout());
+        menuBar = new JMenuBar();
+        scrollPane = new JScrollPane(resultsWindow);
+
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-     //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-           imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+       //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+
+        //PLAN REQUIREMENTS
+        MenuSetPlanRequirements = new JMenu("Plan Requirements");
+        MenuItemWorkingDir = new JMenuItem("Set Default Working Directory");
+        MenuItemPensionPlanName = new JMenuItem("Set Pension Plan Name");
+        MenuStart_End_Dates = new JMenu("Set Start and End Date");
+        MenuItemStartDate = new JMenuItem("Set Start Date");
+        MenuItemEndDate = new JMenuItem("Set End Date");
+
+        //TEMPLATE SHEETS
+        MenuTemplateSheet = new JMenu("Template Sheet");
+        MenuCreateTemplateSheet = new JMenu("Create Template Sheet");
+        MenuItemCreateSeperatedTemplate = new JMenuItem("Create Template for Seperated Workbook");
+        MenuItemCreateActiveSheetTemplate = new JMenuItem("Create Active Sheet Template");
+        MenuItemCreateTermineeSheetTemplate = new JMenuItem("Create Terminee Sheet Template");
+        MenuLoadTemplateSheet = new JMenu("Load Template Sheet");
+        MenuItemLoadOutputTemplate = new JMenuItem("Load Template for Active and Terminated Members");
+
+        //MEMBERS
+        MenuMembers = new JMenu("Members");
+        MenuItemViewActiveMember = new JMenuItem("View all Active Members");
+        MenuItemViewTermineeMember = new JMenuItem("View all Terminee Members");
+        MenuItemViewRetiredMember = new JMenuItem("View Retired Members");
+        MenuItemViewDeferredMember = new JMenuItem("View Deferred Members");
+        MenuItemViewDeceasedMember = new JMenuItem("View Deceased Members");
+        MenuItemViewAllMembers = new JMenuItem("View All Members");
+        MenuItemViewTerminatedMember = new JMenuItem("View Terminated Members");
+
+
+        MenuValidationChecks = new JMenu("Validation Checks");
+        menuSingleCheck = new JMenu("Perform Single Check");
+        CheckDuplicate = new JMenuItem("Duplicate Check");
+        CheckAge = new JMenuItem("Age Check");
+        CheckDateofBirth = new JMenuItem("Date of Birth Check");
+        CheckEmployeePS = new JMenuItem("Employee Pensionable Salary Check");
+        CheckPlanEntry = new JMenuItem("Plan Entry Check");
+        CheckAll = new JMenuItem("Perform All Checks");
+
+
+        MenuCreateWorkBook = new JMenu("Create WorkBook");
+        MenuItemCreateActiveSheet = new JMenuItem("Create Active Members Sheet");
+        MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Members Sheet");
 
 
         MenuEditor = new JMenu("Editor");
@@ -146,81 +206,34 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemSaveData = new JMenuItem("Save Plan Requirement Data");
         MenuItemDeleteData = new JMenuItem("Delete Plan Requirement Data");
 
-
-        MenuItemWorkingDir = new JMenuItem("Set Default Working Directory");
-
-        MenuSetPlanRequirements = new JMenu("Plan Requirements");
-        MenuStart_End_Dates = new JMenu("Set Start and End Date");
-        MenuItemStartDate = new JMenuItem("Set Start Date");
-        MenuItemEndDate = new JMenuItem("Set End Date");
-        MenuItemPensionPlanName = new JMenuItem("Set Pension Plan Name");
-
-
-        MenuTemplateSheet = new JMenu("Template Sheet");
-        MenuCreateTemplateSheet = new JMenu("Create Template Sheet");
-        MenuItemCreateActiveSheetTemplate = new JMenuItem("Create Active Sheet Template");
-        MenuItemCreateTermineeSheetTemplate = new JMenuItem("Create Terminee Sheet Template");
-        MenuLoadTemplateSheet = new JMenu("Load Template Sheet");
-        MenuItemLoadOutputTemplate = new JMenuItem("Load Template for Active and Terminated Members");
-
-
-        MenuValidationChecks = new JMenu("Validation Checks");
-        menuSingleCheck = new JMenu("Perform Single Check");
-        CheckAll = new JMenuItem("Perform All Checks");
         MenuLoadWorkbook = new JMenu("Load WorkBook");
-        MenuCreateWorkBook = new JMenu("Create WorkBook");
-
         MenuItemLoadTemplateActiveSheet = new JMenuItem("Load Template Sheet for Active Members");
         MenuItemLoadTemplateTermineeSheet = new JMenuItem("Load Template Sheet for Terminee Members");
-
         MenuItemSeperateMembers = new JMenuItem("Separate Active & Terminee Members into a new WorkBook");
-        MenuItemCreateActiveSheet = new JMenuItem("Create Active Members Sheet");
-        MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Members Sheet");
-
-        resultsWindow.setBorder(BorderFactory.createLineBorder(Color.CYAN, 1));
-        scrollPane = new JScrollPane(resultsWindow);
-        menuBar = new JMenuBar();
-
-        CheckDuplicate = new JMenuItem("Duplicate Check");
-        CheckAge = new JMenuItem("Age Check");
-        CheckDateofBirth = new JMenuItem("Date of Birth Check");
-        CheckEmployeePS = new JMenuItem("Employee Pensionable Salary Check");
-        CheckPlanEntry = new JMenuItem("Plan Entry Check");
 
 
+
+/*
         txtVal = new JTextField("Valuation Data Workbook");
         txtWelcome = new JTextField("\t\tGFRAM Pension Automation Process Beta");
         txtWelcome.setEditable(false);
         btnBrowse = new JButton("Browse");
-        jPanel = new JPanel(new FlowLayout());
-        panWelcome = new JPanel(new BorderLayout());
-
         LoadValDataWorkBook = new JMenuItem("Browse for Valuation Data Workbook");
         LoadPensionableSalaryWorkBook = new JMenuItem("Browse for Pensionable Salary Workbook");
-
-        MenuMembers = new JMenu("Members");
-
-        MenuItemViewActiveMember = new JMenuItem("View all Active Members");
-        MenuItemViewTermineeMember = new JMenuItem("View all Terminee Members");
-        MenuItemViewRetiredMember = new JMenuItem("View Retired Members");
-        MenuItemViewDeferredMember = new JMenuItem("View Deferred Members");
-        MenuItemViewDeceasedMember = new JMenuItem("View Deceased Members");
-        MenuItemViewAllMembers = new JMenuItem("View All Members");
-        MenuItemViewTerminatedMember = new JMenuItem("View Terminated Members");
-
+*/
     }
 
     private void addComponentsTopanels() {
         MenuTemplateSheet.add(MenuCreateTemplateSheet);
         //    MenuTemplateSheet.add(MenuLoadTemplateSheet);
 
+        MenuCreateTemplateSheet.add(MenuItemCreateSeperatedTemplate);
         MenuCreateTemplateSheet.add(MenuItemCreateActiveSheetTemplate);
         MenuCreateTemplateSheet.add(MenuItemCreateTermineeSheetTemplate);
 
         MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
         MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
         MenuLoadTemplateSheet.add(MenuItemLoadTemplateTermineeSheet);
-
 
         MenuMembers.add(MenuItemViewActiveMember);
         MenuMembers.add(MenuItemViewTerminatedMember);
@@ -247,11 +260,13 @@ public class MainWindow extends JFrame implements ActionListener {
         menuSingleCheck.add(CheckPlanEntry);
         menuSingleCheck.add(CheckEmployeePS);
         MenuValidationChecks.add(menuSingleCheck);
-        MenuValidationChecks.add(CheckAll);
+   //     MenuValidationChecks.add(CheckAll);
 
         //    menuBar.add(MenuLoadWorkbook);
         menuBar.add(MenuSetPlanRequirements);
+
         menuBar.add(MenuTemplateSheet);
+
         menuBar.add(MenuMembers);
         menuBar.add(MenuValidationChecks);
         menuBar.add(MenuCreateWorkBook);
@@ -269,8 +284,8 @@ public class MainWindow extends JFrame implements ActionListener {
 
         jPanel.add(menuBar);
 
-        MenuLoadWorkbook.add(LoadValDataWorkBook);
-        MenuLoadWorkbook.add(LoadPensionableSalaryWorkBook);
+//        MenuLoadWorkbook.add(LoadValDataWorkBook);
+     //   MenuLoadWorkbook.add(LoadPensionableSalaryWorkBook);
     }
 
     private void addPanelsToWindow() {
@@ -283,6 +298,8 @@ public class MainWindow extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         Color LINES = new Color(130, 125, 127);
+
+
 
         if (e.getSource().equals(MenuItemClearScreen)) {
             resultsWindow.ClearScreen(resultsWindow);
@@ -401,12 +418,23 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                    result = validationChecks.Check_For_Duplicates(filePathWorkingDir);
-                    result += validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
-                    result += validationChecks.Check_Age(filePathWorkingDir);
-                    result += validationChecks.Check_DateofBirth(filePathWorkingDir);
-                    result += validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
-                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    if(PensionPlanStartDate==null && PensionPlanEndDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Start Date and End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else if(PensionPlanStartDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else if(PensionPlanEndDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else {
+                        result = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                        result += validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                        result += validationChecks.Check_Age(filePathWorkingDir);
+                        result += validationChecks.Check_DateofBirth(filePathWorkingDir);
+                        result += validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -434,11 +462,23 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
-                String result = null;
+
                 try {
-                    result = validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
-                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    if(PensionPlanStartDate==null && PensionPlanEndDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Start Date and End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else if(PensionPlanStartDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else if(PensionPlanEndDate==null){
+                        JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
+                        String result = null;
+                        result = validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -481,7 +521,10 @@ public class MainWindow extends JFrame implements ActionListener {
         if (e.getSource().equals(CheckDuplicate)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else {
+            } else if (!new File(filePathWorkingDir + "\\Valuation Data.xlsx").exists()) {
+                JOptionPane.showMessageDialog(null, "Please ensure The Valuation Data is present in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            }
+            else {
                 JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
@@ -512,7 +555,7 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                if (new File(filePathWorkingDir + "\\Hose Valuation Data (Actuary's copy).xlsx ").exists()) {
+                if (new File(filePathWorkingDir + "\\Valuation Data.xlsx ").exists()) {
                     String result = null;
                     //     result = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
                     result = excelReader.Separate_Actives_Terminees(filePathWorkingDir);
@@ -586,6 +629,18 @@ public class MainWindow extends JFrame implements ActionListener {
 
             }
         }
+
+        if(e.getSource().equals(MenuItemCreateSeperatedTemplate)) {
+            if (filePathWorkingDir == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                TemplateSheets.Create_Template_Active_Terminee_Sheet(filePathWorkingDir);
+                if (new File(filePathWorkingDir + "//Template_Separated.xlsx").exists()) {
+                    JOptionPane.showMessageDialog(null, "The Template Workbook for Separated Active and Terminee Members was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                }
+            }
+        }
+
 
         if (e.getSource().equals(MenuItemCreateActiveSheetTemplate)) {
             //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
@@ -724,7 +779,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -740,7 +795,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminee Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -756,7 +811,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminated Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -773,7 +828,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
                     result += excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
@@ -791,7 +846,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Retired_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Retired Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -807,7 +862,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Deceased_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Deceased Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -823,7 +878,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Output.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Deferred_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Deferred Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -837,6 +892,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private void registerListener() {
         //MEMBERS LISTENERS
+        MenuItemCreateSeperatedTemplate.addActionListener(this);
         MenuItemViewActiveMember.addActionListener(this);
         MenuItemViewTermineeMember.addActionListener(this);
         MenuItemViewAllMembers.addActionListener(this);
@@ -858,7 +914,7 @@ public class MainWindow extends JFrame implements ActionListener {
         CheckPlanEntry.addActionListener(this);
         CheckAll.addActionListener(this);
 
-        LoadValDataWorkBook.addActionListener(this);
+//        LoadValDataWorkBook.addActionListener(this);
         MenuItemSeperateMembers.addActionListener(this);
         MenuItemPensionPlanName.addActionListener(this);
         MenuItemStartDate.addActionListener(this);

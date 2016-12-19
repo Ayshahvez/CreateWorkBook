@@ -1,10 +1,9 @@
+import com.sun.prism.paint.Color;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 
 import javax.swing.*;
 import java.io.File;
@@ -480,20 +479,40 @@ public class TemplateSheets {
         TermineeHeading.createCell(9).setCellValue("STATUS");
         TermineeHeading.createCell(10).setCellValue("DATE OF REFUND");
 
+        XSSFCellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setFontName(XSSFFont.DEFAULT_FONT_NAME);
+        font.setFontHeightInPoints((short)14);
+        font.setBold(true);
+     //   font.setColor(Color.GREEN);
+   //     font.setColor(HSSFColor.GREEN);
+        style.setFont(font);
+
+        for(int j = 0; j<11; j++){
+            if(j<10)
+            ActiveHeading.getCell(j).setCellStyle(style);
+
+           TermineeHeading.getCell(j).setCellStyle(style);
+
+      //     ActiveHeading.setFillForegroundColor(XSSFColor.GREY_25_PERCENT.index);
+      //      csFirstRow.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        }
+
 
 
 //autofit
-        for(int x=0;x<10;x++){
+        for(int x=0;x<ActiveSheet.getRow(0).getPhysicalNumberOfCells();x++){
             //   sheet.autoSizeColumn(x);
             ActiveSheet.autoSizeColumn(x);
 
         }
 
-        for(int x=0;x<10;x++){
-            //   sheet.autoSizeColumn(x);
-           TermineeSheet.autoSizeColumn(x);
-
+        for (int x = 0; x < TermineeSheet.getRow(0).getPhysicalNumberOfCells(); x++) {
+            TermineeSheet.autoSizeColumn(x);
+        //    ActiveSheet.autoSizeColumn(x);
         }
+
+
 
         try {
             //Write the workbook in file system
@@ -501,7 +520,6 @@ public class TemplateSheets {
                     //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
                     new File(workingDir + "\\Template_Separated.xlsx"));
             workbook.write(out);
-
         out.close();
         workbook.close();
     }
@@ -510,6 +528,6 @@ public class TemplateSheets {
     } catch (Exception e) {
         e.printStackTrace();
     }
-        System.out.println("Template_Separated.xlsx" );
+        System.out.println("Template_Separated.xlsx Created Sucessfully" );
     }
 }
