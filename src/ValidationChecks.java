@@ -24,7 +24,7 @@ import static java.util.Calendar.YEAR;
  */
 public class ValidationChecks {
 
-    Utility utility = new Utility();
+   // Utility utility = new Utility();
 
     public String Check_For_Duplicates(String workingDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -122,10 +122,11 @@ SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
                         FindIt = 0;
                         //  break;
                     //    stringBuilder.append("This Member is Duplicate Record, Please Contact Administrator\n"+"\n");
+                      //  stringBuilder.append("Record: " + row + "\n");
                         stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
                         stringBuilder.append("Last Name: " + b1Val_LN+"\n");
                         stringBuilder.append("First Name: " + c1Val_FN+"\n");
-                        stringBuilder.append("DOB: " + dF.format(f1Val_DOB)+"\n");
+                        stringBuilder.append("Date of Birth: " + dF.format(f1Val_DOB)+"\n");
 
                         stringBuilder.append("------------------------------------------\n");
                     }
@@ -671,7 +672,7 @@ if (check!=h1) {
                 stringBuilder.append("Employee ID: " + a1Val_EM+"\n");
                 stringBuilder.append("Last Name: " + b1Val_LN+"\n");
                 stringBuilder.append("First Name: " + c1Val_FN+"\n");
-                stringBuilder.append("DOB: " + dF.format(g1Val_DOB)+"\n");
+                stringBuilder.append("Date of Birth: " + dF.format(g1Val_DOB)+"\n");
 
                 stringBuilder.append("-------------------------------------------------------\n");
             }

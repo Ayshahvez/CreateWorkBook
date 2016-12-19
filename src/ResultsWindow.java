@@ -10,12 +10,18 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
     }
 
     public void appendToPane (JTextPane tp, String msg, Color c, boolean isBold) { //append attributes and properties to pane
+        //center align text
+       StyledDocument doc = tp.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
 
         aSet = sc.addAttribute(aSet, StyleConstants.FontFamily, "Consolas"); //Consales font will be used
         aSet = sc.addAttribute(aSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-        aSet = sc.addAttribute(aSet, StyleConstants.FontSize, 21);    //font size of 21 will be used
+        aSet = sc.addAttribute(aSet, StyleConstants.FontSize, 23);    //font size of 23 will be used
 
         if (isBold) aSet = sc.addAttribute(aSet, StyleConstants.Bold, Boolean.TRUE);   //text will be bold
         else aSet = sc.addAttribute(aSet, StyleConstants.Bold, Boolean.FALSE);
@@ -23,11 +29,8 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
         int len = tp.getDocument().getLength();
         tp.setCaretPosition(len);
         tp.setCharacterAttributes(aSet, false);
-     //   tp.replaceSelection(" ");
         tp.replaceSelection(msg+"\n");
-      //  tp.
-   //     tp.removeAll();
-
+        tp.setEditable(false);
     }
 
     public void ClearScreen(JTextPane tp){

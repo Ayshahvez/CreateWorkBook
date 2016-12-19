@@ -118,6 +118,7 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
 
+
     private void setWindowProperties() {
 
         // TODO Auto-generated method stub
@@ -134,8 +135,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-        //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+     //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+           imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
 
         MenuEditor = new JMenu("Editor");
@@ -176,6 +177,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemCreateActiveSheet = new JMenuItem("Create Active Members Sheet");
         MenuItemCreateTermineeSheet = new JMenuItem("Create Terminee Members Sheet");
 
+        resultsWindow.setBorder(BorderFactory.createLineBorder(Color.CYAN, 1));
         scrollPane = new JScrollPane(resultsWindow);
         menuBar = new JMenuBar();
 
@@ -279,7 +281,6 @@ public class MainWindow extends JFrame implements ActionListener {
         this.add(westPanel, BorderLayout.WEST);
     }
 
-
     public void actionPerformed(ActionEvent e) {
         Color LINES = new Color(130, 125, 127);
 
@@ -289,19 +290,23 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (e.getSource().equals(MenuItemDeleteData)) {
             if (new File(filePathWorkingDir + "\\PN.txt").exists() || new File(filePathWorkingDir + "\\SD.txt").exists() || new File(filePathWorkingDir + "\\ED.txt").exists()) {
-                if (new File(filePathWorkingDir + "\\PN.txt").exists()) {
-                    new File(filePathWorkingDir + "\\PN.txt").delete();
+              int option=  JOptionPane.showConfirmDialog(null, "Are you Sure you want to Delete Saved Data?" , "Notice", JOptionPane.OK_CANCEL_OPTION);
+                if(option == JOptionPane.OK_OPTION) { // Afirmative
+                    //....
+                    if (new File(filePathWorkingDir + "\\PN.txt").exists()) {
+                        new File(filePathWorkingDir + "\\PN.txt").delete();
+                    }
+
+                    if (new File(filePathWorkingDir + "\\SD.txt").exists()) {
+                        new File(filePathWorkingDir + "\\SD.txt").delete();
+                    }
+
+                    if (new File(filePathWorkingDir + "\\ED.txt").exists()) {
+                        new File(filePathWorkingDir + "\\ED.txt").delete();
+                    }
+                    JOptionPane.showMessageDialog(null, "Saved Data Was Successfully Deleted!" , "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
 
-                if (new File(filePathWorkingDir + "\\SD.txt").exists()) {
-                    new File(filePathWorkingDir + "\\SD.txt").delete();
-                }
-
-                if (new File(filePathWorkingDir + "\\ED.txt").exists()) {
-                    new File(filePathWorkingDir + "\\ED.txt").delete();
-                }
-
-                JOptionPane.showMessageDialog(null, "Saved Data Was Successfully Deleted!" , "Notice", JOptionPane.PLAIN_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null, "There was no Saved Data to be Deleted!" , "Notice", JOptionPane.PLAIN_MESSAGE);
             }
@@ -349,7 +354,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 } else if (PensionPlanEndDate != null) {
                     JOptionPane.showMessageDialog(null, "You have successfully stored the Plan End Date for Future use", "Success", JOptionPane.PLAIN_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "There was no Data to be Saved!", "Success", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "There was no Data to be Saved!", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
 
             }
@@ -363,7 +368,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
                 if (!new File(filePathWorkingDir + "\\PN.txt").exists() && !new File(filePathWorkingDir + "\\SD.txt").exists() && !new File(filePathWorkingDir + "\\ED.txt").exists()) {
-                    JOptionPane.showMessageDialog(null, "Sorry, There was no Data to Load, Please Input all the Plan Requirements Data ", "Success", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Sorry, There was no Data to Load, Please Input all the Plan Requirements Data ", "Notice", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     try {
                         if (new File(filePathWorkingDir + "\\WD.txt").exists()) {
@@ -401,10 +406,11 @@ public class MainWindow extends JFrame implements ActionListener {
                     result += validationChecks.Check_Age(filePathWorkingDir);
                     result += validationChecks.Check_DateofBirth(filePathWorkingDir);
                     result += validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
             }
         }
 
@@ -416,10 +422,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 String result = null;
                 try {
                     result = validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
             }
         }
 
@@ -431,10 +438,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 String result = null;
                 try {
                     result = validationChecks.Check_FivePercent_PS(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
             }
         }
 
@@ -446,10 +454,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 String result = null;
                 try {
                     result = validationChecks.Check_Age(filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
             }
         }
 
@@ -461,10 +470,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 String result = null;
                 try {
                     result = validationChecks.Check_DateofBirth(filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
             }
         }
 
@@ -473,13 +483,14 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
-                String s = null;
+                String result = null;
                 try {
-                    s = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                    result = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                resultsWindow.appendToPane(resultsWindow, s + "\n", LINES, true);
+
             }
         }
 
@@ -563,10 +574,6 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             }
 
-        }
-
-        if (e.getSource().equals(MenuItemLoadOutputTemplate)) {
-            filePathOutputTemplate = utility.getFilePath();
         }
 
 
