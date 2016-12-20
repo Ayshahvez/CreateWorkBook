@@ -12,9 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static java.awt.SystemColor.menu;
 
 /**
  * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
@@ -153,8 +150,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-       //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       //imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+          imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -297,7 +294,8 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        Color LINES = new Color(130, 125, 127);
+      //  Color LINES = new Color(130, 125, 127);
+        Color LINES = new Color(105, 105, 107);
 
 
 
@@ -411,7 +409,7 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
-        if (e.getSource().equals(CheckAll)) {
+      /*  if (e.getSource().equals(CheckAll)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
@@ -440,7 +438,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 }
 
             }
-        }
+        }*/
 
         if (e.getSource().equals(CheckPlanEntry)) {
             if (filePathWorkingDir == null) {
@@ -490,18 +488,25 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Now Performing Age Check, Press Ok to Continue", "Age Check", JOptionPane.PLAIN_MESSAGE);
-                String result = null;
-                try {
-                    result = validationChecks.Check_Age(filePathWorkingDir);
-                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                String age = JOptionPane.showInputDialog(this, "Please Input the Required Age it takes a Member to be eligible for the Plan", "Age", JOptionPane.PLAIN_MESSAGE);
+                int Age = Integer.parseInt(age);
+                if (Age >= 15) {
+                    if (age != null) {
+                        JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
+                        String result = null;
+                        try {
+                            result = validationChecks.Check_Age(filePathWorkingDir, Age);
+                            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
 
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Important Notice: You have to be at least 15 to be Working in Jamaica", "Notice", JOptionPane.PLAIN_MESSAGE);
+                }
             }
         }
-
         if (e.getSource().equals(CheckDateofBirth)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);

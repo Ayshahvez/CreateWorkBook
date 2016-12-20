@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +41,7 @@ public class ValidationChecks {
         int NoMembers = DemoSheet.getPhysicalNumberOfRows();
         SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
 //dF.format("dd-MMM-yy");
+        int check = 0;
         for (int row = 0; row < NoMembers; row++) {
             int temp = row;
 
@@ -49,7 +52,6 @@ public class ValidationChecks {
             //  int Row = row;
 
             XSSFRow DemoRow = DemoSheet.getRow(row);
-
 
             XSSFCell cellA1_EM = DemoRow.getCell((short) 0);  //employee number
             if (cellA1_EM == null) {
@@ -67,8 +69,8 @@ public class ValidationChecks {
             XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //first name
             Date f1Val_DOB = cellF1_DOB.getDateCellValue();
 
-
             int FindIt = 0;
+            check = 0;
             boolean findIt = false;
 
             for (int row2 = 0; row2 < NoMembers; row2++) {
@@ -81,7 +83,6 @@ public class ValidationChecks {
                 //  int Row = row;
 
                 XSSFRow DemoRow2 = DemoSheet.getRow(row2);
-
 
                 XSSFCell cellA1_EM2 = DemoRow2.getCell((short) 0);  //employee number
                 if (cellA1_EM2 == null) {
@@ -108,8 +109,7 @@ public class ValidationChecks {
 
 
                     if (FindIt > 1) {
-
-
+                        check++;
                         //   System.out.println("Please Contact Administrator");
                         System.out.println("Employee ID: " + a1Val_EM);
                         System.out.println("Last Name: " + b1Val_LN);
@@ -136,6 +136,7 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Duplicate check process has now been completed");
+        if (check == 0) stringBuilder.append("\n\nNotice: There was no Duplicate records found in this list of Members");
         stringBuilder.append("\n\nNotice: The Duplicate check process has now been completed");
         return String.valueOf(stringBuilder + "\n");
     }
@@ -604,7 +605,7 @@ public class ValidationChecks {
         return String.valueOf(stringBuilder);
     }
 
-    public String Check_Age(String workingDir) throws IOException {
+    public String Check_Age(String workingDir, int age) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: Results of the Age Check Process:\n\n");
@@ -613,7 +614,7 @@ public class ValidationChecks {
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Valuation Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
-
+int check=0;
         int NoMembers = DemoSheet.getPhysicalNumberOfRows();
 
         for (int row = 0; row < NoMembers; row++) {
@@ -650,12 +651,19 @@ public class ValidationChecks {
             XSSFCell cellH1_PE = DemoRow.getCell((short) 7);   //emp date
             Date h1Val_PE = cellH1_PE.getDateCellValue();
 
+
+            LocalDate birthDate= g1Val_DOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate planEntryDate= PlanEntry.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+
             SimpleDateFormat dF = new SimpleDateFormat();
+
             dF.applyPattern("dd-MMM-yy");
 
-            int age = Utility.getAge(g1Val_DOB, PlanEntry);
+           // int memberAge = Utility.getAge(g1Val_DOB, PlanEntry);
+            int memberAge = Utility.calculateAge(birthDate, planEntryDate);
 
-            if (age < 15) {
+            if ( memberAge < age) {
                 System.out.println("Employee ID: " + a1Val_EM);
                 System.out.println("Last Name: " + b1Val_LN);
                 System.out.println("First Name: " + c1Val_FN);
@@ -670,13 +678,16 @@ public class ValidationChecks {
                 stringBuilder.append("Last Name: " + b1Val_LN + "\n");
                 stringBuilder.append("First Name: " + c1Val_FN + "\n");
                 stringBuilder.append("Date of Birth: " + dF.format(g1Val_DOB) + "\n");
+                stringBuilder.append("Plan Entry: " + dF.format(PlanEntry) + "\n");
 
                 stringBuilder.append("---------------------------------------------------------------------------------\n");
+                check++;
             }
 
 
         }
         System.out.println("Notice: The Age Check Process has now been completed.");
+        if (check == 0) stringBuilder.append("Notice: All Members' Ages have been checked in respect to their Plan Entry Date, No Discrepancy was found\n");
         stringBuilder.append("\nNotice: The Age Check Process has now been completed.\n");
 
         return String.valueOf(stringBuilder);
