@@ -29,7 +29,7 @@ public class ValidationChecks {
 
     public String Check_For_Duplicates(String workingDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Notice: Results of the Duplicate Check Process:");
+        stringBuilder.append("Notice: The Duplicate Check Validates the list of Members for Repeated Records");
         boolean once = true;
 
         // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
@@ -136,15 +136,16 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Duplicate check process has now been completed");
-        if (check == 0) stringBuilder.append("\n\nNotice: There was no Duplicate records found in this list of Members");
+        if (check == 0) stringBuilder.append("\n\nNotice: There were no Duplicate records found in this list of Members");
         stringBuilder.append("\n\nNotice: The Duplicate check process has now been completed");
         return String.valueOf(stringBuilder + "\n");
     }
 
     public String Check_FivePercent_PS(String PensionPlanStartDate, String PensionPlanEndDate, String workindDir) throws IOException {
 
+        int Check = 0;
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Notice: Results of the Pensionable Salary Check Process:\n\n");
+        stringBuilder.append("Notice: Results of the Pensionable Salary Check Process:\n");
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
@@ -361,11 +362,11 @@ public class ValidationChecks {
                             }
                             double h1 = H1.getNumericCellValue();
 
-
                             if (a1.equals(a1Val_EM)) {
                                 double check = 0.05 * d[x];
                                 check = Double.parseDouble(dF.format(check));
                                 if (check != h1) {
+                                    Check++;
                                     //    ArrayList val = new ArrayList();
 
                                     System.out.println("Emplyee Number: " + a1);
@@ -423,18 +424,20 @@ public class ValidationChecks {
 
         }// END OF LOOP YEARS
         //   stringBuilder.append("-------------------------------------------------------\n");
-        stringBuilder.append("\nNotice: The Pensionable Check Process has now been completed.\n");
+        if(Check==0) stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions throughout the Review Period");
+        stringBuilder.append("\n\nNotice: The Pensionable Check Process has now been completed.\n");
         return String.valueOf(stringBuilder);
     }
 
     public String Check_Plan_EntryDate_empDATE(String workindDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Notice: Results of the Plan Entry Check Process: \n");
+        stringBuilder.append("Notice: The Plan Entry Check Validates whether a Member has enrolled in the Plan before Employment Date \n");
 
         FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
+        int check=0;
         int NoMembers = DemoSheet.getPhysicalNumberOfRows();
 
         for (int row = 0; row < NoMembers; row++) {
@@ -479,7 +482,7 @@ public class ValidationChecks {
                 System.out.println("Employment Date: " + dF.format(h1Val_PE));
                 System.out.println("Please Contact Administrator");
 
-                stringBuilder.append("\nResult: This member's plan entry date at " + dF.format(g1Val_PE) + " is before their employment date at " + dF.format(h1Val_PE) + "\n");
+                stringBuilder.append("\nResult: This member's Plan Entry Date at " + dF.format(g1Val_PE) + " is before their Employment Date at " + dF.format(h1Val_PE) + "\n");
                 stringBuilder.append("Employee ID: " + a1Val_EM + "\n");
                 stringBuilder.append("Last Name: " + b1Val_LN + "\n");
                 stringBuilder.append("First Name: " + c1Val_FN + "\n");
@@ -487,11 +490,13 @@ public class ValidationChecks {
                 stringBuilder.append("Employment Date: " + dF.format(h1Val_PE) + "\n");
                 stringBuilder.append("----------------------------------------------------------------------------------------------------------\n");
                 System.out.println();
+                check++;
             }
 
 
         }
         System.out.println("Notice: The Plan Entry Check Process has now been completed.");
+        if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Emp. Date in respect to their Plane Entry Date\n");
         stringBuilder.append("\nNotice: The Plan Entry Check Process has now been completed.\n");
 
         return String.valueOf(stringBuilder);
@@ -499,13 +504,13 @@ public class ValidationChecks {
 
     public String Check_DateofBirth(String workindDir) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Notice: Results of the Date of Birth Check Process: \n");
+        stringBuilder.append("Notice: The Date of Birth Check Validates the Members' were born before their Employment Date and Plan Entry Date\n");
         FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
 
         int NoMembers = DemoSheet.getPhysicalNumberOfRows();
-
+int check=0;
         for (int row = 0; row < NoMembers; row++) {
             int temp = row;
 
@@ -593,14 +598,15 @@ public class ValidationChecks {
                 stringBuilder.append("Employment Date: " + dF.format(h1Val_EM) + "\n");
                 stringBuilder.append("Status Date: " + dF.format(i1Val_SD) + "\n");
                 stringBuilder.append("--------------------------------------------------------------------------------------------------------------\n");
-
+                check++;
             }
 
 
         }
 
         System.out.println("Notice: The Date of Birth Check Process has now been completed.");
-        stringBuilder.append("\nNotice: The Date of Birth Check Process has now been completed.\n");
+        if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members");
+        stringBuilder.append("\n\nNotice: The Date of Birth Check Process has now been completed.\n");
 
         return String.valueOf(stringBuilder);
     }
@@ -608,13 +614,13 @@ public class ValidationChecks {
     public String Check_Age(String workingDir, int age) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Notice: Results of the Age Check Process:\n\n");
+        stringBuilder.append("Notice: The Age Check Validates that all Employees Are Eligible to be enrolled in The Plan\n\n");
 //        FileInputStream fileInputStream = new FileInputStream(filePathValData);
         //    FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Valuation Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
-int check=0;
+        int check=0;
         int NoMembers = DemoSheet.getPhysicalNumberOfRows();
 
         for (int row = 0; row < NoMembers; row++) {
@@ -624,9 +630,7 @@ int check=0;
                 row = 1;  //start reading from second row
             }
 
-
             XSSFRow DemoRow = DemoSheet.getRow(row);
-
 
             XSSFCell cellA1_EM = DemoRow.getCell((short) 0);  //employee number
             if (cellA1_EM == null) {
@@ -652,18 +656,18 @@ int check=0;
             Date h1Val_PE = cellH1_PE.getDateCellValue();
 
 
-            LocalDate birthDate= g1Val_DOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate planEntryDate= PlanEntry.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+          //  LocalDate birthDate= g1Val_DOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+          //  LocalDate planEntryDate= PlanEntry.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
             SimpleDateFormat dF = new SimpleDateFormat();
 
             dF.applyPattern("dd-MMM-yy");
 
-           // int memberAge = Utility.getAge(g1Val_DOB, PlanEntry);
-            int memberAge = Utility.calculateAge(birthDate, planEntryDate);
+            int memberAge = Utility.getAge(g1Val_DOB, PlanEntry);
+           // int memberAge = Utility.calculateAge(birthDate, planEntryDate);
 
-            if ( memberAge < age) {
+            if ( memberAge < age || memberAge > 70) {
                 System.out.println("Employee ID: " + a1Val_EM);
                 System.out.println("Last Name: " + b1Val_LN);
                 System.out.println("First Name: " + c1Val_FN);
@@ -673,7 +677,7 @@ int check=0;
                 System.out.println();
 
                 //for gui
-                stringBuilder.append("Result: This member age is " + age + " as at their Plan Entry date " + dF.format(PlanEntry) + "\n");
+                stringBuilder.append("Result: This member age is " + memberAge + " as at their Plan Entry date " + dF.format(PlanEntry) + "\n");
                 stringBuilder.append("Employee ID: " + a1Val_EM + "\n");
                 stringBuilder.append("Last Name: " + b1Val_LN + "\n");
                 stringBuilder.append("First Name: " + c1Val_FN + "\n");
@@ -683,7 +687,6 @@ int check=0;
                 stringBuilder.append("---------------------------------------------------------------------------------\n");
                 check++;
             }
-
 
         }
         System.out.println("Notice: The Age Check Process has now been completed.");

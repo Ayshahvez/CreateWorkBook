@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
@@ -13,11 +13,11 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
     }
 
     public void appendToPane (JTextPane tp, String msg, Color c, boolean isBold) { //append attributes and properties to pane
-
-        StyledDocument doc = tp.getStyledDocument();
+        setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+   /*     StyledDocument doc = tp.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);*/
 
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);

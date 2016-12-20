@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sun.rmi.runtime.Log;
 
+import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
@@ -506,6 +507,7 @@ static Utility utility = new Utility();
             //  FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\template.xlsx");
             //    FileInputStream fileR = new FileInputStream(filePathOutputTemplate);
             fileR = new FileInputStream(workingDir + "\\Template_Separated.xlsx");
+           // fileR = new FileInputStream(workingDir + "\\template.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -513,12 +515,10 @@ static Utility utility = new Utility();
             XSSFSheet sheetW = workbookR.getSheet("Terminees");
             ////////////////////////
 
-
             SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
             // Date cellValue = null;
 
             //    cellValue = datetemp.parse("1994-01-01");
-
 
             XSSFRow[] rowR = new XSSFRow[num];
             Cell cellR = null;
@@ -1054,7 +1054,6 @@ static Utility utility = new Utility();
         Date endDate = null;
 
         try {
-
             FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Seperated Members.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet = workbook.getSheet("Terminees");
@@ -1081,7 +1080,9 @@ static Utility utility = new Utility();
             int counter = 7;
             int index =0;
             // int TermineesStartRow = 1;
-           for(int u=0; u< 12;u++) {
+         //   int years = utility.get
+            int years= Utility.getDiffYears(beginDate,endDate);
+           for(int u=0; u<=years;u++) {
                try {
 
                    beginDate = datetemp2.parse(StartDay+"-"+StartMonth+"-"+StartYear);//"01-Jan-05"
@@ -1204,7 +1205,7 @@ static Utility utility = new Utility();
                            System.out.print(" H1: " + h1Val);
                            System.out.print(" I1: " + i1Val);
                            System.out.print(" J1: " + j1Val);
-                          System.out.print(" K1: " + datetemp.format(k1Val));
+                         // System.out.print(" K1: " + datetemp.format(k1Val));
                            System.out.println();
 
 
@@ -1825,9 +1826,10 @@ int Crow = 8;
                 String j1Val = cellJ1.getStringCellValue();
 
                 if (j1Val.equals("ACTIVE") && !(d1Val.equals("KEY"))) {
-                        System.out.print("A1: " + a1Val);
-                         System.out.print(" B1: " + b1Val);
-                   System.out.print(" C1: " + c1Val);
+
+                    System.out.print("A1: " + a1Val);
+                    System.out.print(" B1: " + b1Val);
+                    System.out.print(" C1: " + c1Val);
                     System.out.print(" D1: " + d1Val);
                     System.out.print(" E1: " + e1Val);
                     System.out.print(" F1: " + f1Val);
@@ -1836,7 +1838,7 @@ int Crow = 8;
                     System.out.print(" I1: " + i1Val);
                     System.out.print(" J1: " + j1Val);
 
-                    stringBuilder.append("Employee ID: " + a1Val + "\n");
+                    stringBuilder.append("Employee ID: " + a1Val + "\n ");
                     stringBuilder.append("Last Name: " + c1Val + "\n");
                     stringBuilder.append("First Name: " + d1Val + "\n");
                     stringBuilder.append("Date of Birth: " + f1Val + "\n");
@@ -1847,7 +1849,8 @@ int Crow = 8;
                     stringBuilder.append("-------------------------------------------------------\n");
 
                     System.out.println();
-
+                    Color LINES = new Color(105, 105, 107);
+//new ResultsWindow().appendToPane(new ResultsWindow(), stringBuilder+ "\n", LINES, true);
                 }
             }
         } catch (FileNotFoundException e) {

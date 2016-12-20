@@ -16,6 +16,7 @@ import java.util.Date;
 /**
  * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
  */
+
 public class MainWindow extends JFrame implements ActionListener {
 
     ExcelReader excelReader = new ExcelReader();
@@ -34,6 +35,7 @@ public class MainWindow extends JFrame implements ActionListener {
     String PensionPlanName = null;// utility.readFile("PN",filePathWorkingDir);
     String PensionPlanStartDate = null;//utility.readFile("SD",filePathWorkingDir);
     String PensionPlanEndDate = null; //utility.readFile("ED",filePathWorkingDir);
+    String planEntryAge=null;
 
     //main MenuBar
     JMenuBar menuBar;
@@ -72,8 +74,8 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem CheckDateofBirth;
     private JMenuItem CheckAll;
 
-    private JMenuItem LoadValDataWorkBook;
-    private JMenuItem LoadPensionableSalaryWorkBook;
+ //   private JMenuItem LoadValDataWorkBook;
+  //  private JMenuItem LoadPensionableSalaryWorkBook;
 
     private JMenuItem MenuItemLoadTemplateActiveSheet;
     private JMenuItem MenuItemLoadTemplateTermineeSheet;
@@ -150,8 +152,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       //imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-          imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+        //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -298,7 +300,6 @@ public class MainWindow extends JFrame implements ActionListener {
         Color LINES = new Color(105, 105, 107);
 
 
-
         if (e.getSource().equals(MenuItemClearScreen)) {
             resultsWindow.ClearScreen(resultsWindow);
         }
@@ -371,17 +372,14 @@ public class MainWindow extends JFrame implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(null, "There was no Data to be Saved!", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
-
             }
         }
 
-        if (e.getSource().equals(MenuItemRefreshData)) {
 
+        if (e.getSource().equals(MenuItemRefreshData)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-
-
                 if (!new File(filePathWorkingDir + "\\PN.txt").exists() && !new File(filePathWorkingDir + "\\SD.txt").exists() && !new File(filePathWorkingDir + "\\ED.txt").exists()) {
                     JOptionPane.showMessageDialog(null, "Sorry, There was no Data to Load, Please Input all the Plan Requirements Data ", "Notice", JOptionPane.PLAIN_MESSAGE);
                 } else {
@@ -488,10 +486,10 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                String age = JOptionPane.showInputDialog(this, "Please Input the Required Age it takes a Member to be eligible for the Plan", "Age", JOptionPane.PLAIN_MESSAGE);
-                int Age = Integer.parseInt(age);
-                if (Age >= 15) {
-                    if (age != null) {
+                planEntryAge = JOptionPane.showInputDialog(this, "Please Input the Required Age it takes a Member to be eligible for the Plan", "Age", JOptionPane.PLAIN_MESSAGE);
+                int Age = Integer.parseInt(planEntryAge);
+                if (Age >= 18) {
+                    if (planEntryAge != null) {
                         JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
                         try {
@@ -503,10 +501,11 @@ public class MainWindow extends JFrame implements ActionListener {
 
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Important Notice: You have to be at least 15 to be Working in Jamaica", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Important Notice: You have to be at least 18 to be Working in Jamaica", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
+
         if (e.getSource().equals(CheckDateofBirth)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -542,6 +541,7 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
+/*
         if (e.getSource().equals(LoadValDataWorkBook)) {
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -555,12 +555,14 @@ public class MainWindow extends JFrame implements ActionListener {
                 filePathValData = chooser.getSelectedFile().getAbsolutePath();
             }
         }
+*/
 
         if (e.getSource().equals(MenuItemSeperateMembers)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                if (new File(filePathWorkingDir + "\\Valuation Data.xlsx ").exists()) {
+               if(new File(filePathWorkingDir+"\\Template_Separated.xlsx").exists()){
+                if (new File(filePathWorkingDir + "\\Valuation Data.xlsx").exists()) {
                     String result = null;
                     //     result = excelReader.Separate_Actives_Terminees(filePathValData,filePathOutputTemplate,filePathWorkingDir);
                     result = excelReader.Separate_Actives_Terminees(filePathWorkingDir);
@@ -570,7 +572,12 @@ public class MainWindow extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Please ensure the Valuation Data Workbook is present in the Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
+            else{
+                   JOptionPane.showMessageDialog(null, "Please ensure you Create The Template for the Seperated Members WorkBook", "Notice", JOptionPane.PLAIN_MESSAGE);
+               }
         }
+        }
+
         if (e.getSource().equals(MenuItemPensionPlanName)) {
             if (filePathWorkingDir != null) {
                 PensionPlanName = JOptionPane.showInputDialog("Please enter the name of the Pension Plan: ");
@@ -713,6 +720,7 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }//end
 
+
         if (e.getSource().equals(MenuItemCreateActiveSheet)) {
             String result = null;
             if (filePathWorkingDir == null) {
@@ -753,9 +761,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 if (new File(filePathWorkingDir + "\\Template_Terminee_Sheet.xlsx ").exists()) {
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
                         result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-
-
-                        if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx ").exists()) {
+                        if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
                             try {
                                 excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             } catch (IOException e1) {
@@ -783,7 +789,6 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
                     String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
