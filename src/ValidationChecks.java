@@ -48,9 +48,7 @@ public class ValidationChecks {
             if (temp == 0) {
                 row = 1;  //start reading from second row
             }
-
             //  int Row = row;
-
             XSSFRow DemoRow = DemoSheet.getRow(row);
 
             XSSFCell cellA1_EM = DemoRow.getCell((short) 0);  //employee number
@@ -66,7 +64,7 @@ public class ValidationChecks {
             XSSFCell cellD1_FN = DemoRow.getCell((short) 3);   //first name
             String c1Val_FN = cellD1_FN.getStringCellValue();
 
-            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //first name
+            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
             Date f1Val_DOB = cellF1_DOB.getDateCellValue();
 
             int FindIt = 0;
@@ -97,7 +95,10 @@ public class ValidationChecks {
                 XSSFCell cellD1_FN2 = DemoRow2.getCell((short) 3);   //first name
                 String c1Val_FN2 = cellD1_FN2.getStringCellValue();
 
-                if (a1Val_EM.equals(a1Val_EM2) && b1Val_LN.equals(b1Val_LN2) && c1Val_FN.equals(c1Val_FN2)) {
+                XSSFCell cell_DOB = DemoRow2.getCell((short) 5);   //DOB
+                Date f1_DOB =  cell_DOB.getDateCellValue();
+
+                if (a1Val_EM.equals(a1Val_EM2) && b1Val_LN.equals(b1Val_LN2) && c1Val_FN.equals(c1Val_FN2) || c1Val_FN.equals(c1Val_FN2)&&b1Val_LN.equals(b1Val_LN2)&&f1Val_DOB.equals(f1_DOB) || a1Val_EM.equals(a1Val_EM2)) {
                     FindIt++;
                     //  findIt=true;
 
@@ -147,7 +148,7 @@ public class ValidationChecks {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: Results of the Pensionable Salary Check Process:\n");
 
-        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+        DecimalFormat dF = new DecimalFormat("#.###");//#.##
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
@@ -370,8 +371,8 @@ public class ValidationChecks {
                                     //    ArrayList val = new ArrayList();
 
                                     System.out.println("Emplyee Number: " + a1);
-                                    System.out.println("Last Name: " + Cb1);
-                                    System.out.println("First Name: " + c1);
+                                    System.out.println("Last Name: " + c1);
+                                    System.out.println("First Name: " + Cb1);
                                     System.out.println("Pensionable Salary: " + dF.format(d[x]));
                                     System.out.println("Employee Basic: " + h1);
 
@@ -380,8 +381,8 @@ public class ValidationChecks {
                                     String test = "";
 
                                     stringBuilder.append("\nEmployee ID: " + a1 + "\n");
-                                    stringBuilder.append("Last Name: " + Cb1 + "\n");
-                                    stringBuilder.append("First Name: " + c1 + "\n");
+                                    stringBuilder.append("Last Name: " + c1 + "\n");
+                                    stringBuilder.append("First Name: " + Cb1 + "\n");
                                     stringBuilder.append("Pensionable Salary: $" + dF.format(d[x]) + "\n");
                                     stringBuilder.append("Employee Basic: $" + h1 + "\n");
 
@@ -389,15 +390,15 @@ public class ValidationChecks {
                                         test = "true";
                                         System.out.println("TEST: Pensionable Salary: $" + dF.format(d[x]));
                                         System.out.println("Result: 5% of " + dF.format(d[x] + " is " + check));
-                                        stringBuilder.append("Result: 5% of $" + dF.format(d[x] + " is $" + check + "\n"));
+                                        stringBuilder.append("Result: Contribution is " + dF.format(h1 / d[x] * 100) +"% of " +dF.format(d[x]) + "\n");
                                         System.out.println("Decision: " + test);
 
                                     } else {
                                         test = "false";
 
                                         System.out.println("Result: 5% of " + dF.format(d[x]) + " is not " + h1 + "\n");
-                                        stringBuilder.append("Result: 5% of $" + dF.format(d[x]) + " is not $" + h1 + "\n");
-                                        stringBuilder.append("-------------------------------------------------------\n");
+                                        stringBuilder.append("Result: "+Cb1+" Contribution of: $"+h1+" is " + dF.format(h1 / d[x]) +"% of $" +dF.format(d[x]) + "\n");
+                                        stringBuilder.append("---------------------------------------------------------------------------------------------------------------------------------------------------\n");
                                         System.out.println("Decision: Please contact administrator");
                                     }
 

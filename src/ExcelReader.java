@@ -10,7 +10,7 @@ import sun.rmi.runtime.Log;
 
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -2358,5 +2358,91 @@ int Crow = 8;
         }
         return String.valueOf(stringBuilder);
     }// end of view
+
+    public void Create_Activee_Acc_Balances(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+
+        //OPEN ACTIVE SHEET
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Updated_Actives_Sheet.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet ActiveSheet = workbook.getSheet("Actives");
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        int Write_Coloumn =22;
+        int Write_Row=7;
+        ArrayList val = new ArrayList();
+
+        for (int x = 0; x <= years; x++) {
+            int numOfActives = ActiveSheet.getLastRowNum()+1;
+            XSSFRow[] rowR = new XSSFRow[numOfActives];
+
+            Cell cellR = null;
+
+            for (int row = 7, I=0; row < numOfActives; row++,I++) {
+            int Row = row;
+                XSSFRow ActiveRow = ActiveSheet.getRow(row);
+
+           /*     XSSFCell cellA1 = ActiveRow.createCell( Write_Coloumn);  //employee number
+                cellA1.setCellValue("test1");
+                XSSFCell cellA2 = ActiveRow.createCell(Write_Coloumn+=1);  //employee number
+                cellA2.setCellValue("test2");
+                XSSFCell cellA3 = ActiveRow.createCell(Write_Coloumn+=1); //employee number
+                cellA3.setCellValue("test3");
+                XSSFCell cellA4 = ActiveRow.createCell(Write_Coloumn+=1); //employee number
+                cellA4.setCellValue("test4");*/
+
+                val.add(0, "test1");
+                val.add(1, "test2");
+                val.add(2, "test3");
+                val.add(3, "test4");
+
+          //      System.out.print(val.size());
+                for (int b = 0; b < 4; b++) {
+                    cellR = ActiveRow.createCell(Write_Coloumn + b);
+                    cellR.setCellValue(String.valueOf(val.get(b)));
+                }
+//val.clear();
+            }
+
+            Write_Coloumn+=8;
+            StartYear++;
+             //comment out years if COMMENTED
+           // Write_Row=7;
+
+        }// END OF LOOP YEARS
+
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Contribution_Actives_Sheet.xlsx"));
+        workbook.write(outFile);
+        fileInputStream.close();
+        outFile.close();
+    }
 
 }

@@ -14,10 +14,10 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
 
     public void appendToPane (JTextPane tp, String msg, Color c, boolean isBold) { //append attributes and properties to pane
         setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-   /*     StyledDocument doc = tp.getStyledDocument();
+       StyledDocument doc = tp.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);*/
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
@@ -32,7 +32,7 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
         int len = tp.getDocument().getLength();
         tp.setCaretPosition(len);
         tp.setCharacterAttributes(aSet, false);
-    //    tp.replaceSelection(msg+"\n");
+      // tp.replaceSelection(msg+"\n");
        // tp.insertIcon(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\page1.png"));
         tp.setText(msg+"\n");
       //  tp.setEditable(false);

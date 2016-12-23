@@ -63,6 +63,14 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenu MenuSetPlanRequirements;
     private JMenu MenuStart_End_Dates;
 
+    private JMenu MenuFeesTemplate;
+    private JMenuItem MenuItemCreateFeesActiveSheetTemplate;
+    private JMenuItem MenuItemCreateFeesTermineeSheetTemplate;
+
+    private JMenu MenuNoFeesTemplate;
+    private JMenuItem MenuItemCreateNoFeesActiveSheetTemplate;
+    private JMenuItem MenuItemCreateNoFeesTermineeSheetTemplate;
+
     private JMenuItem MenuItemPensionPlanName;
     private JMenuItem MenuItemStartDate;
     private JMenuItem MenuItemEndDate;
@@ -80,8 +88,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem MenuItemLoadTemplateActiveSheet;
     private JMenuItem MenuItemLoadTemplateTermineeSheet;
 
-    private JMenuItem MenuItemCreateActiveSheetTemplate;
-    private JMenuItem MenuItemCreateTermineeSheetTemplate;
+
 
     private JMenuItem MenuItemCreateActiveSheet;
     private JMenuItem MenuItemCreateTermineeSheet;
@@ -143,6 +150,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
     public void initiliazeComponents() {
 
+        MenuFeesTemplate = new JMenu("Create Template With Fees");
+        MenuNoFeesTemplate = new JMenu("Create Template With No Fees");
+
         jPanel = new JPanel(new FlowLayout());
         panWelcome = new JPanel(new BorderLayout());
         menuBar = new JMenuBar();
@@ -167,10 +177,16 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuTemplateSheet = new JMenu("Template Sheet");
         MenuCreateTemplateSheet = new JMenu("Create Template Sheet");
         MenuItemCreateSeperatedTemplate = new JMenuItem("Create Template for Seperated Workbook");
-        MenuItemCreateActiveSheetTemplate = new JMenuItem("Create Active Sheet Template");
-        MenuItemCreateTermineeSheetTemplate = new JMenuItem("Create Terminee Sheet Template");
         MenuLoadTemplateSheet = new JMenu("Load Template Sheet");
         MenuItemLoadOutputTemplate = new JMenuItem("Load Template for Active and Terminated Members");
+
+        //FEES
+        MenuItemCreateFeesActiveSheetTemplate = new JMenuItem("Create Active Sheet Template with Fees");
+        MenuItemCreateFeesTermineeSheetTemplate = new JMenuItem("Create Terminee Sheet Template with Fees");
+
+        //NO FEES
+        MenuItemCreateNoFeesActiveSheetTemplate = new JMenuItem("Create Active Sheet Template with No Fees");
+        MenuItemCreateNoFeesTermineeSheetTemplate = new JMenuItem("Create Terminee Sheet Template with No Fees");
 
         //MEMBERS
         MenuMembers = new JMenu("Members");
@@ -227,8 +243,16 @@ public class MainWindow extends JFrame implements ActionListener {
         //    MenuTemplateSheet.add(MenuLoadTemplateSheet);
 
         MenuCreateTemplateSheet.add(MenuItemCreateSeperatedTemplate);
-        MenuCreateTemplateSheet.add(MenuItemCreateActiveSheetTemplate);
-        MenuCreateTemplateSheet.add(MenuItemCreateTermineeSheetTemplate);
+
+        MenuCreateTemplateSheet.add(MenuFeesTemplate);
+        MenuCreateTemplateSheet.add(MenuNoFeesTemplate);
+
+
+        MenuFeesTemplate.add(MenuItemCreateFeesActiveSheetTemplate);
+        MenuFeesTemplate.add(MenuItemCreateFeesTermineeSheetTemplate);
+
+        MenuNoFeesTemplate.add(MenuItemCreateNoFeesActiveSheetTemplate);
+        MenuNoFeesTemplate.add(MenuItemCreateNoFeesTermineeSheetTemplate);
 
         MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
         MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
@@ -488,7 +512,7 @@ public class MainWindow extends JFrame implements ActionListener {
             } else {
                 planEntryAge = JOptionPane.showInputDialog(this, "Please Input the Required Age it takes a Member to be eligible for the Plan", "Age", JOptionPane.PLAIN_MESSAGE);
                 int Age = Integer.parseInt(planEntryAge);
-                if (Age >= 18) {
+                if (Age >= 18 && Age<=70) {
                     if (planEntryAge != null) {
                         JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
@@ -652,9 +676,78 @@ public class MainWindow extends JFrame implements ActionListener {
                 }
             }
         }
+        //FEES
+        if (e.getSource().equals(MenuItemCreateFeesActiveSheetTemplate)) {
+            //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
+            if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate == null && PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null && PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null && PensionPlanStartDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (filePathWorkingDir == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            }
+
+            if (PensionPlanStartDate != null && PensionPlanEndDate != null && PensionPlanName != null) {
+                try {
+
+                    TemplateSheets.Create_Template_Fees_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+                    //    TemplateSheets.Create_Template_Active_Sheet(utility.readFile("SD",filePathWorkingDir), utility.readFile("ED",filePathWorkingDir), utility.readFile("PN",filePathWorkingDir), filePathWorkingDir);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                if (new File(filePathWorkingDir + "//Template_Active_Sheet.xlsx").exists()) {
+                    JOptionPane.showMessageDialog(null, "The Active Sheet Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                }
+            }
+        }
+
+        //create template sheet for active members
+        if (e.getSource().equals(MenuItemCreateFeesTermineeSheetTemplate)) {
+            if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate == null && PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null && PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null && PensionPlanStartDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanStartDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanEndDate == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (PensionPlanName == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name", "Notice", JOptionPane.PLAIN_MESSAGE);
+            } else if (filePathWorkingDir == null) {
+                JOptionPane.showMessageDialog(null, "Please Ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+            }
 
 
-        if (e.getSource().equals(MenuItemCreateActiveSheetTemplate)) {
+            if (PensionPlanStartDate != null && PensionPlanEndDate != null && PensionPlanName != null) {
+                try {
+                    TemplateSheets.Create_Template_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+                    ;
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(null, "The Terminee Sheet  Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+            }
+        }//end
+
+
+
+
+        //NO FEES
+        if (e.getSource().equals(MenuItemCreateNoFeesActiveSheetTemplate)) {
             //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
             if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
                 JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -689,7 +782,7 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         //create template sheet for active members
-        if (e.getSource().equals(MenuItemCreateTermineeSheetTemplate)) {
+        if (e.getSource().equals(MenuItemCreateNoFeesTermineeSheetTemplate)) {
             if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
                 JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else if (PensionPlanStartDate == null && PensionPlanEndDate == null) {
@@ -734,7 +827,8 @@ public class MainWindow extends JFrame implements ActionListener {
                         //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
 
                         try {
-                            excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                      //      excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Create_Activee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -932,8 +1026,11 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemLoadOutputTemplate.addActionListener(this);
         MenuItemWorkingDir.addActionListener(this);
 
-        MenuItemCreateActiveSheetTemplate.addActionListener(this);
-        MenuItemCreateTermineeSheetTemplate.addActionListener(this);
+        MenuItemCreateNoFeesActiveSheetTemplate.addActionListener(this);
+        MenuItemCreateNoFeesTermineeSheetTemplate.addActionListener(this);
+
+        MenuItemCreateFeesActiveSheetTemplate.addActionListener(this);
+        MenuItemCreateFeesTermineeSheetTemplate.addActionListener(this);
 
         MenuItemCreateActiveSheet.addActionListener(this);
         MenuItemCreateTermineeSheet.addActionListener(this);
