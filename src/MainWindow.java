@@ -51,6 +51,8 @@ public class MainWindow extends JFrame implements ActionListener {
     ResultsWindow resultsWindow = new ResultsWindow();
     JScrollPane scrollPane;
 
+   // JTable table;
+
     //Main menu items
     JMenu MenuLoadWorkbook;
     JMenu menuSingleCheck;
@@ -74,6 +76,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem MenuItemPensionPlanName;
     private JMenuItem MenuItemStartDate;
     private JMenuItem MenuItemEndDate;
+    JMenuItem MenuItemInterestRates;
 
     private JMenuItem CheckDuplicate;
     private JMenuItem CheckAge;
@@ -153,6 +156,14 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     public void initiliazeComponents() {
+/*        String[] columnHeaders = {"Popularity","Position","Team","Manager","Points"};
+        Object[][] data = {
+                {"1","Famous","Man Utd","Luis Van Gaal","86"},
+
+        };
+        table =  new JTable(data,columnHeaders);
+        table.setPreferredScrollableViewportSize(new Dimension(500,80));*/
+
         MenuCreateWorkBook = new JMenu("Create WorkBook");
 
 
@@ -172,14 +183,16 @@ public class MainWindow extends JFrame implements ActionListener {
         jPanel = new JPanel(new FlowLayout());
         panWelcome = new JPanel(new BorderLayout());
         menuBar = new JMenuBar();
+
         scrollPane = new JScrollPane(resultsWindow);
+     //   scrollPane = new JScrollPane(table);
 
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-    //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-          imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+    //      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -188,6 +201,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuStart_End_Dates = new JMenu("Set Start and End Date");
         MenuItemStartDate = new JMenuItem("Set Start Date");
         MenuItemEndDate = new JMenuItem("Set End Date");
+        MenuItemInterestRates = new JMenuItem("Input Interest Rates");
 
         //TEMPLATE SHEETS
         MenuTemplateSheet = new JMenu("Template Sheet");
@@ -909,12 +923,12 @@ public class MainWindow extends JFrame implements ActionListener {
                 if (new File(filePathWorkingDir + "\\Template_Active_Sheet.xlsx ").exists()) {
 
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                     //   result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
+                   //    result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
 
                         //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
 
                         try {
-                         //        excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        //         excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                  //here
                            excelReader.Create_Activee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
@@ -1100,6 +1114,11 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
+        if(e.getSource().equals(MenuItemInterestRates)){
+
+        }
+
+
         if (e.getSource().equals(MenuItemViewDeferredMember)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -1160,6 +1179,8 @@ public class MainWindow extends JFrame implements ActionListener {
 
         MenuItemCreateFeesActiveSheet.addActionListener(this);
         MenuItemCreateFeesTermineeSheet.addActionListener(this);
+
+        MenuItemInterestRates.addActionListener(this);
     }
 
 }
