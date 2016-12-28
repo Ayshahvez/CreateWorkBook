@@ -31,6 +31,7 @@ import static java.util.Calendar.YEAR;
 
 public class ExcelReader {
 
+
 static Utility utility = new Utility();
 
     public void Results(){
@@ -480,6 +481,7 @@ static Utility utility = new Utility();
         return ActiveSum;
     }
 
+    //seperate actives
     public String Separate_Actives_Terminees(String workingDir) throws IndexOutOfBoundsException {
         // public String Separate_Actives_Terminees(String filePathValData,String filePathOutputTemplate, String WorkingDir) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -714,6 +716,8 @@ static Utility utility = new Utility();
         return String.valueOf(stringBuilder);
     }
 
+
+    //NO FEES
     public String Create_Actives_Sheet(String workingDir) throws IndexOutOfBoundsException {
        StringBuilder stringBuilder = new StringBuilder();
         SimpleDateFormat dF1 = new SimpleDateFormat();
@@ -1009,6 +1013,245 @@ static Utility utility = new Utility();
         return String.valueOf(stringBuilder);
     }// end of create active sheet
 
+    public void Create_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+        /*
+        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
+        XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+        XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);
+        */
+
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+
+        //OPEN ACTIVE SHEET
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Actives_Sheet.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet ActiveSheet = workbook.getSheet("Actives");
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        // System.out.println(StartYear + "." + StartMonth + "." + StartDay);
+        //  System.out.println(EndYear + "." + EndMonth + "." + EndDay);
+
+        int WriteAt =26;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+
+        int counter=7;
+        for (int x = 0; x <= years; x++) {
+
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(StartYear, StartMonth, StartDay);
+            SimpleDateFormat sdf = new SimpleDateFormat("yy"); // Just the year, with 2 digits
+            String formattedDate = sdf.format(cal.getTime());
+
+            // String StartDate = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
+            // String EndDate = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
+            String Recon = ("Recon " + formattedDate);
+
+
+            FileInputStream fs = null;
+            try {
+                fs = new FileInputStream(workingDir+"\\Valuation Data.xlsx");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            XSSFWorkbook WB = new XSSFWorkbook(fs);
+
+//GET RECON SHEET
+            XSSFSheet Reconsheet = WB.getSheet(Recon);
+            System.out.println(formattedDate);
+            int CountReconRow = Reconsheet.getPhysicalNumberOfRows();
+
+
+
+            int numOfActives = ActiveSheet.getLastRowNum()+1; // get the last row number
+            // System.out.println(rowCount);
+            //     System.out.println("Recon"+ Recon + "count"+CountReconRow +"Actives" +numOfActives);
+            XSSFRow[] rowR = new XSSFRow[numOfActives];
+            Cell cellR = null;
+
+/*if(Recon.equals(15)){
+    numOfActives=35;
+}*/
+            int Crow = 8;
+            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+
+                int Row = row;
+
+                XSSFRow ActiveRow = ActiveSheet.getRow(row);
+
+                XSSFCell cellA1 = ActiveRow.getCell((short) 0);  //employee number
+                String result = cellA1.getStringCellValue();
+                String a1Val = result.replaceAll("[-]","");
+
+                XSSFCell cellB1 = ActiveRow.getCell((short) 1);   //last name
+                String b1Val = cellB1.getStringCellValue();
+
+                XSSFCell cellC1 = ActiveRow.getCell((short) 2);   //first name
+                String c1Val = cellC1.getStringCellValue();
+
+                XSSFCell cellD1 = ActiveRow.getCell((short) 3);
+                String d1Val = cellD1.getStringCellValue();
+
+                String i1Val = null;
+                XSSFCell[] cellI1 = new XSSFCell[12];
+                double [] d = new double[12];
+                for (int g=8,j=0;g<20;g++,j++){
+                    cellI1[j] = ActiveRow.getCell(g);
+                    i1Val = cellI1[j].getStringCellValue();
+                    d[j] = Double.parseDouble(i1Val);
+                }
+
+
+                //    Crow++;
+
+                rowR[Row] = ActiveSheet.getRow(counter++);
+
+                for (int y = 6; y < CountReconRow; y++) {
+
+                    XSSFRow reconRow = Reconsheet.getRow(y);
+
+                    XSSFCell A1 = reconRow.getCell(0);  //employee number
+                    if (A1 == null) {
+                        A1 = reconRow.createCell(0);
+                    }
+                    String a1 = A1.getStringCellValue();
+
+
+                    XSSFCell B1 = reconRow.getCell(1);  //FNAME
+                    if (B1 == null) {
+                        B1 = reconRow.createCell(1);
+
+                    }
+                    String b1 = B1.getStringCellValue();
+
+                    XSSFCell C1 = reconRow.getCell(2);  //LNAME
+                    if (C1 == null) {
+                        C1 = reconRow.createCell(2);
+
+                    }
+                    String c1 = C1.getStringCellValue();
+
+
+                    XSSFCell H1 = reconRow.getCell((short) 7);
+                    //Update the value of cell
+                    if (H1 == null) {
+                        H1 = reconRow.createCell(7);
+                    }
+                    double h1 = H1.getNumericCellValue();
+
+                    XSSFCell I1 = reconRow.getCell((short) 8);
+                    //Update the value of cell
+                    if (I1 == null) {
+                        I1 = reconRow.createCell(8);
+                    }
+                    double i1 = I1.getNumericCellValue();
+
+                    XSSFCell J1 = reconRow.getCell((short) 9);
+                    //Update the value of cell
+                    if (J1 == null) {
+                        J1 = reconRow.createCell(9);
+                    }
+                    double j1 = J1.getNumericCellValue();
+
+                    if (a1.equals(a1Val) ) {
+
+                        ArrayList val = new ArrayList();
+
+                        System.out.print("A1: " + a1);
+                        System.out.print(" D1: " + b1);
+                        System.out.print(" C1: " + c1);
+                        System.out.print("PS: " + i1Val);
+                        System.out.print(" H1: " + h1);
+                        System.out.print(" I1: " + i1);
+                        System.out.print(" J1: " + j1);
+                        String test="";
+                        double check = 0.05 *d[x];
+                        check= Double.parseDouble(dF.format(check));
+                        if (check == h1) {
+                            test = "true";
+
+                        } else {
+                            test = "false";
+                        }
+                        System.out.print(" TEST: Pensionable Salary"+d[x]+"result "+check+test);
+
+                        System.out.println();
+
+                        val.add(0, h1);
+                        val.add(1, i1);
+                        val.add(2, j1);
+                        val.add(3, 0);
+
+
+                        for (int b = 0; b < val.size(); b++) {
+                            cellR = rowR[Row].createCell(WriteAt + b);
+                            cellR.setCellValue(String.valueOf(val.get(b)));
+                        }
+
+                                                                           /*    cellR = rowR[Row].createCell(26);
+                                                                                cellR.setCellValue(h1);
+
+                                                                                cellR = rowR[Row].createCell(27);
+                                                                                cellR.setCellValue(i1);
+
+                                                                                cellR = rowR[Row].createCell(28);
+                                                                                cellR.setCellValue(j1);
+
+                                                                                cellR = rowR[Row].createCell(29);
+                                                                                cellR.setCellValue(0);*/
+
+                        break;
+
+                    }
+
+
+                    //   counter=7;
+                }
+
+
+
+            }
+
+            WriteAt+=8;
+            StartYear++; //comment out years if COMMENTED
+            counter=7;
+
+        }// END OF LOOP YEARS
+
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Actives_Sheet.xlsx"));
+        workbook.write(outFile);
+        fileInputStream.close();
+        outFile.close();
+    }
+
     public String Create_Terminee_Sheet(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -1038,14 +1281,17 @@ static Utility utility = new Utility();
         int StartMonth = 01;
         int StartDay = 01;
 */
-/*
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+
+        DateFormat df2 = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
-        Date endDate = null;
+        Date endDatee = null;
         try {
-            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
-            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
-        */
+            startDate = df2.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDatee = df2.parse(EndYear + "." + EndMonth + "." + EndDay);
+        }catch(ParseException e){
+e.printStackTrace();
+        }
+
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         DateFormat df = new SimpleDateFormat("dd-MMM-yy");
         SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
@@ -1079,12 +1325,12 @@ static Utility utility = new Utility();
             ArrayList PensionableSalary = new ArrayList();
             int counter = 7;
             int index =0;
-            // int TermineesStartRow = 1;
-         //   int years = utility.get
-            int years= Utility.getDiffYears(beginDate,endDate);
-           for(int u=0; u<=years;u++) {
-               try {
 
+         int years= Utility.getAge(startDate,endDatee);
+         years+=1;//always add 1 to computer language
+
+           for(int u=0; u<years;u++) {
+               try {
                    beginDate = datetemp2.parse(StartDay+"-"+StartMonth+"-"+StartYear);//"01-Jan-05"
                    endDate = datetemp.parse(Utility.getEndDate(StartYear,01,01));
                } catch (ParseException e) {
@@ -1306,245 +1552,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return String.valueOf(stringBuilder);
     }
 
-    public void Create_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
-        /*
-        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
-        XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
-        XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);
-        */
-
-        DecimalFormat dF = new DecimalFormat("#.##");//#.##
-
-        //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Actives_Sheet.xlsx");
-        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet ActiveSheet = workbook.getSheet("Actives");
-
-        String SD[] = PensionPlanStartDate.split("/");
-        int startMonth = Integer.parseInt(SD[0]);
-        int startDay = Integer.parseInt(SD[1]);
-        int startYear = Integer.parseInt(SD[2]);
-
-        String ED[] = PensionPlanEndDate.split("/");
-        int endMonth = Integer.parseInt(ED[0]);
-        int endDay = Integer.parseInt(ED[1]);
-        int endYear = Integer.parseInt(ED[2]);
-
-        int EndYear = endYear;
-        int EndMonth = endMonth;
-        int EndDay = endDay;
-
-        int StartYear = startYear;
-        int StartMonth = startMonth;
-        int StartDay = startDay;
-
-     // System.out.println(StartYear + "." + StartMonth + "." + StartDay);
-     //  System.out.println(EndYear + "." + EndMonth + "." + EndDay);
-
-        int WriteAt =26;
-
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
-            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        int years = Utility.getDiffYears(startDate, endDate);
-
-        int counter=7;
-        for (int x = 0; x <= years; x++) {
-
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(StartYear, StartMonth, StartDay);
-        SimpleDateFormat sdf = new SimpleDateFormat("yy"); // Just the year, with 2 digits
-        String formattedDate = sdf.format(cal.getTime());
-
-        // String StartDate = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
-        // String EndDate = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
-        String Recon = ("Recon " + formattedDate);
-
-
-        FileInputStream fs = null;
-        try {
-            fs = new FileInputStream(workingDir+"\\Valuation Data.xlsx");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        XSSFWorkbook WB = new XSSFWorkbook(fs);
-
-//GET RECON SHEET
-        XSSFSheet Reconsheet = WB.getSheet(Recon);
-      System.out.println(formattedDate);
-        int CountReconRow = Reconsheet.getPhysicalNumberOfRows();
-
-
-
-        int numOfActives = ActiveSheet.getLastRowNum()+1; // get the last row number
-        // System.out.println(rowCount);
-       //     System.out.println("Recon"+ Recon + "count"+CountReconRow +"Actives" +numOfActives);
-        XSSFRow[] rowR = new XSSFRow[numOfActives];
-        Cell cellR = null;
-
-/*if(Recon.equals(15)){
-    numOfActives=35;
-}*/
-int Crow = 8;
-        for (int row = 7, I=8; row < numOfActives; row++,I++) {
-
-            int Row = row;
-
-            XSSFRow ActiveRow = ActiveSheet.getRow(row);
-
-            XSSFCell cellA1 = ActiveRow.getCell((short) 0);  //employee number
-            String result = cellA1.getStringCellValue();
-            String a1Val = result.replaceAll("[-]","");
-
-            XSSFCell cellB1 = ActiveRow.getCell((short) 1);   //last name
-            String b1Val = cellB1.getStringCellValue();
-
-            XSSFCell cellC1 = ActiveRow.getCell((short) 2);   //first name
-            String c1Val = cellC1.getStringCellValue();
-
-            XSSFCell cellD1 = ActiveRow.getCell((short) 3);
-            String d1Val = cellD1.getStringCellValue();
-
-            String i1Val = null;
-            XSSFCell[] cellI1 = new XSSFCell[12];
-            double [] d = new double[12];
-            for (int g=8,j=0;g<20;g++,j++){
-                cellI1[j] = ActiveRow.getCell(g);
-                i1Val = cellI1[j].getStringCellValue();
-                d[j] = Double.parseDouble(i1Val);
-            }
-
-
-        //    Crow++;
-
-            rowR[Row] = ActiveSheet.getRow(counter++);
-
-                                for (int y = 6; y < CountReconRow; y++) {
-
-                                               XSSFRow reconRow = Reconsheet.getRow(y);
-
-                                                XSSFCell A1 = reconRow.getCell(0);  //employee number
-                                                if (A1 == null) {
-                                                    A1 = reconRow.createCell(0);
-                                                    }
-                                                    String a1 = A1.getStringCellValue();
-
-
-                                                    XSSFCell B1 = reconRow.getCell(1);  //FNAME
-                                                    if (B1 == null) {
-                                                        B1 = reconRow.createCell(1);
-
-                                                    }
-                                                    String b1 = B1.getStringCellValue();
-
-                                                    XSSFCell C1 = reconRow.getCell(2);  //LNAME
-                                                    if (C1 == null) {
-                                                        C1 = reconRow.createCell(2);
-
-                                                    }
-                                                    String c1 = C1.getStringCellValue();
-
-
-                                                    XSSFCell H1 = reconRow.getCell((short) 7);
-                                                    //Update the value of cell
-                                                    if (H1 == null) {
-                                                        H1 = reconRow.createCell(7);
-                                                    }
-                                                    double h1 = H1.getNumericCellValue();
-
-                                                    XSSFCell I1 = reconRow.getCell((short) 8);
-                                                    //Update the value of cell
-                                                    if (I1 == null) {
-                                                        I1 = reconRow.createCell(8);
-                                                    }
-                                                    double i1 = I1.getNumericCellValue();
-
-                                                    XSSFCell J1 = reconRow.getCell((short) 9);
-                                                    //Update the value of cell
-                                                    if (J1 == null) {
-                                                        J1 = reconRow.createCell(9);
-                                                    }
-                                                    double j1 = J1.getNumericCellValue();
-
-                                                                            if (a1.equals(a1Val) ) {
-
-                                                                                ArrayList val = new ArrayList();
-
-                                                                                System.out.print("A1: " + a1);
-                                                                                System.out.print(" D1: " + b1);
-                                                                                System.out.print(" C1: " + c1);
-                                                                                System.out.print("PS: " + i1Val);
-                                                                                System.out.print(" H1: " + h1);
-                                                                                System.out.print(" I1: " + i1);
-                                                                                System.out.print(" J1: " + j1);
-                                                                                String test="";
-                                                                                double check = 0.05 *d[x];
-                                                                                check= Double.parseDouble(dF.format(check));
-                                                                                if (check == h1) {
-                                                                                    test = "true";
-
-                                                                                } else {
-                                                                                    test = "false";
-                                                                                }
-                                                                                System.out.print(" TEST: Pensionable Salary"+d[x]+"result "+check+test);
-
-                                                                                System.out.println();
-
-                                                                                val.add(0, h1);
-                                                                                val.add(1, i1);
-                                                                                val.add(2, j1);
-                                                                                val.add(3, 0);
-
-
-                                                                                for (int b = 0; b < val.size(); b++) {
-                                                                                    cellR = rowR[Row].createCell(WriteAt + b);
-                                                                                    cellR.setCellValue(String.valueOf(val.get(b)));
-                                                                                }
-
-                                                                           /*    cellR = rowR[Row].createCell(26);
-                                                                                cellR.setCellValue(h1);
-
-                                                                                cellR = rowR[Row].createCell(27);
-                                                                                cellR.setCellValue(i1);
-
-                                                                                cellR = rowR[Row].createCell(28);
-                                                                                cellR.setCellValue(j1);
-
-                                                                                cellR = rowR[Row].createCell(29);
-                                                                                cellR.setCellValue(0);*/
-
-                                                                                break;
-
-                                                                            }
-
-
-                                 //   counter=7;
-                                                }
-
-
-
-              }
-
-            WriteAt+=8;
-             StartYear++; //comment out years if COMMENTED
-            counter=7;
-
-       }// END OF LOOP YEARS
-
-        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Actives_Sheet.xlsx"));
-        workbook.write(outFile);
-        fileInputStream.close();
-        outFile.close();
-    }
-
     public void Create_Terminee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
@@ -1751,6 +1758,481 @@ int Crow = 8;
             }
 
             WriteAt+=8;
+            StartYear++; //comment out years if COMMENTED
+            counter=7;
+
+        }// END OF LOOP YEARS
+
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Terminee_Sheet.xlsx"));
+        workbook.write(outFile);
+        fileInputStream.close();
+        outFile.close();
+    }
+
+    //FEES
+    public void Create_Fees_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+        /*
+        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
+        XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+        XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);
+        */
+
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+
+        //OPEN ACTIVE SHEET
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Actives_Sheet.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet ActiveSheet = workbook.getSheet("Actives");
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        // System.out.println(StartYear + "." + StartMonth + "." + StartDay);
+        //  System.out.println(EndYear + "." + EndMonth + "." + EndDay);
+
+        int WriteAt =26;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+
+        int counter=7;
+        for (int x = 0; x <= years; x++) {
+
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(StartYear, StartMonth, StartDay);
+            SimpleDateFormat sdf = new SimpleDateFormat("yy"); // Just the year, with 2 digits
+            String formattedDate = sdf.format(cal.getTime());
+
+            // String StartDate = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
+            // String EndDate = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
+            String Recon = ("Recon " + formattedDate);
+
+
+            FileInputStream fs = null;
+            try {
+                fs = new FileInputStream(workingDir+"\\Valuation Data.xlsx");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            XSSFWorkbook WB = new XSSFWorkbook(fs);
+
+//GET RECON SHEET
+            XSSFSheet Reconsheet = WB.getSheet(Recon);
+            System.out.println(formattedDate);
+            int CountReconRow = Reconsheet.getPhysicalNumberOfRows();
+
+
+
+            int numOfActives = ActiveSheet.getLastRowNum()+1; // get the last row number
+            // System.out.println(rowCount);
+            //     System.out.println("Recon"+ Recon + "count"+CountReconRow +"Actives" +numOfActives);
+            XSSFRow[] rowR = new XSSFRow[numOfActives];
+            Cell cellR = null;
+
+/*if(Recon.equals(15)){
+    numOfActives=35;
+}*/
+            int Crow = 8;
+            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+
+                int Row = row;
+
+                XSSFRow ActiveRow = ActiveSheet.getRow(row);
+
+                XSSFCell cellA1 = ActiveRow.getCell((short) 0);  //employee number
+                String result = cellA1.getStringCellValue();
+                String a1Val = result.replaceAll("[-]","");
+
+                XSSFCell cellB1 = ActiveRow.getCell((short) 1);   //last name
+                String b1Val = cellB1.getStringCellValue();
+
+                XSSFCell cellC1 = ActiveRow.getCell((short) 2);   //first name
+                String c1Val = cellC1.getStringCellValue();
+
+                XSSFCell cellD1 = ActiveRow.getCell((short) 3);
+                String d1Val = cellD1.getStringCellValue();
+
+                String i1Val = null;
+                XSSFCell[] cellI1 = new XSSFCell[12];
+                double [] d = new double[12];
+                for (int g=8,j=0;g<20;g++,j++){
+                    cellI1[j] = ActiveRow.getCell(g);
+                    i1Val = cellI1[j].getStringCellValue();
+                    d[j] = Double.parseDouble(i1Val);
+                }
+
+
+                //    Crow++;
+
+                rowR[Row] = ActiveSheet.getRow(counter++);
+
+                for (int y = 6; y < CountReconRow; y++) {
+
+                    XSSFRow reconRow = Reconsheet.getRow(y);
+
+                    XSSFCell A1 = reconRow.getCell(0);  //employee number
+                    if (A1 == null) {
+                        A1 = reconRow.createCell(0);
+                    }
+                    String a1 = A1.getStringCellValue();
+
+
+                    XSSFCell B1 = reconRow.getCell(1);  //FNAME
+                    if (B1 == null) {
+                        B1 = reconRow.createCell(1);
+
+                    }
+                    String b1 = B1.getStringCellValue();
+
+                    XSSFCell C1 = reconRow.getCell(2);  //LNAME
+                    if (C1 == null) {
+                        C1 = reconRow.createCell(2);
+
+                    }
+                    String c1 = C1.getStringCellValue();
+
+
+                    XSSFCell H1 = reconRow.getCell((short) 7);
+                    //Update the value of cell
+                    if (H1 == null) {
+                        H1 = reconRow.createCell(7);
+                    }
+                    double h1 = H1.getNumericCellValue();
+
+                    XSSFCell I1 = reconRow.getCell((short) 8);
+                    //Update the value of cell
+                    if (I1 == null) {
+                        I1 = reconRow.createCell(8);
+                    }
+                    double i1 = I1.getNumericCellValue();
+
+                    XSSFCell J1 = reconRow.getCell((short) 9);
+                    //Update the value of cell
+                    if (J1 == null) {
+                        J1 = reconRow.createCell(9);
+                    }
+                    double j1 = J1.getNumericCellValue();
+
+                    XSSFCell cellFee = reconRow.getCell((short) 17);
+                    //Update the value of cell
+                    if (cellFee == null) {
+                        cellFee = reconRow.createCell(17);
+                    }
+                    double CellFeeVal = cellFee.getNumericCellValue();
+
+                    if (a1.equals(a1Val) ) {
+
+                        ArrayList<Double> val = new ArrayList();
+
+                        System.out.print("A1: " + a1);
+                        System.out.print(" D1: " + b1);
+                        System.out.print(" C1: " + c1);
+                        System.out.print("PS: " + i1Val);
+                        System.out.print(" H1: " + h1);
+                        System.out.print(" I1: " + i1);
+                        System.out.print(" J1: " + j1);
+                        String test="";
+                        double check = 0.05 *d[x];
+                        check= Double.parseDouble(dF.format(check));
+                        if (check == h1) {
+                            test = "true";
+
+                        } else {
+                            test = "false";
+                        }
+                        System.out.print(" TEST: Pensionable Salary"+d[x]+"result "+check+test);
+
+                        System.out.println();
+
+                        val.add(0, h1); //employee basic
+                        val.add(1, i1);  //employee optional
+                        val.add(2, j1); //employer required
+                        val.add(3, 0.00); //employer optional
+                        val.add(4,CellFeeVal); //fees
+
+
+                        for (int b = 0; b < val.size(); b++) {
+                            cellR = rowR[Row].createCell(WriteAt + b);
+                            cellR.setCellValue((Double)val.get(b));
+                        }
+
+                                                                           /*    cellR = rowR[Row].createCell(26);
+                                                                                cellR.setCellValue(h1);
+
+                                                                                cellR = rowR[Row].createCell(27);
+                                                                                cellR.setCellValue(i1);
+
+                                                                                cellR = rowR[Row].createCell(28);
+                                                                                cellR.setCellValue(j1);
+
+                                                                                cellR = rowR[Row].createCell(29);
+                                                                                cellR.setCellValue(0);*/
+
+                        break;
+
+                    }
+
+
+                    //   counter=7;
+                }
+
+
+
+            }
+
+            WriteAt+=9;
+            StartYear++; //comment out years if COMMENTED
+            counter=7;
+
+        }// END OF LOOP YEARS
+
+
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Updated_Actives_Sheet.xlsx"));
+        workbook.write(outFile);
+        fileInputStream.close();
+        outFile.close();
+    }
+
+    public void Create_Fees_Terminee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+
+        //OPEN ACTIVE SHEET
+        FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Terminees_Sheet.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet TermineeSheet = workbook.getSheet("Terminees");
+
+
+
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+
+    /*    int EndYear = 2015;
+        int EndMonth = 12;
+        int EndDay = 31;
+
+        int StartYear = 2004;
+        int StartMonth = 01;
+        int StartDay = 01;*/
+
+        int WriteAt = 23;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+
+        int counter=7;
+        for (int x = 0; x <= years; x++) {
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(StartYear, StartMonth, StartDay);
+            SimpleDateFormat sdf = new SimpleDateFormat("yy"); // Just the year, with 2 digits
+            String formattedDate = sdf.format(cal.getTime());
+
+            // String StartDate = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
+            // String EndDate = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
+            String Recon = ("Recon " + formattedDate);
+
+
+            FileInputStream fs = null;
+            try {
+                fs = new FileInputStream(workingDir+ "\\Valuation Data.xlsx");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            XSSFWorkbook WB = new XSSFWorkbook(fs);
+
+//GET RECON SHEET
+            XSSFSheet Reconsheet = WB.getSheet(Recon);
+            System.out.println(formattedDate);
+            int CountReconRow = Reconsheet.getPhysicalNumberOfRows();
+
+            int numOfTerminee = TermineeSheet.getLastRowNum()+1; // get the last row number
+            // System.out.println(rowCount);
+            //     System.out.println("Recon"+ Recon + "count"+CountReconRow +"Actives" +numOfActives);
+            XSSFRow[] rowR = new XSSFRow[numOfTerminee];
+            Cell cellR = null;
+
+            int Crow = 8;
+            for (int row = 7; row < numOfTerminee; row++) {
+
+                int Row = row;
+
+                XSSFRow TermineeRow = TermineeSheet.getRow(row);
+
+                XSSFCell cellA1 = TermineeRow.getCell((short) 0);  //employee number
+                String result = cellA1.getStringCellValue();
+                String a1Val = result.replaceAll("[-]","");
+
+                XSSFCell cellB1 = TermineeRow.getCell((short) 1);   //last name
+                if(cellB1==null){
+                    cellB1 = TermineeRow.createCell(1);
+                }
+                String b1Val = cellB1.getStringCellValue();
+
+                XSSFCell cellC1 = TermineeRow.getCell((short) 2);   //first name
+                if(cellC1==null){
+                    cellC1=TermineeRow.createCell(2);
+                }
+                String c1Val = cellC1.getStringCellValue();
+
+                rowR[Row] = TermineeSheet.getRow(counter++);
+
+                for (int y = 6; y < CountReconRow; y++) {
+
+                    XSSFRow reconRow = Reconsheet.getRow(y);
+
+                    XSSFCell A1 = reconRow.getCell(0);  //employee number
+                    if (A1 == null) {
+                        A1 = reconRow.createCell(0);
+                    }
+                    String a1 = A1.getStringCellValue();
+
+
+                    XSSFCell B1 = reconRow.getCell(1);  //FNAME
+                    if (B1 == null) {
+                        B1 = reconRow.createCell(1);
+
+                    }
+                    String b1 = B1.getStringCellValue();
+
+                    XSSFCell C1 = reconRow.getCell(2);  //LNAME
+                    if (C1 == null) {
+                        C1 = reconRow.createCell(2);
+
+                    }
+                    String c1 = C1.getStringCellValue();
+
+
+                    XSSFCell H1 = reconRow.getCell((short) 7);
+                    //Update the value of cell
+                    if (H1 == null) {
+                        H1 = reconRow.createCell(7);
+                    }
+                    double h1 = H1.getNumericCellValue();  //empoyee basic
+
+                    XSSFCell I1 = reconRow.getCell((short) 8);
+                    //Update the value of cell
+                    if (I1 == null) {
+                        I1 = reconRow.createCell(8);
+                    }
+                    double i1 = I1.getNumericCellValue();
+
+                    XSSFCell J1 = reconRow.getCell((short) 9);
+                    //Update the value of cell
+                    if (J1 == null) {
+                        J1 = reconRow.createCell(9);
+                    }
+                    double j1 = J1.getNumericCellValue();  //employee optional
+
+                    XSSFCell cellFee = reconRow.getCell((short) 17);
+                    //Update the value of cell
+                    if (cellFee == null) {
+                        cellFee = reconRow.createCell(17);
+                    }
+                    double CellFeeVal = cellFee.getNumericCellValue();
+
+
+                    if (a1Val.equals(a1) ) {
+
+                        ArrayList val = new ArrayList();
+
+                        System.out.print("A1: " + a1);
+                        System.out.print(" D1: " + b1);
+                        System.out.print(" C1: " + c1);
+                        //    System.out.print("PS: " + i1Val);
+                        System.out.print(" H1: " + h1);
+                        System.out.print(" I1: " + i1);
+                        System.out.print(" J1: " + j1);
+                 /*       String test="";
+                        double check = 0.05 *d[x];
+                        check= Double.parseDouble(dF.format(check));
+                        if (check == h1) {
+                            test = "true";
+
+                        } else {
+                            test = "false";
+                        }
+                        System.out.print(" TEST: Pensionable Salary"+d[x]+"result "+check+test);*/
+
+                        System.out.println();
+
+                        val.add(0, h1);
+                        val.add(1, i1);
+                        val.add(2, j1);
+                        val.add(3, 0);
+                        val.add(4,CellFeeVal);
+
+
+                        for (int b = 0; b < val.size(); b++) {
+                            cellR = rowR[Row].createCell(WriteAt + b);
+                            cellR.setCellValue(String.valueOf(val.get(b)));
+                        }
+
+
+
+                        break;
+
+                    }
+
+
+                    //   counter=7;
+                }
+
+
+
+            }
+
+            WriteAt+=9;//becuse of fees, we add extra column
             StartYear++; //comment out years if COMMENTED
             counter=7;
 
@@ -2396,46 +2878,222 @@ int Crow = 8;
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
-        int Write_Coloumn =22;
-        int Write_Row=7;
-        ArrayList val = new ArrayList();
 
+
+        ArrayList<Double> val = new ArrayList();
+
+        int numOfActives = ActiveSheet.getLastRowNum()+1;
+      //  XSSFRow[] rowR = new XSSFRow[numOfActives];
+
+        //get the initial Accumulated Balances
+        double [] CellAccEmployeeBasic0 = new double[numOfActives];
+        double[] CellAccEmployeeOptional0 = new double[numOfActives];
+        double[] CellAccEmployerRequired0 = new double[numOfActives];
+        double[] CellAccEmployerOptional0 = new double[numOfActives];
+        for(int row=7,I=0;row<numOfActives;row++,I++){
+            XSSFRow ActiveRow = ActiveSheet.getRow(row);
+
+            //get initial employee basic
+            XSSFCell[] cellAccEmployeeBasic0 = new XSSFCell[numOfActives];
+         cellAccEmployeeBasic0[I] = ActiveRow.getCell( 22);  //employee number
+            if(cellAccEmployeeBasic0[I]==null){
+                cellAccEmployeeBasic0[I] = ActiveRow.createCell(22);
+                cellAccEmployeeBasic0[I].setCellValue(0);
+            }
+            CellAccEmployeeBasic0[I]= cellAccEmployeeBasic0[I].getNumericCellValue();
+
+            XSSFCell[] cellAccEmployeeOptional0 = new XSSFCell[numOfActives];
+            cellAccEmployeeOptional0[I] = ActiveRow.getCell(23);  //employee number
+            if(cellAccEmployeeOptional0[I]==null){
+                cellAccEmployeeOptional0[I] = ActiveRow.createCell(23);
+                cellAccEmployeeOptional0[I].setCellValue(0);
+            }
+            CellAccEmployeeOptional0[I]= cellAccEmployeeOptional0[I].getNumericCellValue();
+            //    double bb = Double.parseDouble(CellAccEmployeeOptional);
+            //readCol++;
+            //  cellA2.setCellValue("test2");
+
+            XSSFCell[] cellAccEmployerRequired0 = new XSSFCell[numOfActives];
+
+
+            cellAccEmployerRequired0[I] = ActiveRow.getCell(24); //employee number
+            if(cellAccEmployerRequired0[I]==null){
+                cellAccEmployerRequired0[I] = ActiveRow.createCell(24);
+                cellAccEmployerRequired0[I].setCellValue(0);
+            }
+            CellAccEmployerRequired0[I] = cellAccEmployerRequired0[I].getNumericCellValue();
+            //  double cc = Double.parseDouble(CellAccEmployerRequired);
+            //readCol++;
+            // cellA3.setCellValue("test3");
+            XSSFCell[] cellAccEmployerOptional0 = new XSSFCell[numOfActives];
+
+            cellAccEmployerOptional0[I] = ActiveRow.getCell(25); //employee number
+            if(cellAccEmployerOptional0[I]==null){
+                cellAccEmployerOptional0[I] = ActiveRow.createCell(25);
+                cellAccEmployerOptional0[I].setCellValue(0);
+            }
+            CellAccEmployerOptional0[I] = cellAccEmployerOptional0[I].getNumericCellValue();
+            //  double dd = Double.parseDouble(CellAccEmployerOptional);
+          //  readCol++;
+            // cellA4.setCellValue("test4");
+        }
+
+        double newAccEmployeeBalance=0;
+        double newAccEmployeeOptional= 0;
+        double newAccEmployerRequired= 0;
+        double newAccEmployerOptional=0;
+
+//run for the appropiate number of years
+        double CellAccEmployeeBasic=0;
+        double CellAccEmployeeOptional=0;
+        double CellAccEmployerRequired=0;
+        double CellAccEmployerOptional=0;
+
+        int readCol=26;
+        int YearCol =readCol;
+        int Write_Coloumn =31;
         for (int x = 0; x <= years; x++) {
-            int numOfActives = ActiveSheet.getLastRowNum()+1;
-            XSSFRow[] rowR = new XSSFRow[numOfActives];
 
             Cell cellR = null;
 
-            for (int row = 7, I=0; row < numOfActives; row++,I++) {
-            int Row = row;
+            for (int row = 7, I = 0; row < numOfActives; row++, I++) {
+                int Row = row;
                 XSSFRow ActiveRow = ActiveSheet.getRow(row);
+                if (x == 0) {
+                CellAccEmployeeBasic = CellAccEmployeeBasic0[I];
+                CellAccEmployeeOptional = CellAccEmployeeOptional0[I];
+                CellAccEmployerRequired = CellAccEmployerRequired0[I];
+                CellAccEmployerOptional = CellAccEmployerOptional0[I];
+            }
+              /* XSSFCell cellAccEmployeeBasic = ActiveRow.getCell( readCol);  //employee number
+                if(cellAccEmployeeBasic==null){
+                    cellAccEmployeeBasic = ActiveRow.createCell(readCol);
+                    cellAccEmployeeBasic.setCellValue(0);
+                }
 
-           /*     XSSFCell cellA1 = ActiveRow.createCell( Write_Coloumn);  //employee number
-                cellA1.setCellValue("test1");
-                XSSFCell cellA2 = ActiveRow.createCell(Write_Coloumn+=1);  //employee number
-                cellA2.setCellValue("test2");
-                XSSFCell cellA3 = ActiveRow.createCell(Write_Coloumn+=1); //employee number
-                cellA3.setCellValue("test3");
-                XSSFCell cellA4 = ActiveRow.createCell(Write_Coloumn+=1); //employee number
-                cellA4.setCellValue("test4");*/
+              Double CellAccEmployeeBasic= cellAccEmployeeBasic.getNumericCellValue();
+            //    double aa = Double.parseDouble(CellAccEmployeeBasic);
+                readCol++;
+                // cellA1.setCellValue("test1");
+                XSSFCell cellAccEmployeeOptional = ActiveRow.getCell((short)readCol);  //employee number
+                if(cellAccEmployeeOptional==null){
+                    cellAccEmployeeOptional = ActiveRow.createCell((short)readCol);
+                    cellAccEmployeeOptional.setCellValue(0);
+                }
+               Double CellAccEmployeeOptional= cellAccEmployeeOptional.getNumericCellValue();
+            //    double bb = Double.parseDouble(CellAccEmployeeOptional);
+                readCol++;
+              //  cellA2.setCellValue("test2");
+                XSSFCell cellAccEmployerRequired = ActiveRow.getCell((short)readCol); //employee number
+                if(cellAccEmployerRequired==null){
+                    cellAccEmployerRequired = ActiveRow.createCell((short)readCol);
+                    cellAccEmployerRequired.setCellValue(0);
+                }
+                Double CellAccEmployerRequired = cellAccEmployerRequired.getNumericCellValue();
+              //  double cc = Double.parseDouble(CellAccEmployerRequired);
+                readCol++;
+                // cellA3.setCellValue("test3");
+                XSSFCell cellAccEmployerOptional = ActiveRow.getCell(readCol); //employee number
+                if(cellAccEmployerOptional==null){
+                    cellAccEmployerOptional = ActiveRow.createCell(readCol);
+                    cellAccEmployerOptional.setCellValue(0);
+                }
+              Double CellAccEmployerOptional = cellAccEmployerOptional.getNumericCellValue();
+              //  double dd = Double.parseDouble(CellAccEmployerOptional);
+                readCol++;
+                // cellA4.setCellValue("test4");
+*/
 
-                val.add(0, "test1");
-                val.add(1, "test2");
-                val.add(2, "test3");
-                val.add(3, "test4");
+             /*   CellAccEmployeeBasic = formulaEB ;
+                CellAccEmployeeOptional= formulaEO;
+                CellAccEmployerRequired= formulaER ;
+                CellAccEmployerOptional= formulaEOPT;*/
 
-          //      System.out.print(val.size());
+                readCol=YearCol;
+                //CONTRIBUTIONS
+                XSSFCell cellConEmployeeBasic = ActiveRow.getCell(readCol);  //employee number
+                if (cellConEmployeeBasic == null) {
+                    cellConEmployeeBasic = ActiveRow.createCell(readCol);
+                    cellConEmployeeBasic.setCellValue(0);
+                }
+                double CellConEmployeeBasic = cellConEmployeeBasic.getNumericCellValue();
+                //   double a = Double.parseDouble(CellConEmployeeBasic);
+                readCol+=1;
+                // cellA1.setCellValue("test1");
+                XSSFCell cellConEmployeeOptional = ActiveRow.getCell(readCol);  //employee number
+                if (cellConEmployeeOptional == null) {
+                    cellConEmployeeOptional = ActiveRow.createCell(readCol);
+                    cellConEmployeeOptional.setCellValue(0);
+                }
+                double CellConEmployeeOptional = cellConEmployeeOptional.getNumericCellValue();
+                //  double B = Double.parseDouble(CellConEmployeeOptional);
+               readCol+=1;
+                //  cellA2.setCellValue("test2");
+
+                XSSFCell cellConEmployerRequired = ActiveRow.getCell(readCol); //employee number
+                if (cellConEmployerRequired == null) {
+                    cellConEmployerRequired = ActiveRow.createCell(readCol);
+                    cellConEmployerRequired.setCellValue(0);
+                }
+                double CellConEmployerRequired = cellConEmployerRequired.getNumericCellValue();
+                //  double c = Double.parseDouble(CellConEmployerRequired);
+                readCol+=1;
+
+                // cellA3.setCellValue("test3");
+                XSSFCell cellConEmployerOptional = ActiveRow.getCell(readCol); //employee number
+                if (cellConEmployerOptional == null) {
+                    cellConEmployerOptional = ActiveRow.createCell(readCol);
+                    cellConEmployerOptional.setCellValue(0);
+                }
+                double CellConEmployerOptional = cellConEmployerOptional.getNumericCellValue();
+                //   double d = Double.parseDouble(CellConEmployerOptional);
+               readCol+=1;
+                // cellA4.setCellValue("test4");
+
+                XSSFCell cellFees = ActiveRow.getCell(readCol);
+                if (cellFees == null) {
+                    cellFees = ActiveRow.createCell(readCol);
+                    cellFees.setCellValue(0);
+                }
+                double CellFees = cellFees.getNumericCellValue();
+                //    double e = Double.parseDouble(CellFees);
+
+                System.out.println("Year: " +x);
+                System.out.println("Acc "+ CellAccEmployeeBasic +"Con"+CellConEmployeeBasic);
+                System.out.println("Acc "+ CellAccEmployeeOptional +"Con"+CellConEmployeeOptional);
+                System.out.println("Acc "+ CellAccEmployerRequired +"Con"+CellConEmployerRequired);
+                System.out.println("Acc "+ CellAccEmployerOptional +"Con"+CellConEmployerOptional);
+                newAccEmployeeBalance = CellAccEmployeeBasic+CellConEmployeeBasic;//CellAccEmployeeBasic * (1 + 1) + CellConEmployeeBasic * (1 + 1 * 0.5);
+                newAccEmployeeOptional = CellAccEmployeeOptional+CellConEmployeeOptional;//CellAccEmployeeOptional * (1 + 1) + CellConEmployeeOptional * (1 + 1 * 0.5);
+                newAccEmployerRequired = CellAccEmployerRequired+CellConEmployerRequired;//CellAccEmployerRequired * (1 + 1) + CellConEmployerRequired * (1 + 1 * 0.5) + CellFees * (1 + 1 * 0.5);
+                newAccEmployerOptional = CellAccEmployerOptional+CellConEmployerOptional;//CellAccEmployerOptional * (1 + 1) + CellConEmployerOptional * (1 + 1 * 0.5);
+
+
+                val.add(0, newAccEmployeeBalance);
+                val.add(1, newAccEmployeeOptional);
+                val.add(2, newAccEmployerRequired);
+                val.add(3, newAccEmployerOptional);
+
+                //      System.out.print(val.size());
                 for (int b = 0; b < 4; b++) {
                     cellR = ActiveRow.createCell(Write_Coloumn + b);
-                    cellR.setCellValue(String.valueOf(val.get(b)));
+                    cellR.setCellValue(val.get(b));
                 }
-//val.clear();
-            }
 
-            Write_Coloumn+=8;
+//val.clear();
+
+            }
+           CellAccEmployeeBasic = newAccEmployeeBalance;
+            CellAccEmployeeOptional = newAccEmployeeOptional;
+            CellAccEmployerRequired = newAccEmployerRequired;
+            CellAccEmployerOptional = newAccEmployerOptional;
+
+            YearCol=readCol+5;
+            readCol=YearCol;
+            Write_Coloumn += 9;//8 no fees  || 9 fees
             StartYear++;
-             //comment out years if COMMENTED
-           // Write_Row=7;
+            //comment out years if COMMENTED
+            // Write_Row=7;
 
         }// END OF LOOP YEARS
 

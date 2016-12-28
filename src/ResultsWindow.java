@@ -8,7 +8,6 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
         setBackground(new Color(255, 255, 243));
         setForeground(new Color(86, 98, 112));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8));
-
    //     set
     }
 
