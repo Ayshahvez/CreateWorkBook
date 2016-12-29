@@ -777,7 +777,7 @@ public class TemplateSheets {
                 tmp += 4;
 
                 rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h + 1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h + 1), StartMonth, StartDay));
-                rowHeading3.createCell(newIndex++).setCellValue( PensionableSalary.get(h));
+                rowHeading3.createCell(newIndex++).setCellValue( getDate(PensionableSalary.get(h), StartMonth, StartDay));
 
                 if (h == PensionableSalary.size() - 2) //when it gets to end of loop
                 {
