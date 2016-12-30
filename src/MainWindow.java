@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,6 +50,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
     JPanel codePanel = new JPanel(new BorderLayout());
     ResultsWindow resultsWindow = new ResultsWindow();
+ //   tableWindow tableWindow = new t
     JScrollPane scrollPane;
 
    // JTable table;
@@ -191,8 +193,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
- //      imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+  //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -1023,9 +1025,12 @@ public class MainWindow extends JFrame implements ActionListener {
             } else {
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
+                   String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+              //  tableWindow TableWindow=null;
+              //  TableWindow.addRow(result);
+                    new tableWindow();
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1073,10 +1078,10 @@ public class MainWindow extends JFrame implements ActionListener {
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
-                    result += excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
+                   // String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
+                //    result += excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
                     JOptionPane.showMessageDialog(null, "Please wait for the list of all the Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
-                    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                 //   resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
