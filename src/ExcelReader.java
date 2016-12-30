@@ -1074,7 +1074,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-
         return String.valueOf(stringBuilder);
     }
 
@@ -2029,9 +2028,11 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
         Date endDate = null;
+        Date endDate2 = null;
         try {
             startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
             endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+            endDate2 = df.parse(2009 + "." +12+ "." + 31);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -2106,9 +2107,33 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
       //  int checkIndex =23;
       //  int startIndex =23;
       //  int endIndex =31;
-    //    int yearPosition=0; //it only can go up to 12
-        for (int x = 0; x < years; x++) { //run for the appropiate number of years
-//yearPosition+=1;
+      //  int yearPosition=2004; //it only can go up to 12
+      //  int xday=31;
+       // int xyear=12;
+       // Date PositionDate= null;
+        Date BD= null;
+        SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
+        SimpleDateFormat datetemp2 = new SimpleDateFormat("dd-MM-yy");
+        //int AmtRefundedindex = 18 + (9*years+8); //move to the amount refunded column
+        for (int x = 0; x < years; x++) { //run for the appropiate number of years 0 up to whatever year
+
+/*
+            try {
+             //   startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+             //   endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+                PositionDate = df.parse(yearPosition + "." +12+ "." + 31);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+*/
+
+            try {
+               BD = datetemp2.parse(StartDay+"-"+StartMonth+"-"+StartYear);//"01-Jan-05"
+          //      endDate = datetemp.parse(Utility.getEndDate(StartYear,01,01));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 //
             //  System.out.println(numOfActives);
             Cell cellR;
@@ -2172,6 +2197,50 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 }
                 double CellFees = cellFees.getNumericCellValue();
 
+                //get amount refunded amount
+
+             /*  XSSFCell cellEBAmtRefunded = ActiveRow.getCell(AmtRefundedindex);
+                if (cellEBAmtRefunded == null) {
+                    cellEBAmtRefunded = ActiveRow.createCell(AmtRefundedindex);
+                    cellEBAmtRefunded.setCellValue(0);
+                }
+                double CellEBAmtRefunded = cellEBAmtRefunded.getNumericCellValue();
+
+                AmtRefundedindex+=1;//move over to amount refunded for employee optional
+
+                XSSFCell cellEOAmtRefunded = ActiveRow.getCell(AmtRefundedindex);
+                if (cellEOAmtRefunded == null) {
+                    cellEOAmtRefunded = ActiveRow.createCell(AmtRefundedindex);
+                    cellEOAmtRefunded.setCellValue(0);
+                }
+                double CellEOAmtRefunded = cellEOAmtRefunded.getNumericCellValue();*/
+
+                //GET DATE OF TERMINATION
+                XSSFCell cellDOT = ActiveRow.getCell(8);
+                if (cellDOT == null) {
+                    cellDOT = ActiveRow.createCell(8);
+                    cellDOT.setCellValue("01-Jan-01");
+                }
+               String CellDOT = cellDOT.getStringCellValue();
+
+                XSSFCell cellD = ActiveRow.getCell(10); //end of year of termination
+                if (cellD == null) {
+                    cellD = ActiveRow.createCell(10);
+                    cellD.setCellValue("01-Jan-01");
+                }
+                String CellD = cellD.getStringCellValue();//end of year of termination
+
+
+           //     SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
+
+                Date statusDate = null;
+                Date ED2 = null;
+                try {
+                    statusDate = datetemp.parse(CellDOT);
+                    ED2=datetemp.parse(CellD);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
           /*      int year = 2004;
                 year+=x;
@@ -2182,13 +2251,21 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 System.out.println("Acc "+ CellAccEmployerRequired +"Con"+CellConEmployerRequired);
                 System.out.println("Acc "+ CellAccEmployerOptional +"Con"+CellConEmployerOptional);
                 System.out.println(interestValues[x]);*/
+               int year = 2004;
+               year+=x;
+                System.out.println("Year: " +year+"Row: "+row);
+          System.out.println("DOT: "+statusDate);
+                System.out.println("BD: "+BD);
+                System.out.println("ED: "+ED2);
+            //    System.out.println("EBR: "+CellEBAmtRefunded);
+            //    System.out.println("EOR: "+CellEOAmtRefunded);
                 //FORMULA CALCULATIONS
-             //   if(checkIndex >=startIndex && checkIndex<=endIndex && x<yearPosition) {
+                if (statusDate.after(BD) && statusDate.before(ED2)) {
                     newAccEmployeeBalance[I] = ((CellAccEmployeeBasic * (1 + interestValues[x])) + (CellConEmployeeBasic * (1 + (interestValues[x] * 0.5))));//CellAccEmployeeBasic * (1 + 1) + CellConEmployeeBasic * (1 + 1 * 0.5);
                     newAccEmployeeOptional[I] = ((CellAccEmployeeOptional * (1 + interestValues[x])) + (CellConEmployeeOptional * (1 + (interestValues[x] * 0.5))));//CellAccEmployeeOptional +  CellConEmployeeOptional; CellAccEmployeeOptional * (1 + 1) + CellConEmployeeOptional * (1 + 1 * 0.5);
                     newAccEmployerRequired[I] = ((CellAccEmployerRequired * (1 + interestValues[x])) + (CellConEmployerRequired * (1 + (interestValues[x] * 0.5))) + (CellFees * (1 + (interestValues[x] * 0.5))));//CellAccEmployerRequired * (1 + 1) + CellConEmployerRequired * (1 + 1 * 0.5) + CellFees * (1 + 1 * 0.5);
                     newAccEmployerOptional[I] = ((CellAccEmployerOptional * (1 + interestValues[x])) + (CellConEmployerOptional * (1 + (interestValues[x] * 0.5))));//CellAccEmployerOptional * (1 + 1) + CellConEmployerOptional * (1 + 1 * 0.5);
-                /*else{
+          /*      }else{
                     newAccEmployeeBalance[I] = 0;//CellAccEmployeeBasic * (1 + 1) + CellConEmployeeBasic * (1 + 1 * 0.5);
                     newAccEmployeeOptional[I] = 0;//CellAccEmployeeOptional +  CellConEmployeeOptional; CellAccEmployeeOptional * (1 + 1) + CellConEmployeeOptional * (1 + 1 * 0.5);
                     newAccEmployerRequired[I] = 0;//CellAccEmployerRequired * (1 + 1) + CellConEmployerRequired * (1 + 1 * 0.5) + CellFees * (1 + 1 * 0.5);
@@ -2207,7 +2284,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
               //      checkIndex+=9;
              //       startIndex+=9;
              //       endIndex+=9;
-             //   }
+                }
             }//end of looping through each member
 
             //MOVING THE INDEXES
@@ -2217,18 +2294,18 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             StartYear++;//increment Start year by one until we reach end year
 
             //when we are at end of year...we should write account balance as at end date
-/*           if(x==(years-1)) {
-               readCol+=3;//move over by 3 columns to get to amount refunded
+         if(x==(years-1)) {
+               readCol+=5;//move over by 3 columns to get to amount refunded
                 for (int I = 0, row=7; row < numOfActives; I++, row++) {
                     XSSFRow  ActiveRow=TermineeSheet.getRow(row);
                     for(int col=0;col<2;col++) {
                         cellR = ActiveRow.createCell(readCol);
-                        cellR.setCellValue("test");
+                        cellR.setCellValue(newAccEmployeeBalance[I]);
                         cellR = ActiveRow.createCell(readCol+col);
-                        cellR.setCellValue("test2");
+                        cellR.setCellValue(newAccEmployeeOptional[I]);
                     }
                     }
-            }*/
+            }
 
         }// END OF LOOP YEARS
 
@@ -3117,7 +3194,6 @@ double [] values = new double[numOfYears];
             return values;
     }
 
-
     public void Results(){
 
         DecimalFormat dF = new DecimalFormat("#");//#.##
@@ -3700,13 +3776,21 @@ double [] values = new double[numOfYears];
 
                     rowR[Row] = sheetR.createRow(counter++);
                     // }
-                    for (int Col = 0; Col <= 9; Col++) {
+                    for (int Col = 0; Col < 10; Col++) {
                         //Update the value of cell
                         //   cellR = rowR[Row].getCell(Col);
                         //   if (cellR == null) {
                         cellR = rowR[Row].createCell(Col);
                         //   }
-                        cellR.setCellValue(String.valueOf(arraylist.get(Col)));
+/*                        if(arraylist.get(Col) instanceof Date)
+                            cellR.setCellValue((Date)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof Boolean)
+                            cellR.setCellValue((Boolean)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof String)
+                            cellR.setCellValue((String)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof Double)
+                            cellR.setCellValue((Double)arraylist.get(Col));*/
+                       cellR.setCellValue(String.valueOf(arraylist.get(Col)));
                     }
 
                 }
@@ -3758,12 +3842,20 @@ double [] values = new double[numOfYears];
 
                     rowR[Row] = sheetW.createRow(TermineesStartRow++);
                     // }
-                    for (int Col = 0; Col <= 9; Col++) {
+                    for (int Col = 0; Col < 10; Col++) {
                         //Update the value of cell
                         //   cellR = rowR[Row].getCell(Col);
                         //   if (cellR == null) {
                         cellR = rowR[Row].createCell(Col);
                         //   }
+  /*                      if(arraylist.get(Col) instanceof Date)
+                            cellR.setCellValue((Date)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof Boolean)
+                            cellR.setCellValue((Boolean)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof String)
+                            cellR.setCellValue((String)arraylist.get(Col));
+                        else if(arraylist.get(Col) instanceof Double)
+                            cellR.setCellValue((Double)arraylist.get(Col));*/
                         cellR.setCellValue(String.valueOf(arraylist.get(Col)));
                     }
 
