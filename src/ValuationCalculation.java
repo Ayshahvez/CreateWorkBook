@@ -17,7 +17,175 @@ import java.util.Date;
  */
 public class ValuationCalculation {
 
-public void Create_Income_Expenditure_Table(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+    public void Create_Balance_Sheet_Table(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
+      double employeeBasicContribution=0;
+      double employeeOptionalContribution=0;
+      double employerContribution=0;
+      double subTotalAccruedBenefits=0;
+      double refundsOutstandingToUnclaimedMembers=0;
+      double refundsOutstandingToTerminatedMembers=0;
+      double accruedBenefitsToRetiredMembers=0;
+      double accruedBenefitsToDeferredVestedPensioners;
+      double totalActuarialLiability=0;
+      double marketValueOfNetAssets=0;
+      double actuarialSurplusDefecit=0;
+      double solvencyLevel=0;
+
+        try{
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Balance_Sheet.xlsx");
+            XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+            XSSFSheet sheetVal_Bal = workbookR.getSheetAt(0);
+
+            FileInputStream file = new FileInputStream(workingDir + "\\Income_Expenditure_Table.xlsx");
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+//GET DATA FROM TEMPLATE
+
+            XSSFRow Row= sheetVal_Bal.getRow(5);
+            XSSFCell cellemployeeBasicContribution = Row.getCell(3);
+            if(cellemployeeBasicContribution==null){
+                cellemployeeBasicContribution=Row.createCell(3);
+                cellemployeeBasicContribution.setCellValue(0.00);
+            }
+            employeeBasicContribution = cellemployeeBasicContribution.getNumericCellValue();
+
+           Row= sheetVal_Bal.getRow(6);
+            XSSFCell cellemployeeOptionalContribution = Row.getCell(3);
+            if(cellemployeeOptionalContribution==null){
+                cellemployeeOptionalContribution=Row.createCell(3);
+                cellemployeeOptionalContribution.setCellValue(0.00);
+            }
+            employeeOptionalContribution = cellemployeeOptionalContribution.getNumericCellValue();
+
+
+            Row= sheetVal_Bal.getRow(7);
+            XSSFCell cellemployerContribution = Row.getCell(3);
+            if(cellemployerContribution==null){
+                cellemployerContribution=Row.createCell(3);
+                cellemployerContribution.setCellValue(0.00);
+            }
+            employerContribution = cellemployerContribution.getNumericCellValue();
+
+
+            Row= sheetVal_Bal.getRow(10);
+            XSSFCell cellrefundsOutstandingToUnclaimedMembers = Row.getCell(3);
+            if(cellrefundsOutstandingToUnclaimedMembers==null){
+                cellrefundsOutstandingToUnclaimedMembers=Row.createCell(3);
+                cellrefundsOutstandingToUnclaimedMembers.setCellValue(0.00);
+            }
+            refundsOutstandingToUnclaimedMembers = cellrefundsOutstandingToUnclaimedMembers.getNumericCellValue();
+
+
+            Row= sheetVal_Bal.getRow(11);
+            XSSFCell cellrefundsOutstandingToTerminatedMembers= Row.getCell(3);
+            if(cellrefundsOutstandingToTerminatedMembers==null){
+                cellrefundsOutstandingToTerminatedMembers=Row.createCell(3);
+                cellrefundsOutstandingToTerminatedMembers.setCellValue(0.00);
+            }
+            refundsOutstandingToTerminatedMembers = cellrefundsOutstandingToTerminatedMembers.getNumericCellValue();
+
+
+            Row= sheetVal_Bal.getRow(12);
+            XSSFCell cellaccruedBenefitsToRetiredMembers= Row.getCell(3);
+            if(cellaccruedBenefitsToRetiredMembers==null){
+                cellaccruedBenefitsToRetiredMembers=Row.createCell(3);
+                cellaccruedBenefitsToRetiredMembers.setCellValue(0.00);
+            }
+            accruedBenefitsToRetiredMembers = cellaccruedBenefitsToRetiredMembers.getNumericCellValue();
+
+
+            Row= sheetVal_Bal.getRow(13);
+            XSSFCell cellaccruedBenefitsToDeferredVestedPensioners= Row.getCell(3);
+            if(cellaccruedBenefitsToDeferredVestedPensioners==null){
+                cellaccruedBenefitsToDeferredVestedPensioners=Row.createCell(3);
+                cellaccruedBenefitsToDeferredVestedPensioners.setCellValue(0.00);
+            }
+            accruedBenefitsToDeferredVestedPensioners = cellaccruedBenefitsToDeferredVestedPensioners.getNumericCellValue();
+
+            Row= sheet.getRow(32);
+            XSSFCell cellNetIncome= Row.getCell(years+1);
+            if(cellNetIncome==null){
+                cellNetIncome=Row.createCell(3);
+                cellNetIncome.setCellValue(0.00);
+            }
+            marketValueOfNetAssets = cellNetIncome.getNumericCellValue();
+
+            //CALCULATIONS
+            subTotalAccruedBenefits = employeeBasicContribution+employeeOptionalContribution+employerContribution;
+            totalActuarialLiability=subTotalAccruedBenefits+refundsOutstandingToUnclaimedMembers+refundsOutstandingToTerminatedMembers+accruedBenefitsToRetiredMembers+accruedBenefitsToDeferredVestedPensioners;
+actuarialSurplusDefecit=marketValueOfNetAssets-totalActuarialLiability;
+solvencyLevel=(marketValueOfNetAssets/totalActuarialLiability)*100;
+
+
+//WRITE CALCULATIONS TO WORKBOOK
+            XSSFRow row = sheetVal_Bal.getRow(8);
+            row.createCell(3).setCellValue(Double.parseDouble(dF.format(subTotalAccruedBenefits)));
+
+          row = sheetVal_Bal.getRow(15);
+            row.createCell(3).setCellValue(Double.parseDouble(dF.format(totalActuarialLiability)));
+
+            row = sheetVal_Bal.getRow(17);
+            row.createCell(3).setCellValue(Double.parseDouble(dF.format(marketValueOfNetAssets)));
+
+            row = sheetVal_Bal.getRow(19);
+            row.createCell(3).setCellValue(Double.parseDouble(dF.format(actuarialSurplusDefecit)));
+
+            row = sheetVal_Bal.getRow(21);
+            row.createCell(3).setCellValue(Double.parseDouble(dF.format(solvencyLevel)));
+
+
+
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Balance_Sheet_Table.xlsx"));
+            workbookR.write(outFile);
+            fileR.close();
+            file.close();
+            outFile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+
+        }
+        }
+
+    public void Create_Income_Expenditure_Table(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
     DecimalFormat dF = new DecimalFormat("#.##");//#.##
     String SD[] = PensionPlanStartDate.split("/");
     int startMonth = Integer.parseInt(SD[0]);

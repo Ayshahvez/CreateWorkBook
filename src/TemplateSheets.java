@@ -1180,6 +1180,111 @@ public class TemplateSheets {
     }
 }
 
+    public static void Create_Template_Balance_Sheet(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException, ParseException {
+      try{
+        String str2[] = EndDate.split("/");
+        int EndMonth = Integer.parseInt(str2[0]);
+        int EndDay = Integer.parseInt(str2[1]);
+        int EndYear = Integer.parseInt(str2[2]);
 
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        //       MemberModel model = new MemberModel();
+
+        XSSFSheet sheet = workbook.createSheet("Val Balance Sheet");
+
+          XSSFRow row = sheet.createRow(0);
+          row.createCell(1).setCellValue(PensionPlanName);
+          sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
+
+        row = sheet.createRow(1);
+        row.createCell(1).setCellValue("FUNDING VALUATION BALANCE SHEET AS AT  "+EndYear+"."+EndMonth+"."+EndDay);
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 4));
+
+          row = sheet.createRow(2);
+          row.createCell(0).setCellValue("A");
+          row.createCell(1).setCellValue("LIABILITY");
+      //    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+
+         // row = sheet.createRow(2);
+          row.createCell(3).setCellValue("AMOUNT ($)");
+       //   sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+          row = sheet.createRow(4);
+          row.createCell(0).setCellValue("1");
+          row.createCell(1).setCellValue("BENEFITS TO ACTIVE MEMBERS: ");
+        //  sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+
+          row = sheet.createRow(5);
+          row.createCell(0).setCellValue("(a)");
+          row.createCell(1).setCellValue("Related to Employees' Basic Contributions Plus Credited Interest");
+       //   sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+          row = sheet.createRow(6);
+          row.createCell(0).setCellValue("(b)");
+          row.createCell(1).setCellValue("Related to Employees' Optional Contributions Plus Credited Interest ");
+
+          row = sheet.createRow(7);
+          row.createCell(0).setCellValue("(c)");
+          row.createCell(1).setCellValue("Related to Employer's Contributions Paid into the Fund Plus Credited ");
+
+          row = sheet.createRow(8);
+          row.createCell(0).setCellValue("(d)");
+          row.createCell(1).setCellValue("Sub-Total (Accrued Benefits to Actives) = Sum of 1(a) to 1(c) ");
+
+          row = sheet.createRow(10);
+          row.createCell(0).setCellValue("2");
+          row.createCell(1).setCellValue("REFUNDS OUTSTANDING TO UNCLAIMED MEMBERS ");
+
+          row = sheet.createRow(11);
+          row.createCell(0).setCellValue("3");
+          row.createCell(1).setCellValue("REFUNDS OUTSTANDING TO TERMINATED MEMBERS");
+
+          row = sheet.createRow(12);
+          row.createCell(0).setCellValue("4");
+          row.createCell(1).setCellValue("ACCRUED BENEFITS TO RETIRED MEMBERS");
+
+
+          row = sheet.createRow(13);
+          row.createCell(0).setCellValue("5");
+          row.createCell(1).setCellValue("ACCRUED BENEFITS TO DEFERRED VESTED PENSIONERS");
+
+
+          row = sheet.createRow(15);
+          row.createCell(0).setCellValue("6");
+          row.createCell(1).setCellValue("TOTAL ACTUARIAL LIABILITY [1(d) + 2 + 3 + 4 + 5]");
+
+          row = sheet.createRow(17);
+          row.createCell(0).setCellValue("B");
+          row.createCell(1).setCellValue("MARKET VALUE OF NET ASSETS ");
+
+          row = sheet.createRow(19);
+          row.createCell(0).setCellValue("C");
+          row.createCell(1).setCellValue("ACTUARIAL SURPLUS/(DEFICIT) = B - A(6)");
+
+          row = sheet.createRow(21);
+          row.createCell(0).setCellValue("D");
+          row.createCell(1).setCellValue("SOLVENCY LEVEL = [ B/A(6) ] *100");
+          for (int x = 0; x <4; x++) {
+              //   sheet.autoSizeColumn(x);
+              sheet.autoSizeColumn(x);
+
+          }
+
+          //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(
+                new File(workingDir + "\\Template_Balance_Sheet.xlsx"));
+        workbook.write(out);
+        out.close();
+        workbook.close();
+        System.out.println("Template_Inc_Exp_Sheet.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
 
 }

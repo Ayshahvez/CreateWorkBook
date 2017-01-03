@@ -20,7 +20,86 @@ import java.util.*;
 
 public class ExcelReader {
 
-static Utility utility = new Utility();
+    public void WriteTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
+
+        double value=0;
+
+        try {
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Accumulated_Actives_Sheet.xlsx");
+            XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+            XSSFSheet ActiveSheet = workbookR.getSheetAt(0);
+            int numOfActives = ActiveSheet.getLastRowNum() + 1;
+
+//MAIN PROCESSING
+            XSSFRow rowtotal = ActiveSheet.createRow(numOfActives + 1);
+            rowtotal.createCell(2).setCellValue("TOTAL");
+for(int k=0;k<years;k++){
+            //GET DATA FROM TEMPLATE
+            for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                //get the prior year adjustment if any
+                XSSFRow Row = ActiveSheet.getRow(row);
+                XSSFCell cellValues = Row.getCell(8+k);
+                if (cellValues == null) {
+                    cellValues = Row.createCell(8);
+                    cellValues.setCellValue(0.00);
+                }
+                value += cellValues.getNumericCellValue();
+
+            }
+            rowtotal = ActiveSheet.getRow(numOfActives + 1);
+            rowtotal.createCell(8+k).setCellValue(Double.parseDouble(dF.format(value)));
+            value=0;
+        }
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Completed_Actives_Sheet.xlsx"));
+            workbookR.write(outFile);
+            fileR.close();
+            outFile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+    static Utility utility = new Utility();
 
     //NO FEES
     public String Create_Actives_Sheet(String workingDir) throws IndexOutOfBoundsException {
@@ -238,7 +317,7 @@ static Utility utility = new Utility();
                             for (int k = 8, l = 0; l < 12; k++, l++) {
 
                                 cellR = rowR[Row].createCell(k);
-                                cellR.setCellValue(String.valueOf(dF.format(PensionableSalary.get(l))));
+                                cellR.setCellValue(Double.parseDouble(dF.format(PensionableSalary.get(l))));
                             }
                             break;
                         }
@@ -1589,11 +1668,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
     //FEES
     public void Create_Fees_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
-        /*
-        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
-        XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
-        XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);
-        */
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
@@ -1620,8 +1694,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         int StartMonth = startMonth;
         int StartDay = startDay;
 
-        // System.out.println(StartYear + "." + StartMonth + "." + StartDay);
-        //  System.out.println(EndYear + "." + EndMonth + "." + EndDay);
 
         int WriteAt =26;
 
@@ -1636,9 +1708,10 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
 
         int counter=7;
-        for (int x = 0; x <= years; x++) {
+        for (int x = 0; x < years; x++) {
 
 
             Calendar cal = Calendar.getInstance();
@@ -1661,22 +1734,16 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
 //GET RECON SHEET
             XSSFSheet Reconsheet = WB.getSheet(Recon);
-            System.out.println(formattedDate);
+      //      System.out.println(formattedDate);
             int CountReconRow = Reconsheet.getPhysicalNumberOfRows();
 
-
-
             int numOfActives = ActiveSheet.getLastRowNum()+1; // get the last row number
-            // System.out.println(rowCount);
-            //     System.out.println("Recon"+ Recon + "count"+CountReconRow +"Actives" +numOfActives);
+
             XSSFRow[] rowR = new XSSFRow[numOfActives];
             Cell cellR = null;
 
-/*if(Recon.equals(15)){
-    numOfActives=35;
-}*/
-            int Crow = 8;
-            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+          //  int Crow = 8;
+            for (int row = 7; row < numOfActives; row++) {
 
                 int Row = row;
 
@@ -1695,18 +1762,20 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 XSSFCell cellD1 = ActiveRow.getCell((short) 3);
                 String d1Val = cellD1.getStringCellValue();
 
-                String i1Val = null;
-                XSSFCell[] cellI1 = new XSSFCell[12];
-                double [] d = new double[12];
-                for (int g=8,j=0;g<20;g++,j++){
+                //get the PENSIONABLE SALARY AMOUNTS
+            //    String i1Val = null;
+ /*               double i1Val = 0;
+                XSSFCell[] cellI1 = new XSSFCell[years];
+                double [] d = new double[years];
+
+                for (int g=7,j=0;j<years;g++,j++){
                     cellI1[j] = ActiveRow.getCell(g);
-                    i1Val = cellI1[j].getStringCellValue();
-                    d[j] = Double.parseDouble(i1Val);
+                    //i1Val = cellI1[j].getStringCellValue();
+                    i1Val = cellI1[j].getNumericCellValue();
+                    //d[j] = Double.parseDouble(i1Val);
+                    d[j] = i1Val;
                 }
-
-
-                //    Crow++;
-
+*/
                 rowR[Row] = ActiveSheet.getRow(counter++);
 
                 for (int y = 6; y < CountReconRow; y++) {
@@ -1767,14 +1836,14 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
                         ArrayList<Double> val = new ArrayList();
 
-                        System.out.print("A1: " + a1);
+                   /*     System.out.print("A1: " + a1);
                         System.out.print(" D1: " + b1);
                         System.out.print(" C1: " + c1);
                         System.out.print("PS: " + i1Val);
                         System.out.print(" H1: " + h1);
                         System.out.print(" I1: " + i1);
-                        System.out.print(" J1: " + j1);
-                        String test="";
+                        System.out.print(" J1: " + j1);*/
+            /*            String test="";
                         double check = 0.05 *d[x];
                         check= Double.parseDouble(dF.format(check));
                         if (check == h1) {
@@ -1782,10 +1851,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
                         } else {
                             test = "false";
-                        }
-                        System.out.print(" TEST: Pensionable Salary"+d[x]+"result "+check+test);
+                        }*/
 
-                        System.out.println();
 
                         val.add(0, h1); //employee basic
                         val.add(1, i1);  //employee optional
@@ -1793,36 +1860,17 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                         val.add(3, 0.00); //employer optional
                         val.add(4,CellFeeVal); //fees
 
-
                         for (int b = 0; b < val.size(); b++) {
                             cellR = rowR[Row].createCell(WriteAt + b);
                             cellR.setCellValue((Double)val.get(b));
                         }
 
-                                                                           /*    cellR = rowR[Row].createCell(26);
-                                                                                cellR.setCellValue(h1);
-
-                                                                                cellR = rowR[Row].createCell(27);
-                                                                                cellR.setCellValue(i1);
-
-                                                                                cellR = rowR[Row].createCell(28);
-                                                                                cellR.setCellValue(j1);
-
-                                                                                cellR = rowR[Row].createCell(29);
-                                                                                cellR.setCellValue(0);*/
-
                         break;
-
                     }
 
-
-                    //   counter=7;
                 }
 
-
-
             }
-
             WriteAt+=9;
             StartYear++; //comment out years if COMMENTED
             counter=7;
@@ -2033,7 +2081,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 //write the calculated accumulated balances to the sheet; start to write at column 31
                 for (int b = 0; b < 4; b++) {
                     cellR = ActiveRow.createCell(Write_Coloumn + b);
-                    cellR.setCellValue(dF.format(val.get(b)));
+                    cellR.setCellValue(Double.parseDouble(dF.format(val.get(b))));
                 }//end of loop
 
             }//end of looping through each member
@@ -2051,7 +2099,9 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     cellR = ActiveRow.createCell(readCol);
                     double AccountBalance =  newAccEmployeeBalance[I] + newAccEmployeeOptional[I] + newAccEmployerRequired[I]+newAccEmployerOptional[I];
                     cellR.setCellValue(AccountBalance);
+
                 }
+
             }
 
         }// END OF LOOP YEARS

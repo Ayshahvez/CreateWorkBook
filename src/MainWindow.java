@@ -212,8 +212,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-   //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+ //     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -388,6 +388,18 @@ MenuCalculations.add(MenuItemCreateBalSheetTable);
     public void actionPerformed(ActionEvent e) {
       //  Color LINES = new Color(130, 125, 127);
         Color LINES = new Color(105, 105, 107);
+
+        if(e.getSource().equals(MenuItemCreateBalSheetTemplate)){
+            try {
+                TemplateSheets.Create_Template_Balance_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+
 if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
     try {
         TemplateSheets.Create_Template_Inc_Exp_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
@@ -400,6 +412,15 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
             try {
               valuationCalculation.Create_Income_Expenditure_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                 JOptionPane.showMessageDialog(null, "Income and Expenditure Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        if(e.getSource().equals(MenuItemCreateBalSheetTable)){
+            try {
+                valuationCalculation.Create_Balance_Sheet_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                JOptionPane.showMessageDialog(null, "The Valuation Balance Sheet Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -980,6 +1001,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                                  excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                  //here
                            excelReader.Create_Fees_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                           excelReader.WriteTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -1194,6 +1216,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
     private void registerListener() {
         MenuItemCreateIncExpTable.addActionListener(this);
+        MenuItemCreateBalSheetTemplate.addActionListener(this);
         //MEMBERS LISTENERS
         MenuItemCreateIncExpTemplate.addActionListener(this);
         MenuItemCreateSeperatedTemplate.addActionListener(this);
@@ -1239,6 +1262,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
         MenuItemCreateFeesTermineeSheet.addActionListener(this);
 
         MenuItemInterestRates.addActionListener(this);
+        MenuItemCreateBalSheetTable.addActionListener(this);
     }
 
 }
