@@ -1,4 +1,5 @@
 import com.sun.prism.paint.Color;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -976,4 +977,209 @@ public class TemplateSheets {
     }
         System.out.println("Template_Separated.xlsx Created Sucessfully" );
     }
+
+    public static void Create_Template_Inc_Exp_Sheet(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException {
+       try {
+
+            String str[] = StartDate.split("/");
+            int StartMonth = Integer.parseInt(str[0]);
+            int StartDay = Integer.parseInt(str[1]);
+            int StartYear = Integer.parseInt(str[2]);
+
+            String str2[] = EndDate.split("/");
+            int EndMonth = Integer.parseInt(str2[0]);
+            int EndDay = Integer.parseInt(str2[1]);
+            int EndYear = Integer.parseInt(str2[2]);
+
+           SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+           // Date startDate = df.parse("2012.01.01");
+           Date startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+           Date endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+
+           int years = getDiffYears(startDate, endDate);
+           System.out.println(years);
+           years+=1;
+           System.out.println(years);
+
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+     //       MemberModel model = new MemberModel();
+
+
+
+            XSSFSheet sheet2 = workbook.createSheet("Income & Expenditure Analysis");
+
+            XSSFRow row1 = sheet2.createRow(0);
+            row1.createCell(0).setCellValue("ANALYSIS OF INCOME AND EXPENDITURE OVER THE PERIOD "+StartYear+"."+StartMonth+"."+" "+StartDay+" TO "+EndYear+"."+EndMonth+"."+EndDay);
+           sheet2.addMergedRegion(new CellRangeAddress(0, 0, 0, years));
+
+            XSSFRow row2 = sheet2.createRow(1);
+            row2.createCell(0).setCellValue("FOR THE ACTUARIAL FUNDING VALUATION AS AT "+EndYear+"."+EndMonth+"." + EndDay + " OF THE " + PensionPlanName);
+           sheet2.addMergedRegion(new CellRangeAddress(1, 1, 0, years));
+
+           XSSFRow row3 = sheet2.createRow(3);
+           row3.createCell(1).setCellValue("AUDITED FINANCIAL STATEMENTS");
+           sheet2.addMergedRegion(new CellRangeAddress(3, 3, 1, years));
+
+           ArrayList<Integer> yearList = new ArrayList<Integer>();
+
+           System.out.println("years:" + years);
+           for (int h = 0; h < years; h++) {
+               yearList.add(h, StartYear + h);
+           }
+
+
+           XSSFRow yearHeadings= sheet2.createRow(4);
+           XSSFRow dollarHeadings= sheet2.createRow(5);
+           for (int t = 0; t < years; t++) {
+
+
+               yearHeadings.createCell(1 + t).setCellValue((yearList.get(t)) + "." + StartMonth + "." + StartDay + " to "
+                       + getDate(yearList.get(t), StartMonth, StartDay));
+               dollarHeadings.createCell(1 + t).setCellValue("$");
+
+               if(t==years-1){
+                   yearHeadings.createCell(years+1).setCellValue("Consolidated "+StartYear+"." + StartMonth + "." + StartDay + " to "+EndYear+"."+EndMonth+"."+EndDay);
+               //    sheet2.addMergedRegion(new CellRangeAddress(3, 3, 1, years));
+                   dollarHeadings.createCell(1 + years).setCellValue("$");
+               }
+
+           }
+          // yearHeadings.createCell(years+1).setCellValue("Consolidated "+StartYear+"." + StartMonth + "." + StartDay + " to "+EndYear+"."+EndMonth+"."+EndDay);
+
+           XSSFRow fieldRow1= sheet2.createRow(6);
+           fieldRow1.createCell(0).setCellValue("FUND AT BEGINNING OF PERIOD");
+
+           XSSFRow fieldRow2= sheet2.createRow(7);
+           fieldRow2.createCell(0).setCellValue("Prior Year Adjustment");
+
+           XSSFRow fieldRow3= sheet2.createRow(8);
+           fieldRow3.createCell(0).setCellValue("INCOME");
+
+           XSSFRow fieldRow4= sheet2.createRow(9);
+           fieldRow4.createCell(0).setCellValue("Employees' Contributions (Basic and Optional)");
+
+           XSSFRow fieldRow5= sheet2.createRow(10);
+           fieldRow5.createCell(0).setCellValue("Employer's Contributions");
+
+           XSSFRow fieldRow6= sheet2.createRow(11);
+           fieldRow6.createCell(0).setCellValue("Interest/Dividend Income");
+
+           XSSFRow fieldRow7= sheet2.createRow(12);
+           fieldRow7.createCell(0).setCellValue("Net Realized Gain/(Loss) on Investments");
+
+           XSSFRow fieldRow8= sheet2.createRow(13);
+           fieldRow8.createCell(0).setCellValue("Net Unrealized Gain/(Loss) on Investments");
+
+           XSSFRow fieldRow9= sheet2.createRow(14);
+           fieldRow9.createCell(0).setCellValue("Total Income");
+
+
+           XSSFRow fieldRow10= sheet2.createRow(16);
+           fieldRow10.createCell(0).setCellValue("EXPENDITURE");
+
+           XSSFRow fieldRow11= sheet2.createRow(17);
+           fieldRow11.createCell(0).setCellValue("Refunds of Contributions Upon Termination/Death");
+
+
+           XSSFRow fieldRow12= sheet2.createRow(18);
+           fieldRow12.createCell(0).setCellValue("Employees' Basic");
+
+           XSSFRow fieldRow13= sheet2.createRow(19);
+           fieldRow13.createCell(0).setCellValue("Employees' Optional");
+
+           XSSFRow fieldRow14= sheet2.createRow(20);
+           fieldRow14.createCell(0).setCellValue("Employer's Required");
+
+           XSSFRow fieldRow15= sheet2.createRow(21);
+           fieldRow15.createCell(0).setCellValue("Purchase of Immediate Pensions");
+
+           XSSFRow fieldRow16= sheet2.createRow(22);
+           fieldRow16.createCell(0).setCellValue("Purchase of Deferred  Pensions");
+
+           XSSFRow fieldRow17= sheet2.createRow(23);
+           fieldRow17.createCell(0).setCellValue("Lump Sum to Retirees");
+
+           XSSFRow fieldRow18= sheet2.createRow(24);
+           fieldRow18.createCell(0).setCellValue("Monthly Pensions Paid to Pensioners");
+
+           XSSFRow fieldRow19= sheet2.createRow(25);
+           fieldRow19.createCell(0).setCellValue("Amounts Used to Purchase  Immediate/Deferred Annuities");
+
+           XSSFRow fieldRow20= sheet2.createRow(26);
+           fieldRow20.createCell(0).setCellValue("Transfer ");
+
+           XSSFRow fieldRow21= sheet2.createRow(27);
+           fieldRow21.createCell(0).setCellValue("Administration Fees");
+
+           XSSFRow fieldRow22= sheet2.createRow(28);
+           fieldRow22.createCell(0).setCellValue("Investment Management Fees");
+
+           XSSFRow fieldRow23= sheet2.createRow(29);
+           fieldRow23.createCell(0).setCellValue("Fees for Professional Services (Actuarial, Audit, Legal, etc.)");
+
+           XSSFRow fieldRow24= sheet2.createRow(30);
+           fieldRow24.createCell(0).setCellValue("Other Expenses");
+
+           XSSFRow fieldRow25= sheet2.createRow(31);
+           fieldRow25.createCell(0).setCellValue("Total Expenditure");
+
+           XSSFRow fieldRow26= sheet2.createRow(32);
+           fieldRow26.createCell(0).setCellValue("NET INCOME");
+
+           XSSFRow fieldRow27= sheet2.createRow(33);
+           fieldRow27.createCell(0).setCellValue("FUND AT END OF PERIOD");
+
+           XSSFRow fieldRow28= sheet2.createRow(34);
+           fieldRow28.createCell(0).setCellValue("Administrative and Other Expenses");
+
+           XSSFRow fieldRow29= sheet2.createRow(35);
+           fieldRow29.createCell(0).setCellValue("Investment Expenses");
+
+
+           XSSFRow fieldRow30= sheet2.createRow(36);
+           fieldRow30.createCell(0).setCellValue("Total Expenses");
+
+           XSSFRow fieldRow31= sheet2.createRow(37);
+           fieldRow31.createCell(0).setCellValue("Total Investment Income");
+
+           XSSFRow fieldRow32= sheet2.createRow(39);
+           fieldRow32.createCell(0).setCellValue("Gross Fund Yield - GFY (% p.a.)");
+
+           XSSFRow fieldRow33= sheet2.createRow(40);
+           fieldRow33.createCell(0).setCellValue("Adjusted Fund Yield - AFY (% p.a.)");
+
+           XSSFRow fieldRow34= sheet2.createRow(41);
+           fieldRow34.createCell(0).setCellValue("Net Fund Yield - NFY (% p.a.)");
+
+
+           XSSFRow fieldRow35= sheet2.createRow(43);
+           fieldRow35.createCell(0).setCellValue("Plan Year Inflation (% p.a.)");
+
+           XSSFRow fieldRow36= sheet2.createRow(44);
+           fieldRow36.createCell(0).setCellValue("Real Adjusted Fund Yield (% p.a.)");
+
+           //   XSSFRow[] fieldRow = new XSSFRow[10];
+           for (int x = 0; x <= yearList.size(); x++) {
+               //   sheet.autoSizeColumn(x);
+               sheet2.autoSizeColumn(x);
+
+           }
+
+           //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(
+                new File(workingDir + "\\Template_Inc_Exp_Sheet.xlsx"));
+        workbook.write(out);
+        out.close();
+        workbook.close();
+        System.out.println("Template_Inc_Exp_Sheet.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
+
 }

@@ -22,6 +22,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
     ExcelReader excelReader = new ExcelReader();
     ValidationChecks validationChecks = new ValidationChecks();
+    ValuationCalculation valuationCalculation = new ValuationCalculation();
     Utility utility = new Utility();
 
     //GLOBAL VARIABLES NEEDED FOR NOW
@@ -40,6 +41,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
     //main MenuBar
     JMenuBar menuBar;
+    JMenuBar MenuBarCreateTemplateSheets;
 
     JMenu MenuEditor;
     JMenuItem MenuItemViewPlanDeatils;
@@ -124,6 +126,14 @@ public class MainWindow extends JFrame implements ActionListener {
     private JButton btnBrowse;
     private JPanel jPanel, panWelcome, eastPanel, westPanel;
 
+    //CALCULATION MENU
+    JMenu MenuCalculations;
+    JMenuItem MenuItemCreateIncExpTemplate;
+    JMenuItem  MenuItemCreateBalSheetTemplate;
+
+    JMenuItem MenuItemCreateIncExpTable;
+    JMenuItem MenuItemCreateBalSheetTable;
+
     public MainWindow() throws IOException {
         super("GFRAM Pension Automation Process Beta");
         try {
@@ -158,6 +168,15 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     public void initiliazeComponents() {
+        //CALCULATIONS
+        MenuCalculations = new JMenu("Valuation Calculations");
+        MenuItemCreateIncExpTemplate = new JMenuItem("Create Income and Expenditure Template");
+        MenuItemCreateBalSheetTemplate = new JMenuItem("Create Balance Sheet Template");
+
+        MenuItemCreateIncExpTable = new JMenuItem("Create Income and Expenditure Table");
+        MenuItemCreateBalSheetTable = new JMenuItem("Create Balance Sheet Table");
+
+        MenuBarCreateTemplateSheets = new JMenuBar();
 /*        String[] columnHeaders = {"Popularity","Position","Team","Manager","Points"};
         Object[][] data = {
                 {"1","Famous","Man Utd","Luis Van Gaal","86"},
@@ -193,8 +212,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
-  //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+   //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\dp.png"));
+      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -231,8 +250,8 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuItemViewTerminatedMember = new JMenuItem("View Terminated Members");
 
 
-        MenuValidationChecks = new JMenu("Validation Checks");
-        menuSingleCheck = new JMenu("Perform Single Check");
+        MenuValidationChecks = new JMenu("Data Quality Checks");
+        menuSingleCheck = new JMenu("Perform ValidationCheck");
         CheckDuplicate = new JMenuItem("Duplicate Check");
         CheckAge = new JMenuItem("Age Check");
         CheckDateofBirth = new JMenuItem("Date of Birth Check");
@@ -268,6 +287,10 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     private void addComponentsTopanels() {
+        //CALCULATIONS
+MenuCalculations.add(MenuItemCreateIncExpTable);
+MenuCalculations.add(MenuItemCreateBalSheetTable);
+
         MenuCreateWorkBook.add(MenuItemSeperateMembers);
         MenuCreateWorkBook.add(MenuCreateWorkbookFees);
         MenuCreateWorkBook.add(MenuCreateWorkbookNoFees);
@@ -292,10 +315,12 @@ public class MainWindow extends JFrame implements ActionListener {
 
         MenuNoFeesTemplate.add(MenuItemCreateNoFeesActiveSheetTemplate);
         MenuNoFeesTemplate.add(MenuItemCreateNoFeesTermineeSheetTemplate);
+        MenuCreateTemplateSheet.add(MenuItemCreateIncExpTemplate);
+        MenuCreateTemplateSheet.add(MenuItemCreateBalSheetTemplate);
 
-        MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
-        MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
-        MenuLoadTemplateSheet.add(MenuItemLoadTemplateTermineeSheet);
+     //   MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
+     //   MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
+     //   MenuLoadTemplateSheet.add(MenuItemLoadTemplateTermineeSheet);
 
         MenuMembers.add(MenuItemViewActiveMember);
         MenuMembers.add(MenuItemViewTerminatedMember);
@@ -332,6 +357,7 @@ public class MainWindow extends JFrame implements ActionListener {
         menuBar.add(MenuMembers);
         menuBar.add(MenuValidationChecks);
         menuBar.add(MenuCreateWorkBook);
+        menuBar.add(MenuCalculations);
         menuBar.add(MenuEditor);
 
         MenuEditor.add(MenuItemClearScreen);
@@ -343,6 +369,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
         jPanel.add(menuBar);
+      //  westPanel.add(MenuBarCreateTemplateSheets);
+      //  eastPanel.add(MenuCalculations);
+   //     MenuBarCreateTemplateSheets.add(MenuItemCreateIncExpTemplate);
 
 //        MenuLoadWorkbook.add(LoadValDataWorkBook);
      //   MenuLoadWorkbook.add(LoadPensionableSalaryWorkBook);
@@ -359,6 +388,22 @@ public class MainWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       //  Color LINES = new Color(130, 125, 127);
         Color LINES = new Color(105, 105, 107);
+if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
+    try {
+        TemplateSheets.Create_Template_Inc_Exp_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+    } catch (IOException e1) {
+        e1.printStackTrace();
+    }
+}
+
+        if(e.getSource().equals(MenuItemCreateIncExpTable)){
+            try {
+              valuationCalculation.Create_Income_Expenditure_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                JOptionPane.showMessageDialog(null, "Income and Expenditure Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
 
 
         if (e.getSource().equals(MenuItemClearScreen)) {
@@ -593,8 +638,10 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                    result = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                   ArrayList<String > al = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                    result = validationChecks.getResult();
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    new AlToTable(al,"View Duplicates");
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -1025,12 +1072,13 @@ public class MainWindow extends JFrame implements ActionListener {
             } else {
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                   String result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
+                //   ArrayList result = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
+                    ArrayList<String> al = excelReader.View_Actives_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result = excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-              //  tableWindow TableWindow=null;
-              //  TableWindow.addRow(result);
-                    new tableWindow();
+
+                    new AlToTable(al,"View Active");
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1043,10 +1091,11 @@ public class MainWindow extends JFrame implements ActionListener {
             } else {
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
-
-                    String result = excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
+                    ArrayList<String> al=  excelReader.View_Terminee_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result = excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminee Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    new AlToTable(al,"VT");
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1144,7 +1193,9 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     private void registerListener() {
+        MenuItemCreateIncExpTable.addActionListener(this);
         //MEMBERS LISTENERS
+        MenuItemCreateIncExpTemplate.addActionListener(this);
         MenuItemCreateSeperatedTemplate.addActionListener(this);
         MenuItemViewActiveMember.addActionListener(this);
         MenuItemViewTermineeMember.addActionListener(this);

@@ -319,11 +319,6 @@ static Utility utility = new Utility();
     }// end of create active sheet
 
     public void Create_Activee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
-        /*
-        FileInputStream fileR = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Actives_Sheet.xlsx");
-        XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
-        XSSFSheet CopyFromSheet = workbookR.getSheetAt(0);
-        */
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
@@ -2611,14 +2606,14 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         outFile.close();
     }
 
-    public String View_Actives_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Actives_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Active Members present as at " + endDate + " \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         //   ArrayList<tableWindow.Fields> list = null;
-        ArrayList list = null;
+        ArrayList list = new ArrayList<String>();;
         try {
             // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Seperated Members.xlsx");
             FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Seperated Members.xlsx");
@@ -2632,7 +2627,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
 
 
-            for (int row = 0; row < rowCount; row++) {
+            for (int row = 0,J=0; row < rowCount; row++,J++) {
                 int Row = row;
 
                 if (Row == 0) {
@@ -2699,11 +2694,12 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status Date: " + i1Val + "\n");
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
-                    list = new ArrayList<>();
-                    list.add(a1Val);
-                    list.add(c1Val);
+
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
+                 //   new AlToTable(list);
+                 /*   list.add(c1Val);
                     list.add(d1Val);
-                    list.add(f1Val);
+                    list.add(f1Val);*/
                     // list = new ArrayList<tableWindow.Fields>();
                     //  tableWindow.Fields fields1 = new tableWindow.Fields(a1Val, c1Val, d1Val, f1Val);
                     //  list.add(fields1);
@@ -2715,7 +2711,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 }
 
             }
-
+            this.setResult(String.valueOf(stringBuilder));
+            result=String.valueOf(stringBuilder);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -2724,9 +2721,18 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-          return String.valueOf(stringBuilder);
-       // return list;
+
+       //   return String.valueOf(stringBuilder);
+        return list;
     }// end of view active sheet
+
+    public String result=null;
+    public void setResult(String x){
+        this.result=x;
+    }
+    public String getResult(){
+        return this.result;
+    }
 
     public String View_Retired_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -2827,7 +2833,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return String.valueOf(stringBuilder);
     }// end of view active sheet
 
-    public String View_Terminee_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Terminee_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Terminee Members present as at "+endDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
@@ -2911,6 +2918,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
 
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
                 }
@@ -2923,7 +2931,9 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-        return String.valueOf(stringBuilder);
+      //  return String.valueOf(stringBuilder);
+        setResult(result);
+        return  list;
     }// end of view active sheet
 
     public String View_Deceased_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {

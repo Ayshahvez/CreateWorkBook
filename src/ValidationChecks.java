@@ -25,9 +25,17 @@ import static java.util.Calendar.YEAR;
  * Created by Ayshahvez on 12/6/2016.
  */
 public class ValidationChecks {
-    // Utility utility = new Utility();
+    public String getResult() {
+        return result;
+    }
 
-    public String Check_For_Duplicates(String workingDir) throws IOException {
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+public String result;
+    public ArrayList Check_For_Duplicates(String workingDir) throws IOException {
+        ArrayList <String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: The Duplicate Check Validates the list of Members for Repeated Records");
         boolean once = true;
@@ -42,6 +50,7 @@ public class ValidationChecks {
         SimpleDateFormat dF = new SimpleDateFormat("dd-MMM-yy");
 //dF.format("dd-MMM-yy");
         int check = 0;
+        int FindIt = 0;
         for (int row = 0; row < NoMembers; row++) {
             int temp = row;
 
@@ -67,7 +76,7 @@ public class ValidationChecks {
             XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
             Date f1Val_DOB = cellF1_DOB.getDateCellValue();
 
-            int FindIt = 0;
+            FindIt = 0;
             check = 0;
             boolean findIt = false;
 
@@ -96,9 +105,9 @@ public class ValidationChecks {
                 String c1Val_FN2 = cellD1_FN2.getStringCellValue();
 
                 XSSFCell cell_DOB = DemoRow2.getCell((short) 5);   //DOB
-                Date f1_DOB =  cell_DOB.getDateCellValue();
+                Date f1_DOB = cell_DOB.getDateCellValue();
 
-                if (a1Val_EM.equals(a1Val_EM2) && b1Val_LN.equals(b1Val_LN2) && c1Val_FN.equals(c1Val_FN2) || c1Val_FN.equals(c1Val_FN2)&&b1Val_LN.equals(b1Val_LN2)&&f1Val_DOB.equals(f1_DOB) || a1Val_EM.equals(a1Val_EM2)) {
+                if (a1Val_EM.equals(a1Val_EM2) && b1Val_LN.equals(b1Val_LN2) && c1Val_FN.equals(c1Val_FN2) || c1Val_FN.equals(c1Val_FN2) && b1Val_LN.equals(b1Val_LN2) && f1Val_DOB.equals(f1_DOB) || a1Val_EM.equals(a1Val_EM2)) {
                     FindIt++;
                     //  findIt=true;
 
@@ -128,6 +137,7 @@ public class ValidationChecks {
                         stringBuilder.append("Date of Birth: " + dF.format(f1Val_DOB) + "\n");
 
                         stringBuilder.append("------------------------------------------\n");
+                        list.add(a1Val_EM+","+b1Val_LN+","+c1Val_FN+","+dF.format(f1Val_DOB));
                     }
                 }
 
@@ -137,9 +147,11 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Duplicate check process has now been completed");
-        if (check == 0) stringBuilder.append("\n\nNotice: There were no Duplicate records found in this list of Members");
+        if (check == 0 && once) stringBuilder.append("\n\nNotice: There were no Duplicate records found in this list of Members");
         stringBuilder.append("\n\nNotice: The Duplicate check process has now been completed");
-        return String.valueOf(stringBuilder + "\n");
+  //      return String.valueOf(stringBuilder + "\n");
+        this.setResult(String.valueOf(stringBuilder));
+        return list;
     }
 
     public String Check_FivePercent_PS(String PensionPlanStartDate, String PensionPlanEndDate, String workindDir) throws IOException {
