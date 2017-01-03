@@ -966,6 +966,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         try {
                             excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                            excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                           excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -1001,7 +1002,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                                  excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                  //here
                            excelReader.Create_Fees_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                           excelReader.WriteTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                           excelReader.WriteFeesActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -1033,6 +1034,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                             try {
                                 excelReader.Create_Fees_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                 excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
@@ -1117,7 +1119,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                     String result = excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminee Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                    new AlToTable(al,"VT");
+                    new AlToTable(al,"View Terminee");
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1132,9 +1134,11 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
+                    ArrayList<String> al=  excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result = excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminated Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    new AlToTable(al,"View Terminated");
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }

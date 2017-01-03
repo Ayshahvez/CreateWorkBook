@@ -19,8 +19,7 @@ import java.util.*;
  */
 
 public class ExcelReader {
-
-    public void WriteTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+    public void WriteActivesTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         String SD[] = PensionPlanStartDate.split("/");
         int startMonth = Integer.parseInt(SD[0]);
@@ -62,6 +61,208 @@ public class ExcelReader {
             int numOfActives = ActiveSheet.getLastRowNum() + 1;
 
 //MAIN PROCESSING
+            //WRITE PENSIONABLE SALARY SUM
+            XSSFRow rowtotal = ActiveSheet.createRow(numOfActives + 1);
+            rowtotal.createCell(2).setCellValue("TOTAL");
+            for(int k=0;k<years;k++){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row.getCell(8+k);
+                    if (cellValues == null) {
+                        cellValues = Row.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    value += cellValues.getNumericCellValue();
+                }
+                rowtotal = ActiveSheet.getRow(numOfActives + 1);
+                rowtotal.createCell(8+k).setCellValue(Double.parseDouble(dF.format(value)));
+                value=0;
+            }
+
+            value=0;
+            int index=(8+years)+2;
+            int cellNumbers=(years*8)+5;// 9 for fees 8 for no fees; 5 to get the last 4 accumultion values and total for account balances
+           // int feeIndex=index+8;
+
+            //WRITE ACCUMULATION AND CONTRIBUTION SUMS
+            for(int k=0;k<cellNumbers;k++) {
+
+             //   if(index!=feeIndex){
+                    //GET DATA FROM TEMPLATE
+                    for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                        //get the prior year adjustment if any
+                        XSSFRow Row = ActiveSheet.getRow(row);
+                        XSSFCell cellValues = Row.getCell(index);
+                        if (cellValues == null) {
+                            cellValues = Row.createCell(index);
+                            cellValues.setCellValue(0.00);
+                        }
+                        value += cellValues.getNumericCellValue();
+                    }
+
+          /*      }
+                else{
+                    feeIndex+=9;
+                }*/
+
+                rowtotal = ActiveSheet.getRow(numOfActives + 1);
+                rowtotal.createCell(index).setCellValue(Double.parseDouble(dF.format(value)));
+                value=0;
+                index+=1;
+            }
+
+
+            //write TTOAL FOR MALE AND FEMALE
+            rowtotal = ActiveSheet.createRow(numOfActives + 3);
+            rowtotal.createCell(2).setCellValue("Total Males");
+
+            rowtotal = ActiveSheet.createRow(numOfActives + 4);
+            rowtotal.createCell(2).setCellValue("Total Females");
+
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(7).setCellValue("Average for Males");
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(7).setCellValue("Average for Females");
+
+
+
+//GET GENDER
+            int maleCount=0;
+            int femaleCount=0;
+            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+                //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                XSSFRow Row = ActiveSheet.getRow(row);
+
+                XSSFCell cellGender = Row.getCell(3);
+                if (cellGender == null) {
+                    cellGender = Row.createCell(3);
+                    cellGender.setCellValue("");
+                }
+                String memberGender= cellGender.getStringCellValue();
+                memberGender=memberGender.toLowerCase();
+
+                System.out.println("F: "+femaleCount);
+                System.out.println("m: "+maleCount);
+                if (memberGender.equals("f"))femaleCount++;
+                if (memberGender.equals("m"))maleCount++;
+            }
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(3).setCellValue(maleCount);
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(3).setCellValue(femaleCount);
+
+            //AVERAGE PENSIONABLE SALARY FOR MALE AND FEMALE
+            double femalePensionableSalary=0;
+            double malePensionableSalary=0;
+            double pensionableSalaryAmount=0;
+            int moveIndex=8;
+            for(int k=0;k<years+2;k++){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                    //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                    XSSFRow Row = ActiveSheet.getRow(row);
+
+                    XSSFCell cellGender = Row.getCell(3);
+                    if (cellGender == null) {
+                        cellGender = Row.createCell(3);
+                        cellGender.setCellValue("");
+                    }
+                    String memberGender= cellGender.getStringCellValue();
+                    memberGender=memberGender.toLowerCase();
+
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row1 = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row1.getCell(8+k);
+                    if (cellValues == null) {
+                        cellValues = Row1.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    pensionableSalaryAmount = cellValues.getNumericCellValue();
+                    if (memberGender.equals("f")) femalePensionableSalary+=pensionableSalaryAmount;
+                    if (memberGender.equals("m")) malePensionableSalary+=pensionableSalaryAmount;
+
+                }
+                rowtotal = ActiveSheet.getRow(numOfActives + 3);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(malePensionableSalary/maleCount)));
+
+                rowtotal = ActiveSheet.getRow(numOfActives + 4);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(femalePensionableSalary/femaleCount)));
+                femalePensionableSalary=0;
+                malePensionableSalary=0;
+                pensionableSalaryAmount=0;
+                moveIndex+=1;
+            }
+
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Completed_Actives_Sheet.xlsx"));
+            workbookR.write(outFile);
+            fileR.close();
+            outFile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public void WriteFeesActivesTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
+
+        double value=0;
+
+        try {
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Accumulated_Actives_Sheet.xlsx");
+            XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+            XSSFSheet ActiveSheet = workbookR.getSheetAt(0);
+            int numOfActives = ActiveSheet.getLastRowNum() + 1;
+
+//MAIN PROCESSING
+            //WRITE PENSIONABLE SALARY SUM
             XSSFRow rowtotal = ActiveSheet.createRow(numOfActives + 1);
             rowtotal.createCell(2).setCellValue("TOTAL");
 for(int k=0;k<years;k++){
@@ -76,13 +277,335 @@ for(int k=0;k<years;k++){
                     cellValues.setCellValue(0.00);
                 }
                 value += cellValues.getNumericCellValue();
-
             }
             rowtotal = ActiveSheet.getRow(numOfActives + 1);
             rowtotal.createCell(8+k).setCellValue(Double.parseDouble(dF.format(value)));
             value=0;
         }
+
+            value=0;
+int index=(8+years)+2;
+            int cellNumbers=(years*9)+5;// 9 for fees 8 for no fees; 5 to get the last 4 accumultion values and total for account balances
+int feeIndex=index+8;
+        //WRITE ACCUMULATION AND CONTRIBUTION SUMS
+            for(int k=0;k<cellNumbers;k++) {
+
+                   if(index!=feeIndex){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row.getCell(index);
+                    if (cellValues == null) {
+                        cellValues = Row.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    value += cellValues.getNumericCellValue();
+                }
+
+            }
+            else{
+                       feeIndex+=9;
+                   }
+
+                    rowtotal = ActiveSheet.getRow(numOfActives + 1);
+                    rowtotal.createCell(index).setCellValue(Double.parseDouble(dF.format(value)));
+                value=0;
+                index+=1;
+            }
+
+
+            //write TTOAL FOR MALE AND FEMALE
+          rowtotal = ActiveSheet.createRow(numOfActives + 3);
+            rowtotal.createCell(2).setCellValue("Total Males");
+
+            rowtotal = ActiveSheet.createRow(numOfActives + 4);
+            rowtotal.createCell(2).setCellValue("Total Females");
+
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(7).setCellValue("Average for Males");
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(7).setCellValue("Average for Females");
+
+
+
+//GET GENDER
+            int maleCount=0;
+            int femaleCount=0;
+            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+                //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                XSSFRow Row = ActiveSheet.getRow(row);
+
+                XSSFCell cellGender = Row.getCell(3);
+                if (cellGender == null) {
+                    cellGender = Row.createCell(3);
+                    cellGender.setCellValue("");
+                }
+               String memberGender= cellGender.getStringCellValue();
+memberGender=memberGender.toLowerCase();
+
+                System.out.println("F: "+femaleCount);
+                System.out.println("m: "+maleCount);
+                if (memberGender.equals("f"))femaleCount++;
+                if (memberGender.equals("m"))maleCount++;
+            }
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(3).setCellValue(maleCount);
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(3).setCellValue(femaleCount);
+
+            //AVERAGE PENSIONABLE SALARY FOR MALE AND FEMALE
+            double femalePensionableSalary=0;
+            double malePensionableSalary=0;
+            double pensionableSalaryAmount=0;
+            int moveIndex=8;
+            for(int k=0;k<years+2;k++){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                        //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                        XSSFRow Row = ActiveSheet.getRow(row);
+
+                        XSSFCell cellGender = Row.getCell(3);
+                        if (cellGender == null) {
+                            cellGender = Row.createCell(3);
+                            cellGender.setCellValue("");
+                        }
+                        String memberGender= cellGender.getStringCellValue();
+                        memberGender=memberGender.toLowerCase();
+
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row1 = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row1.getCell(8+k);
+                    if (cellValues == null) {
+                        cellValues = Row1.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    pensionableSalaryAmount = cellValues.getNumericCellValue();
+                    if (memberGender.equals("f")) femalePensionableSalary+=pensionableSalaryAmount;
+                    if (memberGender.equals("m")) malePensionableSalary+=pensionableSalaryAmount;
+
+                }
+                rowtotal = ActiveSheet.getRow(numOfActives + 3);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(malePensionableSalary/maleCount)));
+
+                rowtotal = ActiveSheet.getRow(numOfActives + 4);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(femalePensionableSalary/femaleCount)));
+                femalePensionableSalary=0;
+                malePensionableSalary=0;
+                pensionableSalaryAmount=0;
+                moveIndex+=1;
+            }
+
             FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Completed_Actives_Sheet.xlsx"));
+            workbookR.write(outFile);
+            fileR.close();
+            outFile.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public void WriteFeesTermineeTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        DecimalFormat dF = new DecimalFormat("#.##");//#.##
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
+
+        double value=0;
+
+        try {
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Accumulated_Terminee_Sheet.xlsx");
+            XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+            XSSFSheet ActiveSheet = workbookR.getSheetAt(0);
+            int numOfActives = ActiveSheet.getLastRowNum() + 1;
+
+//MAIN PROCESSING
+            //WRITE PENSIONABLE SALARY SUM
+            XSSFRow rowtotal = ActiveSheet.createRow(numOfActives + 1);
+            rowtotal.createCell(2).setCellValue("TOTAL");
+        /*    for(int k=0;k<years;k++){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row.getCell(8+k);
+                    if (cellValues == null) {
+                        cellValues = Row.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    value += cellValues.getNumericCellValue();
+                }
+                rowtotal = ActiveSheet.getRow(numOfActives + 1);
+                rowtotal.createCell(8+k).setCellValue(Double.parseDouble(dF.format(value)));
+                value=0;
+            }*/
+
+            value=0;
+            int index=19;
+            int cellNumbers=(years*8)+4;// 9 for fees 8 for no fees; 4 for last 4 accumultion values and total for account balances
+            int feeIndex=index+8;
+
+            //WRITE ACCUMULATION AND CONTRIBUTION SUMS
+            for(int k=0;k<cellNumbers;k++) {
+
+                if(index!=feeIndex){
+                    //GET DATA FROM TEMPLATE
+                    for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                        //get the prior year adjustment if any
+                        XSSFRow Row = ActiveSheet.getRow(row);
+                        XSSFCell cellValues = Row.getCell(index);
+                        if (cellValues == null) {
+                            cellValues = Row.createCell(index);
+                            cellValues.setCellValue(0.00);
+                        }
+                        value += cellValues.getNumericCellValue();
+                    }
+
+                }
+                else{
+                    feeIndex+=9;
+                }
+
+                rowtotal = ActiveSheet.getRow(numOfActives + 1);
+                rowtotal.createCell(index).setCellValue(Double.parseDouble(dF.format(value)));
+                value=0;
+                index+=1;
+            }
+
+
+            //write TTOAL FOR MALE AND FEMALE
+            rowtotal = ActiveSheet.createRow(numOfActives + 3);
+            rowtotal.createCell(2).setCellValue("Total Males");
+
+            rowtotal = ActiveSheet.createRow(numOfActives + 4);
+            rowtotal.createCell(2).setCellValue("Total Females");
+
+/*
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(7).setCellValue("Average for Males");
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(7).setCellValue("Average for Females");*/
+
+
+
+//GET GENDER
+            int maleCount=0;
+            int femaleCount=0;
+            for (int row = 7, I=8; row < numOfActives; row++,I++) {
+                //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                XSSFRow Row = ActiveSheet.getRow(row);
+
+                XSSFCell cellGender = Row.getCell(3);
+                if (cellGender == null) {
+                    cellGender = Row.createCell(3);
+                    cellGender.setCellValue("");
+                }
+                String memberGender= cellGender.getStringCellValue();
+                memberGender=memberGender.toLowerCase();
+
+                System.out.println("F: "+femaleCount);
+                System.out.println("m: "+maleCount);
+                if (memberGender.equals("f"))femaleCount++;
+                if (memberGender.equals("m"))maleCount++;
+            }
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 3);
+            rowtotal.createCell(3).setCellValue(maleCount);
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 4);
+            rowtotal.createCell(3).setCellValue(femaleCount);
+
+
+       /*     //AVERAGE PENSIONABLE SALARY FOR MALE AND FEMALE
+            double femalePensionableSalary=0;
+            double malePensionableSalary=0;
+            double pensionableSalaryAmount=0;
+            int moveIndex=8;
+            for(int k=0;k<years+2;k++){
+                //GET DATA FROM TEMPLATE
+                for (int x = 0, row = 7; row < numOfActives; x++, row++) {
+
+                    //GET THE FUND AT BEGINNING OF PERIOD IF ANY
+                    XSSFRow Row = ActiveSheet.getRow(row);
+
+                    XSSFCell cellGender = Row.getCell(3);
+                    if (cellGender == null) {
+                        cellGender = Row.createCell(3);
+                        cellGender.setCellValue("");
+                    }
+                    String memberGender= cellGender.getStringCellValue();
+                    memberGender=memberGender.toLowerCase();
+
+
+                    //get the prior year adjustment if any
+                    XSSFRow Row1 = ActiveSheet.getRow(row);
+                    XSSFCell cellValues = Row1.getCell(8+k);
+                    if (cellValues == null) {
+                        cellValues = Row1.createCell(8);
+                        cellValues.setCellValue(0.00);
+                    }
+                    pensionableSalaryAmount = cellValues.getNumericCellValue();
+                    if (memberGender.equals("f")) femalePensionableSalary+=pensionableSalaryAmount;
+                    if (memberGender.equals("m")) malePensionableSalary+=pensionableSalaryAmount;
+
+                }
+                rowtotal = ActiveSheet.getRow(numOfActives + 3);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(malePensionableSalary/maleCount)));
+
+                rowtotal = ActiveSheet.getRow(numOfActives + 4);
+                rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(femalePensionableSalary/femaleCount)));
+                femalePensionableSalary=0;
+                malePensionableSalary=0;
+                pensionableSalaryAmount=0;
+                moveIndex+=1;
+            }
+*/
+            FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Completed_Terminee_Sheet.xlsx"));
             workbookR.write(outFile);
             fileR.close();
             outFile.close();
@@ -377,7 +900,7 @@ for(int k=0;k<years;k++){
                 DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
                 cellR = rowR[Row].createCell(21);
-                cellR.setCellValue(dF.format((Utility.betweenDates(startDate1, endDate1)/365.25)));
+                cellR.setCellValue(Double.parseDouble(dF.format((Utility.betweenDates(startDate1, endDate1)/365.25))));
 
             }
             FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Actives_Sheet.xlsx"));
@@ -498,13 +1021,16 @@ for(int k=0;k<years;k++){
                 XSSFCell cellD1 = ActiveRow.getCell((short) 3);
                 String d1Val = cellD1.getStringCellValue();
 
-                String i1Val = null;
+                //String i1Val = null;
+                double i1Val = 0;
                 XSSFCell[] cellI1 = new XSSFCell[12];
                 double [] d = new double[12];
                 for (int g=8,j=0;g<20;g++,j++){
                     cellI1[j] = ActiveRow.getCell(g);
-                    i1Val = cellI1[j].getStringCellValue();
-                    d[j] = Double.parseDouble(i1Val);
+                   // i1Val = cellI1[j].getStringCellValue();
+                    i1Val = cellI1[j].getNumericCellValue();
+                //    d[j] = Double.parseDouble(i1Val);
+                    d[j] = i1Val;
                 }
 
 
@@ -813,7 +1339,7 @@ for(int k=0;k<years;k++){
 //write the calculated accumulated balances to the sheet; start to write at column 31
                 for (int b = 0; b < 4; b++) {
                     cellR = ActiveRow.createCell(Write_Coloumn + b);
-                    cellR.setCellValue(dF.format(val.get(b)));
+                    cellR.setCellValue(Double.parseDouble(dF.format(val.get(b))));
                 }//end of loop
 
             }//end of looping through each member
@@ -2113,6 +2639,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
     }//end of function Create Active Accumulated Balances
 
     public void Create_Fees_Terminee_Acc_Balances(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         int readCol=23;//start to read from Col 26, which is starting contribution column
         int YearCol = readCol;//as we are in the same year, we should always be reading from the correct column
@@ -2340,7 +2867,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 //write the calculated accumulated balances to the sheet; start to write at column 31
                     for (int b = 0; b < 4; b++) {
                         cellR = ActiveRow.createCell(Write_Coloumn + b);
-                        cellR.setCellValue(dF.format(val.get(b)));
+                        cellR.setCellValue(Double.parseDouble(dF.format(val.get(b))));
                     }//end of loop
 
                 }
@@ -2968,6 +3495,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
 
+                    this.setResult(String.valueOf(stringBuilder));
+                //    result=
                     list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
@@ -2982,7 +3511,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
         }
       //  return String.valueOf(stringBuilder);
-        setResult(result);
+
         return  list;
     }// end of view active sheet
 
@@ -3184,7 +3713,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return String.valueOf(stringBuilder);
     }// end of view active sheet
 
-    public String View_Terminated_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Terminated_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Terminated Members present as at "+endDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
@@ -3267,7 +3797,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status Date: " + i1Val + "\n");
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
-
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
                 }
@@ -3280,7 +3810,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-        return String.valueOf(stringBuilder);
+        this.setResult(String.valueOf(stringBuilder));
+        return list;
     }// end of view
 
     public double[] getInterestRates(String workingDir, int numOfYears) throws IOException {
