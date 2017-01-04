@@ -212,8 +212,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
- //     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+ //      imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -391,7 +391,10 @@ MenuCalculations.add(MenuItemCreateBalSheetTable);
 
         if(e.getSource().equals(MenuItemCreateBalSheetTemplate)){
             try {
-                TemplateSheets.Create_Template_Balance_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+               TemplateSheets.Create_Template_Balance_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+              //  Runtime.getRuntime().exec("cmd /c start"+filePathWorkingDir+"\\myVBS.vbs");
+            //  String  cmd = "cmd start "+filePathWorkingDir+"\\myVBS.vbs";
+           //     Runtime.getRuntime().exec(cmd);
             } catch (IOException e1) {
                 e1.printStackTrace();
             } catch (ParseException e1) {
