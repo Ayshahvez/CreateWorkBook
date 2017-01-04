@@ -19,6 +19,7 @@ import java.util.*;
  */
 
 public class ExcelReader {
+
     public void WriteActivesTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         String SD[] = PensionPlanStartDate.split("/");
@@ -152,6 +153,9 @@ public class ExcelReader {
                 if (memberGender.equals("f"))femaleCount++;
                 if (memberGender.equals("m"))maleCount++;
             }
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 1);
+            rowtotal.createCell(3).setCellValue(maleCount+femaleCount);
 
             rowtotal = ActiveSheet.getRow(numOfActives + 3);
             rowtotal.createCell(3).setCellValue(maleCount);
@@ -324,6 +328,8 @@ int feeIndex=index+8;
             rowtotal.createCell(2).setCellValue("Total Females");
 
 
+
+
             rowtotal = ActiveSheet.getRow(numOfActives + 3);
             rowtotal.createCell(7).setCellValue("Average for Males");
 
@@ -352,6 +358,9 @@ memberGender=memberGender.toLowerCase();
                 if (memberGender.equals("f"))femaleCount++;
                 if (memberGender.equals("m"))maleCount++;
             }
+
+            rowtotal = ActiveSheet.getRow(numOfActives + 1);
+            rowtotal.createCell(3).setCellValue(maleCount+femaleCount);
 
             rowtotal = ActiveSheet.getRow(numOfActives + 3);
             rowtotal.createCell(3).setCellValue(maleCount);
@@ -392,6 +401,8 @@ memberGender=memberGender.toLowerCase();
                     if (memberGender.equals("m")) malePensionableSalary+=pensionableSalaryAmount;
 
                 }
+
+
                 rowtotal = ActiveSheet.getRow(numOfActives + 3);
                 rowtotal.createCell(moveIndex).setCellValue(Double.parseDouble(dF.format(malePensionableSalary/maleCount)));
 
@@ -2411,6 +2422,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
     }
 
     public void Create_Fees_Active_Acc_Balances(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         int readCol=26;//start to read from Col 26, which is starting contribution column
         int YearCol = readCol;//as we are in the same year, we should always be reading from the correct column
@@ -3304,6 +3316,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
     }// end of view active sheet
 
     public String result=null;
+
     public void setResult(String x){
         this.result=x;
     }
@@ -3311,7 +3324,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return this.result;
     }
 
-    public String View_Retired_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Retired_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Retired Members present as at "+endDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
@@ -3395,6 +3409,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
 
+
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
                 }
@@ -3407,7 +3423,9 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-        return String.valueOf(stringBuilder);
+     //   return String.valueOf(stringBuilder);
+        this.setResult(String.valueOf(stringBuilder));
+        return list;
     }// end of view active sheet
 
     public ArrayList View_Terminee_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
@@ -3515,7 +3533,8 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return  list;
     }// end of view active sheet
 
-    public String View_Deceased_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Deceased_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+        ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("The following is a list of Deceased Members present as at "+endDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
@@ -3599,6 +3618,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
 
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
                 }
@@ -3611,11 +3631,16 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-        return String.valueOf(stringBuilder);
+     //   return String.valueOf(stringBuilder);
+        this.setResult( String.valueOf(stringBuilder));
+        return list;
     }// end of view active sheet
 
-    public String View_Deferred_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+    public ArrayList View_Deferred_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
+
+        ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
+
         stringBuilder.append("The following is a list of Deferred Members present as at "+endDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
@@ -3697,7 +3722,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     stringBuilder.append("Status Date: " + i1Val + "\n");
                     stringBuilder.append("Status: " + j1Val + "\n");
                     stringBuilder.append("-------------------------------------------------------\n");
-
+                    list.add(a1Val+","+c1Val+","+d1Val+","+f1Val);
                     System.out.println();
 
                 }
@@ -3710,7 +3735,9 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
             e.printStackTrace();
 
         }
-        return String.valueOf(stringBuilder);
+        this.setResult( String.valueOf(stringBuilder));
+       // return String.valueOf(stringBuilder);
+        return list;
     }// end of view active sheet
 
     public ArrayList View_Terminated_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {

@@ -426,7 +426,6 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
             }
         }
 
-
         if (e.getSource().equals(MenuItemClearScreen)) {
             resultsWindow.ClearScreen(resultsWindow);
         }
@@ -1171,8 +1170,11 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Retired_Members(filePathWorkingDir, PensionPlanEndDate);
+                 ArrayList al = excelReader.View_Retired_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result = excelReader.getResult();
+
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Retired Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+                    new AlToTable(al,"View Retired");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -1187,9 +1189,11 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Deceased_Members(filePathWorkingDir, PensionPlanEndDate);
+                   ArrayList al = excelReader.View_Deceased_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result = excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Deceased Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                new AlToTable(al,"View Deceased");
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1208,8 +1212,10 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    String result = excelReader.View_Deferred_Members(filePathWorkingDir, PensionPlanEndDate);
+                 ArrayList al = excelReader.View_Deferred_Members(filePathWorkingDir, PensionPlanEndDate);
+                    String result=excelReader.getResult();
                     JOptionPane.showMessageDialog(null, "Please wait for the list of the Deferred Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+                   new AlToTable(al,"View Deferred");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
