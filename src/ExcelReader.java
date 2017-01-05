@@ -1634,14 +1634,20 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                            arraylist.add(10,K); //end of plan year of termination
                            arraylist.add(11,L); //end of plan year of enrolment
                            arraylist.add(12, datetemp.format(k1Val)); //date of refund
-                           arraylist.add(13,dF.format(Utility.betweenDates(date2,k1Val)/365.25)); //doe to dor
-                          arraylist.add(14,dF.format(Utility.betweenDates(dateJ,k1Val)/365.25)); //start of plan year of temrination to dor
+                           arraylist.add(13,dF.format(Utility.betweenDates(date2,k1Val)/365.25)); //period from DOE to DOR
+                          arraylist.add(14,dF.format(Utility.betweenDates(dateJ,k1Val)/365.25)); //PERIOD FROM start of plan year of temrination to dor
                            arraylist.add(15,dF.format(Utility.betweenDates(date2,dateL)/365.25)); //period from doe to end of plan year of enrolment
-                           arraylist.add(16,dF.format(Utility.betweenDates(k1Val,dateK)/365.25)); //period from doe to end of plan year of enrolment
-                           arraylist.add(17,dF.format(Utility.betweenDates(date2,k1Val)/365.25)); //doe to dor
+                           arraylist.add(16,dF.format(Utility.betweenDates(k1Val,dateK)/365.25)); //period from dor to end of plan year of termination
+                           arraylist.add(17,dF.format(Utility.betweenDates(date2,k1Val)/365.25)); //Pensonable Service up to DOT
 
-                           // arraylist.add(9, j1Val);
-                           for (int Col = 0, temp = 0; Col < 18; Col++, temp++) {
+                           //check if member is vested or non vested
+                          String checkVested = "Non-Vested";
+                          double PS= Double.parseDouble(dF.format(Utility.betweenDates(date2,k1Val)/365.25));
+                          if(PS>5) checkVested="Vested";
+                           arraylist.add(18,checkVested); //Pensonable Service up to DOT
+
+
+                           for (int Col = 0, temp = 0; Col <19; Col++, temp++) {
                                //Update the value of cell
                                //   cellR = rowR[Row].getCell(Col);
                                //   if (cellR == null) {
@@ -2893,12 +2899,24 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
             //when we are at end of year...we should write account balance as at end date
          if(x==(years-1)) {
+
              int AmtRefundedindex = readCol+3;
              int UnderOverIndex = readCol+5;
            //    readCol+=5;//move over by 3 columns to get to amount refunded
+             double[] netFundYieldRates = new double[years];
+             netFundYieldRates=getNetFundYieldRates(workingDir,years);
 
                 for (int I = 0, row=7; row < numOfActives; I++, row++) {
+
                     XSSFRow ActiveRow = TermineeSheet.getRow(row);
+
+                    //end of year of termination
+                    XSSFCell cellD = ActiveRow.getCell(10);
+                    if (cellD == null) {
+                        cellD = ActiveRow.createCell(10);
+                        cellD.setCellValue("01-Jan-01");
+                    }
+                    String CellD = cellD.getStringCellValue();//end of year of termination
 
                     //get the employee basic refund
                     XSSFCell cellEBAmtRefunded = ActiveRow.getCell(readCol+3);
@@ -2917,7 +2935,18 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 }
                 double CellEOAmtRefunded = cellEOAmtRefunded.getNumericCellValue();
 
-               //WRITE TO UNDER/OVER CELLS
+
+                    //get non-Vested or Vested
+                    XSSFCell cellType= ActiveRow.getCell(18);
+                    if (cellType == null) {
+                        cellType = ActiveRow.createCell(18);
+                        //   cellEBAmtRefunded.setCellValue(0);
+                    }
+                    String CellType= cellType.getStringCellValue();
+
+
+
+                    //WRITE TO UNDER/OVER CELLS
                    // for(int col=0;col<2;col++) {
                                 //write to employee basic of under/over column
                         cellR = ActiveRow.createCell(UnderOverIndex);
@@ -2929,9 +2958,31 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                         double resultEO =CellEOAmtRefunded-newAccEmployeeOptional[I];
                         cellR.setCellValue(resultEO);
                 //    }
+
+                    //write to the vesting column
+                    double vestSign=0;
+                    cellR = ActiveRow.createCell(UnderOverIndex+2);
+
+                    if(CellType.equals("Vested"))  vestSign=1;
+                    cellR.setCellValue(vestSign);
+
+                    //write to the Er Non-Vested Bal
+                    cellR = ActiveRow.createCell(UnderOverIndex+3);
+
+                    double erVal=1;
+
+                    for(int a=0;a<years;a++){
+                       erVal*= (1+netFundYieldRates[a]);
+                       System.out.println("year: "+ (a+StartYear) + "="+netFundYieldRates[a]);
                     }
 
-            }
+//erVal*= newAccEmployerRequired[I];
+  //                  erVal= erVal * (1-vestSign);
+                    cellR.setCellValue(erVal);
+                 // erVal=1;
+                    }
+
+            }//at end of year
 
         }// END OF LOOP YEARS
         FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Accumulated_Terminee_Sheet.xlsx"));
@@ -2939,6 +2990,31 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         fileInputStream.close();
         outFile.close();
     }//end of function Create Active Accumulated Balances
+
+    public double[] getNetFundYieldRates(String workingDir, int numOfYears) throws IOException {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(workingDir + "\\nfy Rates.xlsx");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        XSSFSheet sheet =workbook.getSheet("rates");
+        XSSFCell [] cell = new XSSFCell[numOfYears];
+        double [] values = new double[numOfYears];
+
+        for(int row=1,I=0;I<numOfYears;row++,I++) {
+            XSSFRow interestRow = sheet.getRow(row);
+
+            cell[I] = interestRow.getCell(1);
+            //    list.add(cell[I].getNumericCellValue(),I);
+            values[I]=cell[I].getNumericCellValue();
+
+        }
+
+        return values;
+    }
 
     public void Create_Fees_Terminee_Contribution(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
 
@@ -4456,15 +4532,15 @@ double [] values = new double[numOfYears];
                         //   if (cellR == null) {
                         cellR = rowR[Row].createCell(Col);
                         //   }
-/*                        if(arraylist.get(Col) instanceof Date)
+                        if(arraylist.get(Col) instanceof Date)
                             cellR.setCellValue((Date)arraylist.get(Col));
                         else if(arraylist.get(Col) instanceof Boolean)
                             cellR.setCellValue((Boolean)arraylist.get(Col));
                         else if(arraylist.get(Col) instanceof String)
                             cellR.setCellValue((String)arraylist.get(Col));
                         else if(arraylist.get(Col) instanceof Double)
-                            cellR.setCellValue((Double)arraylist.get(Col));*/
-                       cellR.setCellValue(String.valueOf(arraylist.get(Col)));
+                            cellR.setCellValue((Double)arraylist.get(Col));
+                    //   cellR.setCellValue(String.valueOf(arraylist.get(Col)));
                     }
 
                 }

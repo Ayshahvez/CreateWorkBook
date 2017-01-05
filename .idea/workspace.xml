@@ -10,15 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fce0561-5f05-4bda-91b2-64b559aec56a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Table.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExcelReader.java" afterPath="$PROJECT_DIR$/src/ExcelReader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainWindow.java" afterPath="$PROJECT_DIR$/src/MainWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Table.java" afterPath="$PROJECT_DIR$/src/Table.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TemplateSheets.java" afterPath="$PROJECT_DIR$/src/TemplateSheets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Utility.java" afterPath="$PROJECT_DIR$/src/Utility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ValuationCalculation.java" afterPath="$PROJECT_DIR$/src/ValuationCalculation.java" />
     </list>
     <ignored path="CreateWorkBook.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ExcelReader.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ExcelReader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="17" column="38" lean-forward="true" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+            <state relative-caret-position="314">
+              <caret line="2978" column="0" lean-forward="false" selection-start-line="2978" selection-start-column="0" selection-end-line="2979" selection-end-column="50" />
               <folding>
                 <element signature="method#WriteActivesTotalRow#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#WriteFeesActivesTotalRow#0;class#ExcelReader#0" expanded="false" />
@@ -62,7 +58,7 @@
                 <element signature="method#Create_Terminee_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Fees_Activee_Contribution#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Fees_Active_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
-                <element signature="method#Create_Fees_Terminee_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
+                <element signature="method#getNetFundYieldRates#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#Create_Fees_Terminee_Contribution#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#View_Actives_Members#0;class#ExcelReader#0" expanded="false" />
                 <element signature="method#View_Retired_Members#0;class#ExcelReader#0" expanded="false" />
@@ -83,8 +79,8 @@
       <file leaf-file-name="ValuationCalculation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ValuationCalculation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="926" column="0" lean-forward="false" selection-start-line="926" selection-start-column="0" selection-end-line="926" selection-end-column="0" />
+            <state relative-caret-position="414">
+              <caret line="899" column="3" lean-forward="true" selection-start-line="899" selection-start-column="3" selection-end-line="925" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#getInflationRates#0;class#ValuationCalculation#0" expanded="false" />
@@ -97,23 +93,23 @@
       <file leaf-file-name="Table.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Table.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+            <state relative-caret-position="778">
+              <caret line="332" column="0" lean-forward="true" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
                 <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
-                <marker date="1483635809947" expanded="false" signature="9512:9520" ph="{...}" />
-                <marker date="1483635809947" expanded="false" signature="9816:9824" ph="{...}" />
+                <marker date="1483641943680" expanded="false" signature="13303:13311" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TemplateSheets.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TemplateSheets.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="1406" column="98" lean-forward="false" selection-start-line="1406" selection-start-column="98" selection-end-line="1406" selection-end-column="98" />
+            <state relative-caret-position="-21">
+              <caret line="817" column="0" lean-forward="true" selection-start-line="817" selection-start-column="0" selection-end-line="817" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
@@ -121,12 +117,11 @@
                 <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Fees_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
-                <element signature="method#Create_Template_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
-                <element signature="method#Create_Template_Fees_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Active_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Inc_Exp_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Balance_Sheet#0;class#TemplateSheets#0" expanded="false" />
                 <element signature="method#Create_Template_Summary_of_Active_Memberships#0;class#TemplateSheets#0" expanded="false" />
+                <element signature="method#Create_Template_Movement_in_Active_Memberships#0;class#TemplateSheets#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -135,11 +130,12 @@
       <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="460" column="0" lean-forward="true" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
+            <state relative-caret-position="579">
+              <caret line="1321" column="56" lean-forward="true" selection-start-line="1321" selection-start-column="56" selection-end-line="1321" selection-end-column="56" />
               <folding>
                 <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
                 <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
+                <element signature="method#actionPerformed#0;class#MainWindow#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -180,7 +176,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setDefaultCloseOperation</find>
       <find>kono</find>
       <find>MenuItemViewTerminee</find>
       <find>Dupli</find>
@@ -210,6 +205,7 @@
       <find>dp.pn</find>
       <find>Summary</find>
       <find>MenuCalculations</find>
+      <find>Under</find>
     </findStrings>
     <replaceStrings>
       <replace>DatePicker</replace>
@@ -247,19 +243,17 @@
         <option value="$PROJECT_DIR$/src/ValidationChecks.java" />
         <option value="$PROJECT_DIR$/src/AlToTable.java" />
         <option value="$PROJECT_DIR$/src/Utility.java" />
-        <option value="$PROJECT_DIR$/src/ExcelReader.java" />
         <option value="$PROJECT_DIR$/src/ValuationCalculation.java" />
         <option value="$PROJECT_DIR$/src/Table.java" />
         <option value="$PROJECT_DIR$/src/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/TemplateSheets.java" />
+        <option value="$PROJECT_DIR$/src/ExcelReader.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1456" />
-    <option name="height" value="876" />
+    <option name="width" value="720" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -664,7 +658,14 @@
       <option name="project" value="LOCAL" />
       <updated>1483566782193</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Work in Progress">
+      <created>1483636843329</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1483636843329</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -677,26 +678,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="0" y="0" width="720" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28666666" sideWeight="0.5451389" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2845953" sideWeight="0.54236114" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3237598" sideWeight="0.35" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26533332" sideWeight="0.36079547" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15796344" sideWeight="0.65" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26533332" sideWeight="0.63920456" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767624" sideWeight="0.49517167" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38958332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23368146" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23866667" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -786,7 +787,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>1676</line>
+          <line>1682</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
@@ -846,13 +847,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/MainWindow.java</url>
-          <line>1079</line>
+          <line>1088</line>
           <properties />
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/MainWindow.java</url>
-          <line>1280</line>
+          <line>1289</line>
           <properties />
           <option name="timeStamp" value="56" />
         </line-breakpoint>
@@ -864,27 +865,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>2940</line>
+          <line>2991</line>
           <properties />
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>2930</line>
+          <line>2959</line>
           <properties />
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>3291</line>
+          <line>3367</line>
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>3199</line>
+          <line>3275</line>
           <properties />
           <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/TemplateSheets.java</url>
+          <line>1346</line>
+          <properties />
+          <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
@@ -924,18 +931,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/ExcelReader.java</url>
-          <line>3197</line>
+          <line>3273</line>
           <properties class="ExcelReader" method="View_Actives_Members" />
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/TemplateSheets.java</url>
-          <line>1169</line>
+          <line>1173</line>
           <properties class="TemplateSheets" method="Create_Template_Balance_Sheet" />
           <option name="timeStamp" value="87" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="88" />
+      <option name="time" value="89" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1197,10 +1204,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="332" column="0" lean-forward="true" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
+            <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
+            <marker date="1483641943680" expanded="false" signature="13303:13311" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="1321" column="56" lean-forward="true" selection-start-line="1321" selection-start-column="56" selection-end-line="1321" selection-end-column="56" />
+          <folding>
+            <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#actionPerformed#0;class#MainWindow#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21">
+          <caret line="817" column="0" lean-forward="true" selection-start-line="817" selection-start-column="0" selection-end-line="817" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#getDiffYears#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Fees_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Active_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Inc_Exp_Sheet#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Balance_Sheet#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Summary_of_Active_Memberships#0;class#TemplateSheets#0" expanded="false" />
+            <element signature="method#Create_Template_Movement_in_Active_Memberships#0;class#TemplateSheets#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ValuationCalculation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="899" column="3" lean-forward="true" selection-start-line="899" selection-start-column="3" selection-end-line="925" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getInflationRates#0;class#ValuationCalculation#0" expanded="false" />
+            <element signature="method#Create_Income_Expenditure_Table#0;class#ValuationCalculation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="17" column="38" lean-forward="true" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+        <state relative-caret-position="314">
+          <caret line="2978" column="0" lean-forward="false" selection-start-line="2978" selection-start-column="0" selection-end-line="2979" selection-end-column="50" />
           <folding>
             <element signature="method#WriteActivesTotalRow#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#WriteFeesActivesTotalRow#0;class#ExcelReader#0" expanded="false" />
@@ -1213,7 +1277,7 @@
             <element signature="method#Create_Terminee_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Fees_Activee_Contribution#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Fees_Active_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
-            <element signature="method#Create_Fees_Terminee_Acc_Balances#0;class#ExcelReader#0" expanded="false" />
+            <element signature="method#getNetFundYieldRates#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Create_Fees_Terminee_Contribution#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#View_Actives_Members#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#View_Retired_Members#0;class#ExcelReader#0" expanded="false" />
@@ -1226,63 +1290,6 @@
             <element signature="method#TermineeSumReader#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#ActiveSumReader#0;class#ExcelReader#0" expanded="false" />
             <element signature="method#Separate_Actives_Terminees#0;class#ExcelReader#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ValuationCalculation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="926" column="0" lean-forward="false" selection-start-line="926" selection-start-column="0" selection-end-line="926" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getInflationRates#0;class#ValuationCalculation#0" expanded="false" />
-            <element signature="method#Create_Income_Expenditure_Table#0;class#ValuationCalculation#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
-            <marker date="1483635809947" expanded="false" signature="9512:9520" ph="{...}" />
-            <marker date="1483635809947" expanded="false" signature="9816:9824" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="460" column="0" lean-forward="true" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
-          <folding>
-            <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TemplateSheets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="1406" column="98" lean-forward="false" selection-start-line="1406" selection-start-column="98" selection-end-line="1406" selection-end-column="98" />
-          <folding>
-            <element signature="docComment;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#getCalendar#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#getDiffYears#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#getDate#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Fees_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Active_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Fees_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Active_Terminee_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Inc_Exp_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Balance_Sheet#0;class#TemplateSheets#0" expanded="false" />
-            <element signature="method#Create_Template_Summary_of_Active_Memberships#0;class#TemplateSheets#0" expanded="false" />
           </folding>
         </state>
       </provider>

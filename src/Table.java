@@ -245,7 +245,97 @@ public class Table {
     }
 
     public void Create_Table_Movement_in_Active_Membership(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        DecimalFormat dF = new DecimalFormat("#.#");//#.##
+        String SD[] = PensionPlanStartDate.split("/");
+        int startMonth = Integer.parseInt(SD[0]);
+        int startDay = Integer.parseInt(SD[1]);
+        int startYear = Integer.parseInt(SD[2]);
 
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+        int StartYear = startYear;
+        int StartMonth = startMonth;
+        int StartDay = startDay;
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+            endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
+
+        FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Movement_in_Active_Membership.xlsx");
+        XSSFWorkbook workbookTemplate = new XSSFWorkbook(fileR);
+        XSSFSheet sheetTemplate = workbookTemplate.getSheetAt(0);
+
+        FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Accumulated_Actives_Sheet.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet ActiveSheet = workbook.getSheet("Actives");
+
+        //get Active members as at start of plan year if any
+        XSSFRow Row = ActiveSheet.getRow(3);
+        //get male and female active members as at start date
+        XSSFCell cellMaleActiveMember = Row.getCell(1);
+        if (cellMaleActiveMember == null) {
+            cellMaleActiveMember = Row.createCell(1);
+            cellMaleActiveMember.setCellValue(0);
+        }
+       double maleActiveMembers = cellMaleActiveMember.getNumericCellValue();
+
+        //get female active members as at start date
+        XSSFCell cellFemaleActiveMember = Row.getCell(2);
+        if (cellFemaleActiveMember == null) {
+            cellFemaleActiveMember = Row.createCell(1);
+            cellFemaleActiveMember.setCellValue(0);
+        }
+        double femaleActiveMembers = cellFemaleActiveMember.getNumericCellValue();
+
+        //get both sex active members as at start date
+        XSSFCell cellBothActiveMember = Row.getCell(3);
+        if (cellBothActiveMember == null) {
+            cellBothActiveMember = Row.createCell(1);
+            cellBothActiveMember.setCellValue(0);
+        }
+        double bothActiveMembers = cellBothActiveMember.getNumericCellValue();
+
+
+        //write the initial data
+
+        //male initial active members
+        XSSFRow row = sheetTemplate.createRow(3);
+        XSSFCell writeCell= row.createCell(1);
+        writeCell.setCellValue(maleActiveMembers);
+        writeCell= row.createCell(2);
+        writeCell.setCellValue(femaleActiveMembers);
+        writeCell= row.createCell(3);
+        writeCell.setCellValue(bothActiveMembers);
+
+
+
+
+
+        for (int x = 0; x <4; x++) {
+            sheetTemplate.autoSizeColumn(x);
+        }
+
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Table_Movement_in_Active_Membership.xlsx"));
+
+        workbookTemplate.write(outFile);
+        fileInputStream.close();
+        outFile.close();
     }
 
     public void Create_Table_Analysis_of_Fund_Yield(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{

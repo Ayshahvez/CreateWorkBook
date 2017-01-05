@@ -589,6 +589,8 @@ public class TemplateSheets {
 
                     rowHeading2.createCell(Contindex++).setCellValue("Employees' Basic Contributions plus Credited Interest");
                     rowHeading2.createCell(Contindex++).setCellValue("Employees Optional Plus Credited Interest");
+                    rowHeading2.createCell(Contindex++).setCellValue("Vesting %");
+                    rowHeading2.createCell(Contindex++).setCellValue("Er Non-Vested Bal as at "+EndYear+"."+EndMonth+"."+EndYear);
                     break;
                 }
                 rowHeading3.createCell(tmp).setCellValue("Contributions During Plan Year " + PensionableSalary.get(h + 1) + "." + StartMonth + "." + StartDay + " to " + getDate(PensionableSalary.get(h + 1), StartMonth, StartDay));
@@ -816,6 +818,8 @@ public class TemplateSheets {
 
                     rowHeading2.createCell(Contindex++).setCellValue("Employees' Basic Contributions plus Credited Interest");
                     rowHeading2.createCell(Contindex++).setCellValue("Employees Optional Plus Credited Interest");
+                    rowHeading2.createCell(Contindex++).setCellValue("Vesting %");
+                    rowHeading2.createCell(Contindex++).setCellValue("Er Non-Vested Bal as at "+EndYear+"."+EndMonth+"."+EndYear);
                     break;
                 }
 
@@ -1394,9 +1398,8 @@ public class TemplateSheets {
        row = sheet.createRow(10);
        row.createCell(0).setCellValue("Unclaimed");
 
-       row = sheet.createRow(11);
+       row = sheet.createRow(12);
        row.createCell(0).setCellValue("Active Members as at "+EndYear+"."+EndMonth+"."+EndDay);
-
 
        for (int x = 0; x <4; x++) {
             //   sheet.autoSizeColumn(x);

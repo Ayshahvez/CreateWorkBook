@@ -440,6 +440,15 @@ public class MainWindow extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "Summary of Active Membership Template Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
         }
 
+        if(e.getSource().equals(MenuItemCreateTableSummaryofActiveMembership)){
+            try {
+                table.Create_Table_Movement_in_Active_Membership(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Movement in Active Membership Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
+        }
+
 
         if(e.getSource().equals(MenuItemCreateTemplateSummaryofActiveMembership)){
             try {
@@ -1306,7 +1315,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
     }
 
     private void registerListener() {
-
+        MenuItemCreateTableSummaryofActiveMembership.addActionListener(this);
         MenuItemCreateIncExpTable.addActionListener(this);
         MenuItemCreateBalSheetTemplate.addActionListener(this);
 
