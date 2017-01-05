@@ -39,6 +39,11 @@ public class MainWindow extends JFrame implements ActionListener {
     String PensionPlanEndDate = null; //utility.readFile("ED",filePathWorkingDir);
     String planEntryAge=null;
 
+    JMenu MenuCreateTableTemplate;
+    JMenuItem MenuItemCreateTemplateSummaryofActiveMembership;
+    JMenuItem MenuItemCreateTemplateMovementsinActiveMemberships;
+    JMenuItem MenuItemCreateTemplateAnalysisofFundYield;
+    JMenuItem MenuItemCreateTemplateGainsLosses;
     //main MenuBar
     JMenuBar menuBar;
     JMenuBar MenuBarCreateTemplateSheets;
@@ -49,6 +54,7 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenuItem MenuItemRefreshData;
     JMenuItem MenuItemSaveData;
     JMenuItem MenuItemDeleteData;
+
 
     JPanel codePanel = new JPanel(new BorderLayout());
     ResultsWindow resultsWindow = new ResultsWindow();
@@ -168,6 +174,13 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     public void initiliazeComponents() {
+        //TABLE TEMPLATES
+        MenuCreateTableTemplate = new JMenu("Create Table Template");
+        MenuItemCreateTemplateSummaryofActiveMembership = new JMenuItem("Create Template Summary of Active Membership");
+        MenuItemCreateTemplateMovementsinActiveMemberships = new JMenuItem("Create Template Movements in Active Memberships");
+        MenuItemCreateTemplateAnalysisofFundYield = new JMenuItem("Create Template Analysis of Fund Yield");
+        MenuItemCreateTemplateGainsLosses = new JMenuItem("Create Template Gains and Losses");
+
         //CALCULATIONS
         MenuCalculations = new JMenu("Valuation Calculations");
         MenuItemCreateIncExpTemplate = new JMenuItem("Create Income and Expenditure Template");
@@ -287,6 +300,7 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     private void addComponentsTopanels() {
+
         //CALCULATIONS
 MenuCalculations.add(MenuItemCreateIncExpTable);
 MenuCalculations.add(MenuItemCreateBalSheetTable);
@@ -315,8 +329,8 @@ MenuCalculations.add(MenuItemCreateBalSheetTable);
 
         MenuNoFeesTemplate.add(MenuItemCreateNoFeesActiveSheetTemplate);
         MenuNoFeesTemplate.add(MenuItemCreateNoFeesTermineeSheetTemplate);
-        MenuCreateTemplateSheet.add(MenuItemCreateIncExpTemplate);
-        MenuCreateTemplateSheet.add(MenuItemCreateBalSheetTemplate);
+       // MenuCreateTemplateSheet.add(MenuItemCreateIncExpTemplate);
+     //   MenuCreateTemplateSheet.add(MenuItemCreateBalSheetTemplate);
 
      //   MenuLoadTemplateSheet.add(MenuItemLoadOutputTemplate);
      //   MenuLoadTemplateSheet.add(MenuItemLoadTemplateActiveSheet);
@@ -375,6 +389,16 @@ MenuCalculations.add(MenuItemCreateBalSheetTable);
 
 //        MenuLoadWorkbook.add(LoadValDataWorkBook);
      //   MenuLoadWorkbook.add(LoadPensionableSalaryWorkBook);
+        //TABLES
+        MenuCreateTemplateSheet.add(MenuCreateTableTemplate);
+
+        //add tables template to create table menu
+        MenuCreateTableTemplate.add(MenuItemCreateIncExpTemplate);
+        MenuCreateTableTemplate.add(MenuItemCreateBalSheetTemplate);
+        MenuCreateTableTemplate.add(MenuItemCreateTemplateSummaryofActiveMembership);
+        MenuCreateTableTemplate.add(MenuItemCreateTemplateMovementsinActiveMemberships);
+        MenuCreateTableTemplate.add(MenuItemCreateTemplateAnalysisofFundYield);
+        MenuCreateTableTemplate.add(MenuItemCreateTemplateGainsLosses);
     }
 
     private void addPanelsToWindow() {
@@ -388,6 +412,26 @@ MenuCalculations.add(MenuItemCreateBalSheetTable);
     public void actionPerformed(ActionEvent e) {
       //  Color LINES = new Color(130, 125, 127);
         Color LINES = new Color(105, 105, 107);
+
+        if(e.getSource().equals(MenuItemCreateTemplateSummaryofActiveMembership)){
+            try {
+                TemplateSheets.Create_Template_Summary_of_Active_Memberships(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        if(e.getSource().equals(MenuItemCreateTemplateMovementsinActiveMemberships)){
+
+        }
+
+        if(e.getSource().equals(MenuItemCreateTemplateAnalysisofFundYield)){
+
+        }
+
+        if(e.getSource().equals(MenuItemCreateTemplateGainsLosses)){
+
+        }
 
         if(e.getSource().equals(MenuItemCreateBalSheetTemplate)){
             try {
@@ -1276,6 +1320,11 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
         MenuItemInterestRates.addActionListener(this);
         MenuItemCreateBalSheetTable.addActionListener(this);
+
+        MenuItemCreateTemplateSummaryofActiveMembership.addActionListener(this);
+        MenuItemCreateTemplateMovementsinActiveMemberships.addActionListener(this);
+        MenuItemCreateTemplateAnalysisofFundYield.addActionListener(this);
+        MenuItemCreateTemplateGainsLosses.addActionListener(this);
     }
 
 }
