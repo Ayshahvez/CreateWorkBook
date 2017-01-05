@@ -1338,4 +1338,82 @@ public class TemplateSheets {
         }
 
     }
+
+    public static void Create_Template_Movement_in_Active_Memberships(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException{
+   try{
+        String str[] = StartDate.split("/");
+        int StartMonth = Integer.parseInt(str[0]);
+        int StartDay = Integer.parseInt(str[1]);
+        int StartYear = Integer.parseInt(str[2]);
+
+        String str2[] = EndDate.split("/");
+        int EndMonth = Integer.parseInt(str2[0]);
+        int EndDay = Integer.parseInt(str2[1]);
+        int EndYear = Integer.parseInt(str2[2]);
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        // Date startDate = df.parse("2012.01.01");
+        Date startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+        Date endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+
+        int years = getDiffYears(startDate, endDate);
+        years+=1;
+
+       XSSFWorkbook workbook = new XSSFWorkbook();
+       XSSFSheet sheet = workbook.createSheet("Template Movement in Active Membership");
+
+       XSSFRow row = sheet.createRow(0);
+       row.createCell(0).setCellValue(PensionPlanName);
+
+       row = sheet.createRow(1);
+       row.createCell(0).setCellValue("Table 3.2 Movements in Active Membership from "+StartYear+"."+StartMonth+"."+StartDay+" to "+EndYear+"."+EndMonth+"."+EndDay);
+
+       row = sheet.createRow(2);
+       row.createCell(1).setCellValue("Males");
+       row.createCell(2).setCellValue("Females");
+       row.createCell(3).setCellValue("Both Sexes");
+
+       row = sheet.createRow(3);
+       row.createCell(0).setCellValue("Active Members as at "+StartYear+"."+StartMonth+"."+StartDay);
+
+       row = sheet.createRow(4);
+       row.createCell(0).setCellValue("Plus: New Entrants");
+
+       row = sheet.createRow(6);
+       row.createCell(0).setCellValue("Less: ");
+
+       row = sheet.createRow(7);
+       row.createCell(0).setCellValue("Terminations");
+
+       row = sheet.createRow(8);
+       row.createCell(0).setCellValue("Retirements");
+
+       row = sheet.createRow(9);
+       row.createCell(0).setCellValue("Deaths");
+
+       row = sheet.createRow(10);
+       row.createCell(0).setCellValue("Unclaimed");
+
+       row = sheet.createRow(11);
+       row.createCell(0).setCellValue("Active Members as at "+EndYear+"."+EndMonth+"."+EndDay);
+
+
+       for (int x = 0; x <4; x++) {
+            //   sheet.autoSizeColumn(x);
+            sheet.autoSizeColumn(x);
+        }
+
+        //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Movements_in_Active_Membership.xlsx"));
+        workbook.write(out);
+        out.close();
+        workbook.close();
+        System.out.println("Template_Movements_in_Active_Membership.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
 }

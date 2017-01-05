@@ -897,7 +897,6 @@ solvencyLevel=(marketValueOfNetAssets/totalActuarialLiability)*100;
         }
         }
 
-
     public double[] getInflationRates(String workingDir, int numOfYears) throws IOException {
         //    ArrayList list = new ArrayList();
 //System.out.print(numOfYears);

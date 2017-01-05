@@ -169,12 +169,12 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
- // File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
-   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
+ File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
+ //  File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
     if(f.exists()) {
         // do something
-    // content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
-     content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
+     content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
+    // content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
     }
     return content;
 }
@@ -192,12 +192,12 @@ public class Utility extends Component {
                 switch (type) {
                     case "WD":
                         content = new String(Files.readAllBytes(Paths.get(workingDir + "//WD.txt")));
-                        System.out.print(content);
+                  //      System.out.print(content);
                         break;
 
                     case "PN":
                         content = new String(Files.readAllBytes(Paths.get(workingDir + "//PN.txt")));
-                        System.out.print(content);
+                    //    System.out.print(content);
                         break;
 
                     case "SD":
@@ -207,11 +207,11 @@ public class Utility extends Component {
 
                     case "ED":
                         content = new String(Files.readAllBytes(Paths.get(workingDir + "//ED.txt")));
-                        System.out.print(content);
+                    //    System.out.print(content);
                         break;
 
                     default:
-                        System.out.println("Error no selection");
+                  //      System.out.println("Error no selection");
                         content = null;
                 }
 
