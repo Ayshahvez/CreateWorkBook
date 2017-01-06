@@ -7,7 +7,7 @@ import javax.swing.table.*;
 
 public class AlToTable extends JFrame {
 
-    private final static String[] header = {"Employee ID", "Last Name", "First Name","DOB"};
+    private final static String[] header = {"Employee ID", "Last Name", "First Name","DOB","Employment Date","Plan Entry Date","Status Date","Status"};
 
     AlToTable(ArrayList<String> al) {
         super("List of Active Members");
@@ -52,7 +52,12 @@ public class AlToTable extends JFrame {
         else if(type.equals("View Active"))
             setTitle("List of Active Members");
         else if(type.equals("View Duplicates"))
+        {
             setTitle("List of Duplicate Members");
+       //  header = new String[]{"Employee ID", "Last Name", "First Name", "DOB"};
+          //  MyModel mm = new MyModel(al, header);
+        }
+
 
         MyModel mm = new MyModel(al, header);
         JTable table = new JTable(mm);

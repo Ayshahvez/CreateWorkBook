@@ -271,29 +271,6 @@ public class TemplateSheets {
             int EndDay = Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
-   /*         LocalDate localStartDate= StartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate localEndDate = EndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-*/
-
-          /*  int EndYear = 2015;
-            int EndMonth = 12;
-            int EndDay=31;
-
-            int StartYear=2004;
-            int StartMonth=01;
-            int StartDay= 01;*/
-
-
-           /*int EndYear = localEndDate.getYear();
-            int EndMonth = localEndDate.getMonthValue();
-            int EndDay=localEndDate.getDayOfMonth();
-
-            int StartYear=localStartDate.getYear();
-            int StartMonth=localStartDate.getMonthValue();
-            int StartDay= localStartDate.getDayOfMonth();*/
-
-            //   System.out.print(StartDay +"/"+ StartMonth +"/" + StartYear);
-            //    System.out.print(EndDay +"/"+ EndMonth +"/" + EndYear);
             XSSFWorkbook workbook = new XSSFWorkbook();
             MemberModel model = new MemberModel();
 
@@ -676,22 +653,6 @@ public class TemplateSheets {
             int EndDay = Integer.parseInt(str2[1]);
             int EndYear = Integer.parseInt(str2[2]);
 
-        /*    int EndYear = localEndDate.getYear();
-            int EndMonth = localEndDate.getMonthValue();
-            int EndDay=localEndDate.getDayOfMonth();
-
-            int StartYear=localStartDate.getYear();
-            int StartMonth=localStartDate.getMonthValue();
-            int StartDay= localStartDate.getDayOfMonth();*/
-
-        /*    int EndYear = 2015;
-            int EndMonth = 12;
-            int EndDay=31;
-
-            int StartYear=2004;
-            int StartMonth=01;
-            int StartDay= 01;
-*/
             XSSFWorkbook workbook = new XSSFWorkbook();
             MemberModel model = new MemberModel();
 
@@ -1418,5 +1379,158 @@ public class TemplateSheets {
         e.printStackTrace();
     }
     }
+
+    public static void Create_Template_Gains_Losses(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException {
+        try{
+            String str[] = StartDate.split("/");
+            int StartMonth = Integer.parseInt(str[0]);
+            int StartDay = Integer.parseInt(str[1]);
+            int StartYear = Integer.parseInt(str[2]);
+
+            String str2[] = EndDate.split("/");
+            int EndMonth = Integer.parseInt(str2[0]);
+            int EndDay = Integer.parseInt(str2[1]);
+            int EndYear = Integer.parseInt(str2[2]);
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Template Gains and Losses");
+
+      XSSFRow  row = sheet.createRow(0);
+        row.createCell(1).setCellValue("Table 6.2 Gains and Lossess by Source");
+
+      row = sheet.createRow(1);
+        row.createCell(1).setCellValue("Factors Contributing to Actuarial Surplus (Defecit)");
+        row.createCell(2).setCellValue("Amount $");
+
+            row = sheet.createRow(3);
+            row.createCell(0).setCellValue("1");
+            row.createCell(1).setCellValue("Surplus/Deficit as at "+StartYear+"."+StartMonth+"."+StartDay);
+
+            row = sheet.createRow(4);
+            row.createCell(0).setCellValue("2");
+            row.createCell(1).setCellValue("Excess(Shortfall) of Net Investment Income over Interested Credited on Contributions");
+
+
+            row = sheet.createRow(5);
+            row.createCell(0).setCellValue("3");
+            row.createCell(1).setCellValue("Interest Credited to previously Unidentified DVP");
+
+            row = sheet.createRow(6);
+            row.createCell(0).setCellValue("4");
+            row.createCell(1).setCellValue("Non-Vested Employer's Balances");
+
+
+            row = sheet.createRow(7);
+            row.createCell(0).setCellValue("5");
+            row.createCell(1).setCellValue("Receivables");
+
+
+            row = sheet.createRow(8);
+            row.createCell(0).setCellValue("6");
+            row.createCell(1).setCellValue("Miscellaneous Sources");
+
+
+            row = sheet.createRow(10);
+            row.createCell(1).setCellValue("Net Gains (Losses)");
+
+
+
+            for (int x = 0; x <3; x++) {
+            //   sheet.autoSizeColumn(x);
+            sheet.autoSizeColumn(x);
+        }
+
+        //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Gains_Losses.xlsx"));
+        workbook.write(out);
+        out.close();
+        workbook.close();
+        System.out.println("Template_Gains_Losses.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
+    public static void Create_Template_Analysis_of_Fund_Yield(String StartDate, String EndDate, String PensionPlanName, String workingDir) throws IOException, ParseException {
+       try{
+
+        String str[] = StartDate.split("/");
+        int StartMonth = Integer.parseInt(str[0]);
+        int StartDay = Integer.parseInt(str[1]);
+        int StartYear = Integer.parseInt(str[2]);
+
+        String str2[] = EndDate.split("/");
+        int EndMonth = Integer.parseInt(str2[0]);
+        int EndDay = Integer.parseInt(str2[1]);
+        int EndYear = Integer.parseInt(str2[2]);
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        Date startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+        Date endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+
+        int years = getDiffYears(startDate, endDate);
+        years += 1;
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Template Analysis of Fund Yield");
+
+        XSSFRow row;
+        row = sheet.createRow(0);
+        row.createCell(1).setCellValue("Table 4.2 Analysis of Fund Yield- "+StartYear+"."+StartMonth+"."+StartDay+" to "+EndYear+"."+EndMonth+"."+EndDay);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 7));
+
+        row = sheet.createRow(1);
+        row.createCell(0).setCellValue("Plan Year");
+        row.createCell(1).setCellValue("Gross Fund Yield (GFY)");
+        row.createCell(2).setCellValue("Adjusted Fund Yield (AFY)");
+        row.createCell(3).setCellValue("Net Fund Yield (NFY) ");
+        row.createCell(4).setCellValue("Plan Year Inflation ");
+        row.createCell(5).setCellValue("Real Adjusted Fund Yield ");
+        row.createCell(6).setCellValue("Actual Credited Interest Rate ");
+
+        row = sheet.createRow(2);
+        row.createCell(1).setCellValue("%p.a.");
+        row.createCell(2).setCellValue("%p.a.");
+        row.createCell(3).setCellValue("%p.a.");
+        row.createCell(4).setCellValue("%p.a.");
+        row.createCell(5).setCellValue("%p.a.");
+        row.createCell(6).setCellValue("%p.a.");
+
+
+
+        for(int x=0;x<years;x++){
+            row = sheet.createRow(3+x);
+            row.createCell(0).setCellValue(StartYear+"."+StartMonth+"."+StartDay+" to " +getDate(StartYear,StartMonth,StartDay));
+            StartYear++;
+        }
+
+           row = sheet.createRow(years+4);
+           row.createCell(0).setCellValue(years + " Years Average");
+
+        for (int x = 0; x <7; x++) {
+            //   sheet.autoSizeColumn(x);
+            sheet.autoSizeColumn(x);
+        }
+
+
+        //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Analysis_of_Fund_Yield.xlsx"));
+        workbook.write(out);
+        out.close();
+        workbook.close();
+      //  System.out.println("Template_Summary_of_Active_Membership.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+
+    }
+
+
+
 
 }

@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-      // imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-      imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+   //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -440,6 +440,15 @@ public class MainWindow extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "Summary of Active Membership Template Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
         }
 
+        if(e.getSource().equals(MenuItemCreateTableAnalysisofFundYield)){
+            try {
+                table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Analysis of Fund Yield Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
+        }
+
         if(e.getSource().equals(MenuItemCreateTableSummaryofActiveMembership)){
             try {
                 table.Create_Table_Movement_in_Active_Membership(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
@@ -469,11 +478,23 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         if(e.getSource().equals(MenuItemCreateTemplateAnalysisofFundYield)){
-
+            try {
+                TemplateSheets.Create_Template_Analysis_of_Fund_Yield(PensionPlanStartDate,PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Analysis of Fund Yield Template Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
         }
 
         if(e.getSource().equals(MenuItemCreateTemplateGainsLosses)){
-
+            try {
+                TemplateSheets. Create_Template_Gains_Losses(PensionPlanStartDate,PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Movements in Active Membership Template Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
         }
 
         if(e.getSource().equals(MenuItemCreateBalSheetTemplate)){
@@ -511,6 +532,15 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
             try {
                 valuationCalculation.Create_Balance_Sheet_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                 JOptionPane.showMessageDialog(null, "The Valuation Balance Sheet Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        if(e.getSource().equals(MenuItemCreateTableGainsLosses)){
+            try {
+                table.Create_Table_Gains_and_Losses(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                JOptionPane.showMessageDialog(null, "The Gains and Losses Table Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -905,41 +935,6 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
             }
         }
 
-     /*   //create template sheet for active members
-        if (e.getSource().equals(MenuItemCreateFeesTermineeSheetTemplate)) {
-            if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanStartDate == null && PensionPlanEndDate == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanName == null && PensionPlanEndDate == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanName == null && PensionPlanStartDate == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name and Plan Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanStartDate == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Start Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanEndDate == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (PensionPlanName == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name", "Notice", JOptionPane.PLAIN_MESSAGE);
-            } else if (filePathWorkingDir == null) {
-                JOptionPane.showMessageDialog(null, "Please Ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
-            }
-
-
-            if (PensionPlanStartDate != null && PensionPlanEndDate != null && PensionPlanName != null) {
-                try {
-                    TemplateSheets.Create_Template_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
-                    ;
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                JOptionPane.showMessageDialog(null, "The Terminee Sheet  Template was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
-            }
-        }//end
-
-*/
-
-
         //NO FEES
         if (e.getSource().equals(MenuItemCreateNoFeesActiveSheetTemplate)) {
             //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
@@ -974,6 +969,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 }
             }
         }
+
 
        //create template sheet for active members
         if (e.getSource().equals(MenuItemCreateNoFeesTermineeSheetTemplate)) {
@@ -1073,7 +1069,6 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
             }
         }
-
 
         if (e.getSource().equals(MenuItemCreateFeesActiveSheet)) {
             String result = null;

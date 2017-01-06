@@ -3,10 +3,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -338,12 +340,379 @@ public class Table {
         outFile.close();
     }
 
-    public void Create_Table_Analysis_of_Fund_Yield(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+    public void Create_Table_Analysis_of_Fund_Yield(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
+        try {
+            DecimalFormat dF = new DecimalFormat("#.##");//#.##
+            String SD[] = PensionPlanStartDate.split("/");
+            int startMonth = Integer.parseInt(SD[0]);
+            int startDay = Integer.parseInt(SD[1]);
+            int startYear = Integer.parseInt(SD[2]);
+
+            String ED[] = PensionPlanEndDate.split("/");
+            int endMonth = Integer.parseInt(ED[0]);
+            int endDay = Integer.parseInt(ED[1]);
+            int endYear = Integer.parseInt(ED[2]);
+
+            int EndYear = endYear;
+            int EndMonth = endMonth;
+            int EndDay = endDay;
+
+            int StartYear = startYear;
+            int StartMonth = startMonth;
+            int StartDay = startDay;
+
+            DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+                endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            int years = Utility.getDiffYears(startDate, endDate);
+            years += 1;
+
+            FileInputStream fileTemplate = new FileInputStream(workingDir + "\\Template_Analysis_of_Fund_Yield.xlsx");
+            XSSFWorkbook workbookTemplate= new XSSFWorkbook(fileTemplate);
+            XSSFSheet sheetTemplate = workbookTemplate.getSheetAt(0);
+
+            FileInputStream fileIncExp = new FileInputStream(workingDir + "\\Income_Expenditure_Table.xlsx");
+            XSSFWorkbook workbookIncExp = new XSSFWorkbook(fileIncExp);
+            XSSFSheet sheetIncExp = workbookIncExp.getSheetAt(0);
+
+            FileInputStream fileInterest = new FileInputStream(workingDir + "\\Interest Rates.xlsx");
+            XSSFWorkbook workbookInterest = new XSSFWorkbook(fileInterest);
+            XSSFSheet sheetInterest = workbookInterest.getSheetAt(0);
+
+            XSSFRow row;
+
+            //XSSFCell cell;
+            double[] valuesCIR = new double[years];
+            //GET CIR
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                row = sheetInterest.getRow(cellIterator);
+                XSSFCell cellCIR = row.getCell(1);
+                if(cellCIR==null){
+                    cellCIR = row.createCell(cellIterator);
+                    cellCIR.setCellValue(0.00);
+                }
+                valuesCIR[j]=cellCIR.getNumericCellValue();
+            }
+
+
+            //XSSFCell cell;
+            double[] valuesGFY = new double[years];
+            //GET GFY
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                  row = sheetIncExp.getRow(39);
+                XSSFCell cellGFY = row.getCell(cellIterator);
+                if(cellGFY==null){
+                    cellGFY = row.createCell(cellIterator);
+                    cellGFY.setCellValue(0.00);
+                }
+                valuesGFY[j]=cellGFY.getNumericCellValue();
+            }
+
+
+            double[] valuesAFY = new double[years];
+            //GET AFY
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                row = sheetIncExp.getRow(40);
+                XSSFCell cellAFY= row.getCell(cellIterator);
+                if(cellAFY==null){
+                    cellAFY = row.createCell(cellIterator);
+                    cellAFY.setCellValue(0.00);
+                }
+                valuesAFY[j]=cellAFY.getNumericCellValue();
+            }
+
+            double[] valuesNFY = new double[years];
+            //GET NFY
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                row = sheetIncExp.getRow(41);
+                XSSFCell cellNFY= row.getCell(cellIterator);
+                if(cellNFY==null){
+                    cellNFY = row.createCell(cellIterator);
+                    cellNFY.setCellValue(0.00);
+                }
+                valuesNFY[j]=cellNFY.getNumericCellValue();
+            }
+
+            double[] valuesPYI= new double[years];
+            //GET NFY
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                row = sheetIncExp.getRow(43);
+                XSSFCell cellPYI= row.getCell(cellIterator);
+                if(cellPYI==null){
+                    cellPYI = row.createCell(cellIterator);
+                    cellPYI.setCellValue(0.00);
+                }
+                valuesPYI[j]=cellPYI.getNumericCellValue();
+            }
+
+
+            double[] valuesRAFY= new double[years];
+            //GET NFY
+            for(int j = 0, cellIterator=1;j<years;j++,cellIterator++){
+                row = sheetIncExp.getRow(44);
+                XSSFCell cellRAFY= row.getCell(cellIterator);
+                if(cellRAFY==null){
+                    cellRAFY = row.createCell(cellIterator);
+                    cellRAFY.setCellValue(0.00);
+                }
+                valuesRAFY[j]=cellRAFY.getNumericCellValue();
+            }
+
+            //write data to table
+            for(int y=0,rowIterator=3;y<years; y++,rowIterator++){
+                row=sheetTemplate.getRow(rowIterator);
+
+                XSSFCell cellGFY = row.createCell(1);
+                        cellGFY.setCellValue(valuesGFY[y]);
+
+                XSSFCell cellAFY = row.createCell(2);
+                cellAFY.setCellValue(valuesAFY[y]);
+
+                XSSFCell cellNFY = row.createCell(3);
+                cellNFY.setCellValue(valuesNFY[y]);
+
+                XSSFCell cellPYI = row.createCell(4);
+                cellPYI.setCellValue(valuesPYI[y]);
+
+
+                XSSFCell cellRAFY = row.createCell(5);
+                cellRAFY.setCellValue(valuesRAFY[y]);
+
+
+                XSSFCell cellCIR= row.createCell(6);
+                cellCIR.setCellValue(100* valuesCIR[y]);
+            }
+
+//write average row
+            DecimalFormat DF = new DecimalFormat("#.##");
+            double sumGFY=0;
+            double sumAFY=0;
+            double sumNFY=0;
+            double sumPYI=0;
+            double sumCIR=0;
+            double sumRAFY=0;
+
+            for(int y=0,rowIterator=3;y<years; y++,rowIterator++) {
+                sumGFY+=valuesGFY[y];
+                sumAFY+=valuesAFY[y];
+                sumNFY+=valuesNFY[y];
+                sumPYI+=valuesPYI[y];
+                sumCIR+=100*valuesCIR[y];
+                sumRAFY+=valuesRAFY[y];
+            }
+
+            double avgGFY = Double.parseDouble(DF.format(sumGFY/years));
+            double avgAFY = Double.parseDouble(DF.format(sumAFY/years));
+            double avgNFY = Double.parseDouble(DF.format(sumNFY/years));
+            double avgPYI = Double.parseDouble(DF.format(sumPYI/years));
+            double avgCIR = Double.parseDouble(DF.format(sumCIR/years));
+            double avgRAFY = Double.parseDouble(DF.format(sumRAFY/years));
+
+            row=sheetTemplate.getRow(years+4);
+
+
+           XSSFCell cellGFY= row.createCell(1);
+            cellGFY.setCellValue(avgGFY);
+
+
+            XSSFCell cellAFY= row.createCell(2);
+            cellAFY.setCellValue(avgAFY);
+
+            XSSFCell cellNFY= row.createCell(3);
+            cellNFY.setCellValue(avgNFY);
+
+            XSSFCell cellPYI= row.createCell(4);
+            cellPYI.setCellValue(avgPYI);
+
+            XSSFCell cellRAFY= row.createCell(5);
+            cellRAFY.setCellValue(avgRAFY);
+
+            XSSFCell cellCIR= row.createCell(6);
+            cellCIR.setCellValue(avgCIR);
+
+
+
+            for (int x = 0; x <6; x++) {
+                //   sheet.autoSizeColumn(x);
+                sheetTemplate.autoSizeColumn(x);
+            }
+
+            //Write the workbook in file system
+            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Table_Analysis_of_Fund_Yield.xlsx"));
+            workbookTemplate.write(out);
+            out.close();
+            workbookTemplate.close();
+            System.out.println("Table_Analysis_of_Fund_Yield.xlsx written successfully");
+        } catch (NoSuchFileException e1) {
+            JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void Create_Table_Gains_and_Losses(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+        try{
+            DecimalFormat dF = new DecimalFormat("#.##");//#.##
+            String SD[] = PensionPlanStartDate.split("/");
+            int startMonth = Integer.parseInt(SD[0]);
+            int startDay = Integer.parseInt(SD[1]);
+            int startYear = Integer.parseInt(SD[2]);
 
+            String ED[] = PensionPlanEndDate.split("/");
+            int endMonth = Integer.parseInt(ED[0]);
+            int endDay = Integer.parseInt(ED[1]);
+            int endYear = Integer.parseInt(ED[2]);
+
+            int EndYear = endYear;
+            int EndMonth = endMonth;
+            int EndDay = endDay;
+
+            int StartYear = startYear;
+            int StartMonth = startMonth;
+            int StartDay = startDay;
+
+            DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = df.parse(StartYear + "." + StartMonth + "." + StartDay);
+                endDate = df.parse(EndYear + "." + EndMonth + "." + EndDay);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            int years = Utility.getDiffYears(startDate, endDate);
+            years+=1;
+
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Gains_Losses.xlsx");
+            XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
+            XSSFSheet sheetTemplate = workbookR.getSheetAt(0);
+
+            FileInputStream fileT = new FileInputStream(workingDir + "\\Completed_Terminee_Sheet.xlsx");
+            XSSFWorkbook workbookTerminee = new XSSFWorkbook(fileT);
+            XSSFSheet sheetTerminee = workbookTerminee.getSheetAt(0);
+
+        XSSFWorkbook workbookCreate = new XSSFWorkbook();
+        XSSFSheet sheet = workbookCreate.createSheet("Gains and Losses");
+
+        //get initial data
+
+            //get initial surplus
+            XSSFRow row = sheetTemplate.getRow(3);
+            XSSFCell cellSurplus = row.getCell(2);
+            if(cellSurplus==null){
+                cellSurplus = row.createCell(2);
+                cellSurplus.setCellValue(0.00);
+            }
+            double surplusInitial = cellSurplus.getNumericCellValue();
+
+            //get interest credited to previously
+            row = sheetTemplate.getRow(5);
+            XSSFCell cellInterestCredited = row.getCell(2);
+            if(cellInterestCredited==null){
+                cellInterestCredited = row.createCell(2);
+                cellInterestCredited.setCellValue(0.00);
+            }
+            double surplusInterestCredited = cellInterestCredited.getNumericCellValue();
+
+
+            //get Receivables
+            row = sheetTemplate.getRow(7);
+            XSSFCell cellReceivables = row.getCell(2);
+            if(cellReceivables==null){
+                cellReceivables = row.createCell(2);
+                cellReceivables.setCellValue(0.00);
+            }
+            double receivables = cellReceivables.getNumericCellValue();
+
+
+            //get Miscellaneous Sources
+            row = sheetTemplate.getRow(8);
+            XSSFCell cellMiscellaneousSources = row.getCell(2);
+            if(cellMiscellaneousSources==null){
+                cellMiscellaneousSources = row.createCell(2);
+                cellMiscellaneousSources.setCellValue(0.00);
+            }
+            double MiscellaneousSources = cellMiscellaneousSources.getNumericCellValue();
+
+            //get Excess(Shortfall) of Net Investment Income over Interested Credited
+     double excessShortfall=  new ExcelReader().getExcessShortFall(PensionPlanStartDate,PensionPlanEndDate,workingDir);
+
+
+     //get  Non-Vested Employer's Balances
+            int cellNumbers=18+ (years*9)+4+9; //fees
+         //   int cellNumbers=18+ (years*8)+4+9; //no fees
+            int lastcol = sheetTerminee.getLastRowNum();
+            lastcol-=3;
+
+       //     System.out.println("lastcol"+lastcol);
+         //   System.out.println("cellnumber"+cellNumbers);
+
+            row = sheetTerminee.getRow(lastcol);
+            XSSFCell cellNonVestedEmployer = row.getCell(cellNumbers);
+            if(cellNonVestedEmployer==null){
+                cellNonVestedEmployer = row.createCell(cellNumbers);
+                cellNonVestedEmployer.setCellValue(0.00);
+            }
+            double NonVestedEmployer = cellNonVestedEmployer.getNumericCellValue();
+
+            row = sheetTemplate.getRow(3);
+            row.createCell(2).setCellValue(surplusInitial);
+
+            row = sheetTemplate.getRow(4);
+            row.createCell(2).setCellValue(excessShortfall);
+
+            row = sheetTemplate.getRow(5);
+            row.createCell(2).setCellValue(surplusInterestCredited);
+
+
+            row = sheetTemplate.getRow(6);
+            row.createCell(2).setCellValue(NonVestedEmployer);
+
+
+            row = sheetTemplate.getRow(7);
+            row.createCell(2).setCellValue(receivables);
+
+            row = sheetTemplate.getRow(8);
+            row.createCell(2).setCellValue(MiscellaneousSources);
+
+
+            double result = surplusInitial - excessShortfall - surplusInterestCredited + NonVestedEmployer  + receivables + MiscellaneousSources;
+            row = sheetTemplate.getRow(10);
+            row.createCell(2).setCellValue(result);
+
+
+            System.out.println("excessShortfall"+excessShortfall);
+            System.out.println("NonVestedEmployer"+NonVestedEmployer);
+            System.out.println("surplusInterestCredited"+surplusInterestCredited);
+            System.out.println("MiscellaneousSources"+MiscellaneousSources);
+            System.out.println("result"+result);
+            System.out.println("receivables"+receivables);
+
+            for (int x = 0; x <4; x++) {
+            //   sheet.autoSizeColumn(x);
+            sheet.autoSizeColumn(x);
+        }
+        //Write the workbook in file system
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Table_Gains_Losses.xlsx"));
+            workbookR.write(out);
+        out.close();
+        workbookR.close();
+        System.out.println("Table_Gains_Losses.xlsx written successfully");
+    } catch (NoSuchFileException e1) {
+        JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    }
+
 
 }

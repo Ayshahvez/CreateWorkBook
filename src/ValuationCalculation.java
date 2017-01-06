@@ -727,7 +727,7 @@ public class ValuationCalculation {
 
     }
 */
-    public void Create_Balance_Sheet_Table(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
+      public void Create_Balance_Sheet_Table(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
 
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         String SD[] = PensionPlanStartDate.split("/");
@@ -761,18 +761,18 @@ public class ValuationCalculation {
 
         int years = Utility.getDiffYears(startDate, endDate);
         years+=1;
-      double employeeBasicContribution=0.00;
-      double employeeOptionalContribution=0.00;
-      double employerContribution=0.00;
-      double subTotalAccruedBenefits=0.00;
-      double refundsOutstandingToUnclaimedMembers=0.00;
-      double refundsOutstandingToTerminatedMembers=0.00;
-      double accruedBenefitsToRetiredMembers=0.00;
-      double accruedBenefitsToDeferredVestedPensioners;
-      double totalActuarialLiability=0.00;
-      double marketValueOfNetAssets=0.00;
-      double actuarialSurplusDefecit=0.00;
-      double solvencyLevel=0.00;
+        double employeeBasicContribution=0.00;
+        double employeeOptionalContribution=0.00;
+        double employerContribution=0.00;
+        double subTotalAccruedBenefits=0.00;
+        double refundsOutstandingToUnclaimedMembers=0.00;
+        double refundsOutstandingToTerminatedMembers=0.00;
+        double accruedBenefitsToRetiredMembers=0.00;
+        double accruedBenefitsToDeferredVestedPensioners;
+        double totalActuarialLiability=0.00;
+        double marketValueOfNetAssets=0.00;
+        double actuarialSurplusDefecit=0.00;
+        double solvencyLevel=0.00;
 
         try{
             FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Balance_Sheet.xlsx");
@@ -793,7 +793,7 @@ public class ValuationCalculation {
             }
             employeeBasicContribution = cellemployeeBasicContribution.getNumericCellValue();
 
-           Row= sheetVal_Bal.getRow(6);
+            Row= sheetVal_Bal.getRow(6);
             XSSFCell cellemployeeOptionalContribution = Row.getCell(3);
             if(cellemployeeOptionalContribution==null){
                 cellemployeeOptionalContribution=Row.createCell(3);
@@ -857,16 +857,16 @@ public class ValuationCalculation {
             //CALCULATIONS
             subTotalAccruedBenefits = employeeBasicContribution+employeeOptionalContribution+employerContribution;
             totalActuarialLiability=subTotalAccruedBenefits+refundsOutstandingToUnclaimedMembers+refundsOutstandingToTerminatedMembers+accruedBenefitsToRetiredMembers+accruedBenefitsToDeferredVestedPensioners;
-actuarialSurplusDefecit=marketValueOfNetAssets-totalActuarialLiability;
-if(totalActuarialLiability==0)  totalActuarialLiability=1;
-solvencyLevel=(marketValueOfNetAssets/totalActuarialLiability)*100;
+            actuarialSurplusDefecit=marketValueOfNetAssets-totalActuarialLiability;
+            if(totalActuarialLiability==0)  totalActuarialLiability=1;
+            solvencyLevel=(marketValueOfNetAssets/totalActuarialLiability)*100;
 
 
 //WRITE CALCULATIONS TO WORKBOOK
             XSSFRow row = sheetVal_Bal.getRow(8);
             row.createCell(3).setCellValue(Double.parseDouble(dF.format(subTotalAccruedBenefits)));
 
-          row = sheetVal_Bal.getRow(15);
+            row = sheetVal_Bal.getRow(15);
             row.createCell(3).setCellValue(Double.parseDouble(dF.format(totalActuarialLiability)));
 
             row = sheetVal_Bal.getRow(17);
@@ -895,7 +895,7 @@ solvencyLevel=(marketValueOfNetAssets/totalActuarialLiability)*100;
             e.printStackTrace();
 
         }
-        }
+    }
 
     public double[] getInflationRates(String workingDir, int numOfYears) throws IOException {
         //    ArrayList list = new ArrayList();
