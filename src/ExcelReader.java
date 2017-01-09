@@ -3561,6 +3561,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
     public void setResult(String x){
         this.result=x;
     }
+
     public String getResult(){
         return this.result;
     }

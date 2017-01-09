@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-   //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+     //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -691,7 +691,9 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                    result = validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                   ArrayList al = validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                   result=validationChecks.getResult();
+                   new AlToTable(al,"Check Plan Entry Date");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -717,8 +719,10 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
-                        String result = null;
-                        result = validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+
+                        ArrayList al= validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        String result = validationChecks.getResult();
+                        new AlToTable(al,"Check Pensionable Salary");
                         resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                     }
                 } catch (IOException e1) {
@@ -739,7 +743,9 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
                         try {
-                            result = validationChecks.Check_Age(filePathWorkingDir, Age);
+                           ArrayList al = validationChecks.Check_Age(filePathWorkingDir, Age);
+                           result = validationChecks.getResult();
+                           new AlToTable(al,"Check Age");
                             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         } catch (IOException e1) {
                             e1.printStackTrace();
@@ -759,7 +765,9 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Now Performing Date of Birth Check, Press Ok to Continue", "Date of Birth Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                    result = validationChecks.Check_DateofBirth(filePathWorkingDir);
+                  ArrayList al = validationChecks.Check_DateofBirth(filePathWorkingDir);
+                  result = validationChecks.getResult();
+                  new AlToTable(al,"Check Date of Birth");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                 } catch (IOException e1) {
                     e1.printStackTrace();

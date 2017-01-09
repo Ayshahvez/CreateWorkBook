@@ -1237,8 +1237,6 @@ public class ValuationCalculation {
 //MAIN LOOP
             for (int x = 0; x <years; x++) {
 
-
-
                 administrativeAndOtherExpenses[x]=administrativeFees[x]+feesForProfessionalServices[x]+otherExpenses[x];
                 investmentExpenses[x]=investmentManagementFees[x];
                 totalExpenses[x]=administrativeAndOtherExpenses[x]+investmentExpenses[x];

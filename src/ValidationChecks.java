@@ -33,7 +33,8 @@ public class ValidationChecks {
         this.result = result;
     }
 
-public String result;
+    public String result;
+
     public ArrayList Check_For_Duplicates(String workingDir) throws IOException {
         ArrayList <String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
@@ -76,18 +77,20 @@ public String result;
             XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
             Date f1Val_DOB = cellF1_DOB.getDateCellValue();
 
+
+
             FindIt = 0;
             check = 0;
             boolean findIt = false;
 
-            for (int row2 = 0; row2 < NoMembers; row2++) {
-                int temp2 = row2;
+            for (int row2 = 0,rowIterator=1;row2 < NoMembers; rowIterator++,row2++) {
+               int temp2 = row2;
 
-                if (temp2 == 0) {
-                    row2 = 1;  //start reading from second row
-                }
+               if (temp2 == 0) {
+                   row2 = 1;  //start reading from second row
+               }
 
-                //  int Row = row;
+                  int Row = row;
 
                 XSSFRow DemoRow2 = DemoSheet.getRow(row2);
 
@@ -106,6 +109,22 @@ public String result;
 
                 XSSFCell cell_DOB = DemoRow2.getCell((short) 5);   //DOB
                 Date f1_DOB = cell_DOB.getDateCellValue();
+
+                XSSFCell cellG1 = DemoRow2.getCell((short) 6); //plan entry
+                // String g1Val =datetemp.format( cellG1.getDateCellValue());
+                Date g1Val = cellG1.getDateCellValue();
+
+                XSSFCell cellH1 = DemoRow2.getCell((short) 7); //emp date
+                //    String h1Val = datetemp.format( cellH1.getDateCellValue());
+                Date h1Val = cellH1.getDateCellValue();
+
+                XSSFCell cellI1 = DemoRow2.getCell((short) 8);  //status date
+                // String i1Val = datetemp.format( cellI1.getDateCellValue());
+                Date i1Val = cellI1.getDateCellValue();
+
+                XSSFCell cellJ1 = DemoRow2.getCell((short) 9); //status
+                String j1Val = cellJ1.getStringCellValue();
+
 
                 if (a1Val_EM.equals(a1Val_EM2) && b1Val_LN.equals(b1Val_LN2) && c1Val_FN.equals(c1Val_FN2) || c1Val_FN.equals(c1Val_FN2) && b1Val_LN.equals(b1Val_LN2) && f1Val_DOB.equals(f1_DOB) || a1Val_EM.equals(a1Val_EM2)) {
                     FindIt++;
@@ -137,7 +156,8 @@ public String result;
                         stringBuilder.append("Date of Birth: " + dF.format(f1Val_DOB) + "\n");
 
                         stringBuilder.append("------------------------------------------\n");
-                        list.add(a1Val_EM+","+b1Val_LN+","+c1Val_FN+","+dF.format(f1Val_DOB));
+                     //   list.add(a1Val_EM+","+b1Val_LN+","+c1Val_FN+","+dF.format(f1Val_DOB));
+                        list.add(a1Val_EM+","+b1Val_LN+","+c1Val_FN+","+dF.format(f1Val_DOB)+","+dF.format(h1Val)+","+dF.format(g1Val)+","+dF.format(i1Val)+','+j1Val);
                     }
                 }
 
@@ -154,13 +174,14 @@ public String result;
         return list;
     }
 
-    public String Check_FivePercent_PS(String PensionPlanStartDate, String PensionPlanEndDate, String workindDir) throws IOException {
-
+    public ArrayList Check_FivePercent_PS(String PensionPlanStartDate, String PensionPlanEndDate, String workindDir) throws IOException {
+        ArrayList <String> list = new ArrayList<>();
         int Check = 0;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: Results of the Pensionable Salary Check Process:\n");
 
         DecimalFormat dF = new DecimalFormat("#.###");//#.##
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MMM-yy");
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
@@ -193,15 +214,6 @@ public String result;
         int StartMonth = startMonth;
         int StartDay = startDay;
 
-     /*   int EndYear = 2015;
-        int EndMonth = 12;
-        int EndDay = 31;
-
-        int StartYear = 2004;
-        int StartMonth = 01;
-        int StartDay = 01;*/
-        //   int WriteAt =26;
-
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
         Date endDate = null;
@@ -213,6 +225,7 @@ public String result;
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
+        years+=1;
         FileInputStream fsRecon = null;
         try {
             fsRecon = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
@@ -223,7 +236,7 @@ public String result;
         int counter = 1;
 
 
-        for (int x = 0; x <= years; x++) {
+        for (int x = 0; x < years; x++) {
 
             Calendar cal = Calendar.getInstance();
             cal.set(StartYear, StartMonth, StartDay);
@@ -282,8 +295,27 @@ public String result;
                 //  XSSFCell cellD1 = DemoRow.getCell((short) 3);
                 // String d1Val = cellD1.getStringCellValue();
 
-                rowR[Row] = DemoSheet.getRow(counter++);
+                XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
+                Date f1Val_DOB = cellF1_DOB.getDateCellValue();
 
+
+                XSSFCell cellG1 = DemoRow.getCell((short) 6); //plan entry
+                // String g1Val =datetemp.format( cellG1.getDateCellValue());
+                Date g1Val = cellG1.getDateCellValue();
+
+                XSSFCell cellH1 = DemoRow.getCell((short) 7); //emp date
+                //    String h1Val = datetemp.format( cellH1.getDateCellValue());
+                Date h1Val = cellH1.getDateCellValue();
+
+                XSSFCell cellstatusDate= DemoRow.getCell((short) 8);  //status date
+                // String i1Val = datetemp.format( cellI1.getDateCellValue());
+                Date i1Val = cellstatusDate.getDateCellValue();
+
+                XSSFCell cellJ1 = DemoRow.getCell((short) 9); //status
+                String j1Val = cellJ1.getStringCellValue();
+
+
+                rowR[Row] = DemoSheet.getRow(counter++);
 
                 //LOOP THROUGH PENSIONABLE SALARY SHEET
                 for (int y = 0; y < CountPSRow; y++) {
@@ -325,10 +357,8 @@ public String result;
                     double F1 = F1_Year.getNumericCellValue();
 
                     double F1_Yr = 0;
-                    XSSFCell[] cellI1 = new XSSFCell[12];
-                    double[] d = new double[12];
-
-                    //      for (int r=0;ReconRow)
+                    XSSFCell[] cellI1 = new XSSFCell[years];
+                    double[] d = new double[years];
 
 
                     if (a1Val_EM.equals(a1_EM) && !a1Val_EM.equals("ASSE88888")) {
@@ -340,9 +370,7 @@ public String result;
                             d[j] = F1_Yr;
                         }
 
-
                         //CHECK IN RECON SHEET FOR EMPLOYEE CONTRIBUTION
-
                         for (int v = 6; v <= CountReconRow; v++) {
                             XSSFRow reconRow = Reconsheet.getRow(v); //RECEN
 
@@ -380,16 +408,7 @@ public String result;
                                 check = Double.parseDouble(dF.format(check));
                                 if (check != h1) {
                                     Check++;
-                                    //    ArrayList val = new ArrayList();
 
-                                    System.out.println("Emplyee Number: " + a1);
-                                    System.out.println("Last Name: " + c1);
-                                    System.out.println("First Name: " + Cb1);
-                                    System.out.println("Pensionable Salary: " + dF.format(d[x]));
-                                    System.out.println("Employee Basic: " + h1);
-
-                                    //   System.out.print(" I1: " + i1);
-                                    //   System.out.print(" J1: " + j1);
                                     String test = "";
 
                                     stringBuilder.append("\nEmployee ID: " + a1 + "\n");
@@ -398,6 +417,7 @@ public String result;
                                     stringBuilder.append("Pensionable Salary: $" + dF.format(d[x]) + "\n");
                                     stringBuilder.append("Employee Basic: $" + h1 + "\n");
 
+                                    list.add(a1Val_EM+","+c1+","+ Cb1 +","+dateF.format(f1Val_DOB)+","+dateF.format(h1Val)+","+dateF.format(g1Val)+","+dateF.format(i1Val)+','+j1Val);
                                     if (check == h1) {
                                         test = "true";
                                         System.out.println("TEST: Pensionable Salary: $" + dF.format(d[x]));
@@ -439,10 +459,15 @@ public String result;
         //   stringBuilder.append("-------------------------------------------------------\n");
         if(Check==0) stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions throughout the Review Period");
         stringBuilder.append("\n\nNotice: The Pensionable Check Process has now been completed.\n");
-        return String.valueOf(stringBuilder);
+      //  return String.valueOf(stringBuilder);
+
+        this.setResult( String.valueOf(stringBuilder));
+        return list;
     }
 
-    public String Check_Plan_EntryDate_empDATE(String workindDir) throws IOException {
+    public ArrayList Check_Plan_EntryDate_empDATE(String workindDir) throws IOException {
+        ArrayList <String> list = new ArrayList<>();
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: The Plan Entry Check Validates whether a Member has enrolled in the Plan before Employment Date \n");
 
@@ -469,39 +494,50 @@ public String result;
                 cellA1_EM = DemoRow.createCell(0);
             }
             String result = cellA1_EM.getStringCellValue();
-            String a1Val_EM = result.replaceAll("[-]", "");
+            String cellEmployeeNumber = result.replaceAll("[-]", "");
 
             XSSFCell cellC1_LN = DemoRow.getCell((short) 2);   //last name
-            String b1Val_LN = cellC1_LN.getStringCellValue();
+            String cellLastName = cellC1_LN.getStringCellValue();
 
             XSSFCell cellD1_FN = DemoRow.getCell((short) 3);   //first name
-            String c1Val_FN = cellD1_FN.getStringCellValue();
+            String cellFirstName = cellD1_FN.getStringCellValue();
+
+            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
+            Date cellDOB = cellF1_DOB.getDateCellValue();
 
             XSSFCell cellG1_PE = DemoRow.getCell((short) 6);   //plan entry
-            Date g1Val_PE = cellG1_PE.getDateCellValue();
-
+            Date cellPlanEntry = cellG1_PE.getDateCellValue();
 
             XSSFCell cellH1_PE = DemoRow.getCell((short) 7);   //emp date
-            Date h1Val_PE = cellH1_PE.getDateCellValue();
+            Date cellEmploymentDate = cellH1_PE.getDateCellValue();
+
+            XSSFCell cellI1 = DemoRow.getCell((short) 8);  //status date
+            // String i1Val = datetemp.format( cellI1.getDateCellValue());
+            Date cellStatusDate = cellI1.getDateCellValue();
+
+            XSSFCell cellJ1 = DemoRow.getCell((short) 9); //status
+            String cellStatus = cellJ1.getStringCellValue();
+
 
             SimpleDateFormat dF = new SimpleDateFormat();
             dF.applyPattern("dd-MMM-yy");
 
-            if (g1Val_PE.before(h1Val_PE)) {
-                System.out.println("Employee ID: " + a1Val_EM);
-                System.out.println("Last Name: " + b1Val_LN);
-                System.out.println("First Name: " + c1Val_FN);
-                System.out.println("Plan Entry: " + dF.format(g1Val_PE));
-                System.out.println("Employment Date: " + dF.format(h1Val_PE));
-                System.out.println("Please Contact Administrator");
+            if (cellPlanEntry.before(cellEmploymentDate)) {
+/*                System.out.println("Employee ID: " + cellEmployeeNumber);
+                System.out.println("Last Name: " + cellLastName);
+                System.out.println("First Name: " + cellFirstName);
+                System.out.println("Plan Entry: " + dF.format(cellPlanEntry));
+                System.out.println("Employment Date: " + dF.format(cellEmploymentDate));
+                System.out.println("Please Contact Administrator");*/
 
-                stringBuilder.append("\nResult: This member's Plan Entry Date at " + dF.format(g1Val_PE) + " is before their Employment Date at " + dF.format(h1Val_PE) + "\n");
-                stringBuilder.append("Employee ID: " + a1Val_EM + "\n");
-                stringBuilder.append("Last Name: " + b1Val_LN + "\n");
-                stringBuilder.append("First Name: " + c1Val_FN + "\n");
-                stringBuilder.append("Plan Entry: " + dF.format(g1Val_PE) + "\n");
-                stringBuilder.append("Employment Date: " + dF.format(h1Val_PE) + "\n");
+                stringBuilder.append("\nResult: This member's Plan Entry Date at " + dF.format(cellPlanEntry) + " is before their Employment Date at " + dF.format(cellEmploymentDate) + "\n");
+                stringBuilder.append("Employee ID: " + cellEmployeeNumber + "\n");
+                stringBuilder.append("Last Name: " + cellLastName + "\n");
+                stringBuilder.append("First Name: " + cellFirstName + "\n");
+                stringBuilder.append("Plan Entry: " + dF.format(cellPlanEntry) + "\n");
+                stringBuilder.append("Employment Date: " + dF.format(cellEmploymentDate) + "\n");
                 stringBuilder.append("----------------------------------------------------------------------------------------------------------\n");
+                list.add(cellEmployeeNumber+","+cellLastName+","+cellFirstName+","+dF.format(cellDOB)+","+dF.format(cellEmploymentDate)+","+dF.format(cellPlanEntry)+","+dF.format(cellStatusDate)+','+cellStatus);
                 System.out.println();
                 check++;
             }
@@ -512,10 +548,13 @@ public String result;
         if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Emp. Date in respect to their Plane Entry Date\n");
         stringBuilder.append("\nNotice: The Plan Entry Check Process has now been completed.\n");
 
-        return String.valueOf(stringBuilder);
+        this.setResult(String.valueOf(stringBuilder));
+        return list;
     }
 
-    public String Check_DateofBirth(String workindDir) throws IOException {
+    public ArrayList Check_DateofBirth(String workindDir) throws IOException {
+
+        ArrayList <String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: The Date of Birth Check Validates the Members' were born before their Employment Date and Plan Entry Date\n");
         FileInputStream fileInputStream = new FileInputStream(workindDir + "\\Valuation Data.xlsx");
@@ -540,57 +579,60 @@ int check=0;
                 cellA1_EM = DemoRow.createCell(0);
             }
             String result = cellA1_EM.getStringCellValue();
-            String a1Val_EM = result.replaceAll("[-]", "");
+            String cellEmployeeNumber = result.replaceAll("[-]", "");
 
             XSSFCell cellC1_LN = DemoRow.getCell((short) 2);   //last name
-            String b1Val_LN = cellC1_LN.getStringCellValue();
-            //   b1Val_LN = result.replaceAll("[-]","");
+            String cellLastName = cellC1_LN.getStringCellValue();
 
             XSSFCell cellD1_FN = DemoRow.getCell((short) 3);   //first name
-            String c1Val_FN = cellD1_FN.getStringCellValue();
+            String cellFirstName = cellD1_FN.getStringCellValue();
 
-            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //dob
-            Date f1Val_DOB = cellF1_DOB.getDateCellValue();
+            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
+            Date cellDOB = cellF1_DOB.getDateCellValue();
 
             XSSFCell cellG1_PE = DemoRow.getCell((short) 6);   //plan entry
-            Date g1Val_PE = cellG1_PE.getDateCellValue();
+            Date cellPlanEntry = cellG1_PE.getDateCellValue();
 
+            XSSFCell cellH1_PE = DemoRow.getCell((short) 7);   //emp date
+            Date cellEmploymentDate = cellH1_PE.getDateCellValue();
 
-            XSSFCell cellH1_EM = DemoRow.getCell((short) 7);   //emp date
-            Date h1Val_EM = cellH1_EM.getDateCellValue();
+            XSSFCell cellI1 = DemoRow.getCell((short) 8);  //status date
+            // String i1Val = datetemp.format( cellI1.getDateCellValue());
+            Date cellStatusDate = cellI1.getDateCellValue();
 
-            XSSFCell cellI1_SD = DemoRow.getCell((short) 8);   //emp date
-            Date i1Val_SD = cellI1_SD.getDateCellValue();
+            XSSFCell cellJ1 = DemoRow.getCell((short) 9); //status
+            String   cellStatus = cellJ1.getStringCellValue();
+
 
             SimpleDateFormat dF = new SimpleDateFormat();
             dF.applyPattern("dd-MMM-yy");
 
-            if (f1Val_DOB.after(g1Val_PE) || f1Val_DOB.after(h1Val_EM) || f1Val_DOB.after(i1Val_SD)) {
+            if (cellDOB.after(cellPlanEntry) || cellDOB.after(cellEmploymentDate) || cellDOB.after(cellStatusDate)) {
                 String choice = null;
 
-                if (f1Val_DOB.after(g1Val_PE)) {
+                if (cellDOB.after(cellPlanEntry)) {
                     choice = "Plan Entry Date ";
                 }
-                if (f1Val_DOB.after(h1Val_EM)) {
+                if (cellDOB.after(cellEmploymentDate)) {
                     choice = "Employment Date ";
                 }
-                if (f1Val_DOB.after(i1Val_SD)) {
+                if (cellDOB.after(cellStatusDate)) {
                     choice = "Status Date ";
                 }
-                if (f1Val_DOB.after(g1Val_PE) && f1Val_DOB.after(h1Val_EM)) {
+                if (cellDOB.after(cellPlanEntry) && cellDOB.after(cellEmploymentDate)) {
                     choice = "Plan Entry Date & Employment Date ";
                 }
-                if (f1Val_DOB.after(i1Val_SD) && f1Val_DOB.after(g1Val_PE)) {
+                if (cellDOB.after(cellStatusDate) && cellDOB.after(cellPlanEntry)) {
                     choice = "Plan Entry Date & Status Date ";
                 }
 
-                if (f1Val_DOB.after(h1Val_EM) && f1Val_DOB.after(i1Val_SD)) {
+                if (cellDOB.after(cellEmploymentDate) && cellDOB.after(cellStatusDate)) {
                     choice = "Employment Date & Status Date ";
                 }
-                if (f1Val_DOB.after(h1Val_EM) && f1Val_DOB.after(i1Val_SD) && f1Val_DOB.after(g1Val_PE)) {
+                if (cellDOB.after(cellEmploymentDate) && cellDOB.after(cellStatusDate) && cellDOB.after(cellPlanEntry)) {
                     choice = "Employment Date & Status Date & Plan Entry Date ";
                 }
-
+/*
                 System.out.println("Employee ID: " + a1Val_EM);
                 System.out.println("Last Name: " + b1Val_LN);
                 System.out.println("First Name: " + c1Val_FN);
@@ -599,21 +641,22 @@ int check=0;
                 System.out.println("Employment Date: " + dF.format(h1Val_EM));
                 System.out.println("Status Date: " + dF.format(i1Val_SD));
                 System.out.println("Decision: Contact the administrator");
-                System.out.println();
+                System.out.println();*/
 
                 //  stringBuilder.append("\nResult: This member's date of birth is not before date of employment and enrollment to the plan"+"\n");
                 stringBuilder.append("\nResult: This member's date of birth is not before the " + choice + "\n");
-                stringBuilder.append("Employee ID: " + a1Val_EM + "\n");
-                stringBuilder.append("Last Name: " + b1Val_LN + "\n");
-                stringBuilder.append("First Name: " + c1Val_FN + "\n");
-                stringBuilder.append("Date of Birth: " + dF.format(f1Val_DOB) + "\n");
-                stringBuilder.append("Plan Entry: " + dF.format(g1Val_PE) + "\n");
-                stringBuilder.append("Employment Date: " + dF.format(h1Val_EM) + "\n");
-                stringBuilder.append("Status Date: " + dF.format(i1Val_SD) + "\n");
+                stringBuilder.append("Employee ID: " + cellEmployeeNumber + "\n");
+                stringBuilder.append("Last Name: " + cellLastName + "\n");
+                stringBuilder.append("First Name: " + cellFirstName + "\n");
+                stringBuilder.append("Date of Birth: " + dF.format(cellDOB) + "\n");
+                stringBuilder.append("Plan Entry: " + dF.format(cellPlanEntry) + "\n");
+                stringBuilder.append("Employment Date: " + dF.format(cellEmploymentDate) + "\n");
+                stringBuilder.append("Status Date: " + dF.format(cellStatusDate) + "\n");
                 stringBuilder.append("--------------------------------------------------------------------------------------------------------------\n");
+                list.add(cellEmployeeNumber+","+cellLastName+","+cellFirstName+","+dF.format(cellDOB)+","+dF.format(cellEmploymentDate)+","+dF.format(cellPlanEntry)+","+dF.format(cellStatusDate)+','+cellStatus);
                 check++;
-            }
 
+            }
 
         }
 
@@ -621,11 +664,14 @@ int check=0;
         if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members");
         stringBuilder.append("\n\nNotice: The Date of Birth Check Process has now been completed.\n");
 
-        return String.valueOf(stringBuilder);
+     //   return String.valueOf(stringBuilder);
+        this.setResult(String.valueOf(stringBuilder));
+
+        return list;
     }
 
-    public String Check_Age(String workingDir, int age) throws IOException {
-
+    public ArrayList Check_Age(String workingDir, int age) throws IOException {
+        ArrayList <String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Notice: The Age Check Validates that all Employees Are Eligible to be enrolled in The Plan\n\n");
 //        FileInputStream fileInputStream = new FileInputStream(filePathValData);
@@ -650,54 +696,58 @@ int check=0;
                 cellA1_EM = DemoRow.createCell(0);
             }
             String result = cellA1_EM.getStringCellValue();
-            String a1Val_EM = result.replaceAll("[-]", "");
+            String cellEmployeeNumber = result.replaceAll("[-]", "");
 
             XSSFCell cellC1_LN = DemoRow.getCell((short) 2);   //last name
-            String b1Val_LN = cellC1_LN.getStringCellValue();
+            String cellLastName = cellC1_LN.getStringCellValue();
 
             XSSFCell cellD1_FN = DemoRow.getCell((short) 3);   //first name
-            String c1Val_FN = cellD1_FN.getStringCellValue();
+            String cellFirstName = cellD1_FN.getStringCellValue();
 
-            XSSFCell cellG1_DOB = DemoRow.getCell((short) 5);   //dob
-            Date g1Val_DOB = cellG1_DOB.getDateCellValue();
+            XSSFCell cellF1_DOB = DemoRow.getCell((short) 5);   //DOB
+            Date cellDOB = cellF1_DOB.getDateCellValue();
 
-            XSSFCell cellPlantry = DemoRow.getCell((short) 6);   //plan entry
-            Date PlanEntry = cellPlantry.getDateCellValue();
-
+            XSSFCell cellG1_PE = DemoRow.getCell((short) 6);   //plan entry
+            Date cellPlanEntry = cellG1_PE.getDateCellValue();
 
             XSSFCell cellH1_PE = DemoRow.getCell((short) 7);   //emp date
-            Date h1Val_PE = cellH1_PE.getDateCellValue();
+            Date cellEmploymentDate = cellH1_PE.getDateCellValue();
 
+            XSSFCell cellI1 = DemoRow.getCell((short) 8);  //status date
+            // String i1Val = datetemp.format( cellI1.getDateCellValue());
+            Date cellStatusDate = cellI1.getDateCellValue();
 
-          //  LocalDate birthDate= g1Val_DOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-          //  LocalDate planEntryDate= PlanEntry.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            XSSFCell cellJ1 = DemoRow.getCell((short) 9); //status
+            String cellStatus = cellJ1.getStringCellValue();
 
 
             SimpleDateFormat dF = new SimpleDateFormat();
 
             dF.applyPattern("dd-MMM-yy");
 
-            int memberAge = Utility.getAge(g1Val_DOB, PlanEntry);
+            int memberAge = Utility.getAge(cellDOB, cellPlanEntry);
            // int memberAge = Utility.calculateAge(birthDate, planEntryDate);
 
             if ( memberAge < age || memberAge > 70) {
-                System.out.println("Employee ID: " + a1Val_EM);
+/*                System.out.println("Employee ID: " + a1Val_EM);
                 System.out.println("Last Name: " + b1Val_LN);
                 System.out.println("First Name: " + c1Val_FN);
-                System.out.println("Date of Birth: " + dF.format(g1Val_DOB));
+                System.out.println("Date of Birth: " + dF.format(g1Val_DOB));*/
                 //  System.out.println("Employment Date: " + dF.format(h1Val_PE));
                 // System.out.println("Result: This member age is "+age +"as at their Plan Entry date " + dF.format(cellPlantry));
                 System.out.println();
 
                 //for gui
-                stringBuilder.append("Result: This member age is " + memberAge + " as at their Plan Entry date " + dF.format(PlanEntry) + "\n");
-                stringBuilder.append("Employee ID: " + a1Val_EM + "\n");
-                stringBuilder.append("Last Name: " + b1Val_LN + "\n");
-                stringBuilder.append("First Name: " + c1Val_FN + "\n");
-                stringBuilder.append("Date of Birth: " + dF.format(g1Val_DOB) + "\n");
-                stringBuilder.append("Plan Entry: " + dF.format(PlanEntry) + "\n");
-
+                stringBuilder.append("Result: This member age is " + memberAge + " as at their Plan Entry date " + dF.format(cellPlanEntry) + "\n");
+                stringBuilder.append("Employee ID: " + cellEmployeeNumber + "\n");
+                stringBuilder.append("Last Name: " + cellLastName + "\n");
+                stringBuilder.append("First Name: " + cellFirstName + "\n");
+                stringBuilder.append("Date of Birth: " + dF.format(cellDOB) + "\n");
+                stringBuilder.append("Plan Entry: " + dF.format(cellPlanEntry) + "\n");
                 stringBuilder.append("---------------------------------------------------------------------------------\n");
+
+
+                list.add(cellEmployeeNumber+","+cellLastName+","+cellFirstName+","+dF.format(cellDOB)+","+dF.format(cellEmploymentDate)+","+dF.format(cellPlanEntry)+","+dF.format(cellStatusDate)+','+cellStatus);
                 check++;
             }
 
@@ -706,7 +756,8 @@ int check=0;
         if (check == 0) stringBuilder.append("Notice: All Members' Ages have been checked in respect to their Plan Entry Date, No Discrepancy was found\n");
         stringBuilder.append("\nNotice: The Age Check Process has now been completed.\n");
 
-        return String.valueOf(stringBuilder);
+      this.setResult(String.valueOf(stringBuilder));
+      return  list;
     }
 
 }

@@ -6,9 +6,10 @@ public class CreateWorkBook
     public static void main(String[] args) {
 
       try {
+
           new MainWindow();
 
-       } catch (IOException e) {
+      } catch (IOException e) {
             e.printStackTrace();
         }
 

@@ -52,12 +52,15 @@ public class AlToTable extends JFrame {
         else if(type.equals("View Active"))
             setTitle("List of Active Members");
         else if(type.equals("View Duplicates"))
-        {
             setTitle("List of Duplicate Members");
-       //  header = new String[]{"Employee ID", "Last Name", "First Name", "DOB"};
-          //  MyModel mm = new MyModel(al, header);
-        }
-
+        else if(type.equals("Check Pensionable Salary"))
+            setTitle("Pensionable Salary Check");
+        else if(type.equals("Check Plan Entry Date"))
+            setTitle("Plan Entry Date Check");
+        else if(type.equals("Check Age"))
+            setTitle("Age Check");
+        else if(type.equals("Check Date of Birth"))
+            setTitle("Date of Birth Check");
 
         MyModel mm = new MyModel(al, header);
         JTable table = new JTable(mm);
