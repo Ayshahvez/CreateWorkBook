@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-     //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+  //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -514,6 +514,7 @@ public class MainWindow extends JFrame implements ActionListener {
 if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
     try {
         TemplateSheets.Create_Template_Inc_Exp_Sheet(PensionPlanStartDate, PensionPlanEndDate, PensionPlanName, filePathWorkingDir);
+        JOptionPane.showMessageDialog(null, "Income and Expenditure Template Was Successfully Created" , "Notice", JOptionPane.PLAIN_MESSAGE);
     } catch (IOException e1) {
         e1.printStackTrace();
     }
@@ -1052,18 +1053,19 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 if (new File(filePathWorkingDir + "\\Template_Active_Sheet.xlsx ").exists()) {
 
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                        result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
+                    //    result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
 
                         //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
 
-                        try {
-                            excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                           excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                           excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                    //    try {
+                    //        excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                      //     excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                      //     excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Write_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                    //    } catch (IOException e1) {
+                       //     e1.printStackTrace();
+                     //   }
+                     //   resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         JOptionPane.showMessageDialog(null, "The Active Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
                     } else if (new File(filePathWorkingDir + "\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
