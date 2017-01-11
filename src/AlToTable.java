@@ -7,7 +7,8 @@ import javax.swing.table.*;
 
 public class AlToTable extends JFrame {
 
-    private final static String[] header = {"Employee ID", "Last Name", "First Name","DOB","Employment Date","Plan Entry Date","Status Date","Status"};
+    //private final static String[] header = {"Employee ID", "Last Name", "First Name","DOB","Employment Date","Plan Entry Date","Status Date","Status"};
+    private final static String[] header = {"Employee ID", "Last Name", "First Name","DOB","Employment Date","Plan Entry Date"};
 
     AlToTable(ArrayList<String> al) {
         super("List of Active Members");

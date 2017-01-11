@@ -246,7 +246,7 @@ public class TemplateSheets {
             }
 
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Active_Sheet.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Active_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();

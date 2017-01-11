@@ -1,3 +1,8 @@
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -13,7 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static java.time.temporal.ChronoUnit.YEARS;
 import static java.util.Calendar.DATE;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
@@ -225,4 +229,35 @@ public class Utility extends Component {
         }
         return content;
     }
+
+    public static int getNumberOfMembersInSheet(XSSFWorkbook workbook, XSSFSheet hsheet) throws IOException {
+
+        int num = hsheet.getLastRowNum();
+        num += 1;
+        int cnt = 0;
+        for (int l = 7; l < num; l++) {
+            Row r = hsheet.getRow(l); // 2nd row = row 1
+            boolean hasData = true;
+
+            if (r == null) {
+                // Row has never been used
+                hasData = false;
+            } else {
+                // Check to see if all cells in the row are blank (empty)
+                hasData = false;
+                for (Cell c : r) {
+                    if (c.getCellType() != Cell.CELL_TYPE_BLANK) {
+                        hasData = true;
+                        cnt++;
+                        break;
+                    }
+                }
+            }
+        }
+        //  System.out.println("num last row->"+num);
+        //  System.out.println("Successful count->"+cnt);
+        return cnt;
+    }
+
+
 }
