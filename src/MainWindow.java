@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-  //     imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+  //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -1061,7 +1061,12 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                          //   excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         //   excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                        //   excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                            excelReader.Write_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        try {
+                            excelReader.Write_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
 
                         // } catch (IOException e1) {
                     //        e1.printStackTrace();
