@@ -17,6 +17,45 @@ import java.util.*;
 
 public class ExcelReader {
 
+    public String result=null;
+
+    public void setResult(String x){
+        this.result=x;
+    }
+
+    public String getResult(){
+        return this.result;
+    }
+
+    static Utility utility = new Utility();
+
+    public double[] getInterestRates(String workingDir, int numOfYears) throws IOException {
+        //    ArrayList list = new ArrayList();
+//System.out.print(numOfYears);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(workingDir + "\\Interest Rates.xlsx");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        XSSFSheet sheet =workbook.getSheet("rates");
+        XSSFCell [] cell = new XSSFCell[numOfYears];
+        double [] values = new double[numOfYears];
+
+        for(int row=1,I=0;I<numOfYears;row++,I++) {
+            XSSFRow interestRow = sheet.getRow(row);
+
+            cell[I] = interestRow.getCell(1);
+            //    list.add(cell[I].getNumericCellValue(),I);
+            values[I]=cell[I].getNumericCellValue();
+
+        }
+
+        return values;
+    }
+
     public void WriteActivesTotalRow(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
         String SD[] = PensionPlanStartDate.split("/");
@@ -718,7 +757,6 @@ memberGender=memberGender.toLowerCase();
 
     }
 
-    static Utility utility = new Utility();
 
     //NO FEES
     public String Create_Actives_Sheet(String workingDir) throws IndexOutOfBoundsException {
@@ -836,6 +874,7 @@ memberGender=memberGender.toLowerCase();
                         //   }
                         cellR.setCellValue(String.valueOf(arraylist.get(Col)));
                     }
+
                     //PENSIONABLE SALARY*****************************
                     FileInputStream F = new FileInputStream(workingDir + "\\Pensionable Salary - HAS.xlsx");  //pensionable salary sheet
                     XSSFWorkbook workbookF = new XSSFWorkbook(F);
@@ -1067,6 +1106,7 @@ memberGender=memberGender.toLowerCase();
             XSSFRow[] writeRow = new XSSFRow[numOfActives];
             Cell writeCell;
             ArrayList coloumnData = new ArrayList();
+            ArrayList newList = new ArrayList();
             System.out.println(numOfActives);
 //1. Create the date cell style
             XSSFCreationHelper createHelper = workbookTemplate.getCreationHelper();
@@ -1074,23 +1114,18 @@ memberGender=memberGender.toLowerCase();
             cellStyle.setDataFormat(
                     createHelper.createDataFormat().getFormat("dd-MMM-yy"));
             //MAIN PROCESSING
-            for (int x = 0; x < years; x++) {
 
-                Calendar cal = Calendar.getInstance();
-                cal.set(StartYear, StartMonth, StartDay);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
-              //  String formattedDate = sdf.format(cal.getTime());
-                String formattedDate = "2014";
-                String Recon = ("Actives at End of Plan Yr " + formattedDate);
+            String []cellEmployeeID = new String[numOfActives];
+            String[] cellLastName = new String[numOfActives];
+            String[] cellFirstName = new String [numOfActives];
+int cumulativeRow=32;
 
-//GET RECON SHEET
-                XSSFSheet Reconsheet = workbookData.getSheet(Recon);
-
+            //get the initial members in first year period
             for (int row = 0, readFromRow = 7; row < numOfActives; row++, readFromRow++) {
 
                 //get the current row position based on value of row
-          //      XSSFRow rowPosition = worksheet.getRow(readFromRow);
-                XSSFRow rowPosition = Reconsheet.getRow(readFromRow);
+                XSSFRow rowPosition = worksheet.getRow(readFromRow);
+           //     XSSFRow rowPosition = Reconsheet.getRow(readFromRow);
 
                 //get employee id
                 XSSFCell cellA = rowPosition.getCell(0);  //employee number
@@ -1099,7 +1134,7 @@ memberGender=memberGender.toLowerCase();
                     cellA.setCellValue("");
                 }
                 String result = cellA.getStringCellValue();
-                String cellEmployeeID = result.replaceAll("[-]", "");
+                cellEmployeeID[row] = result.replaceAll("[-]", "");
 
                 //get LAST NAME
                 XSSFCell cellB = rowPosition.getCell((short) 1);  //last name
@@ -1107,7 +1142,7 @@ memberGender=memberGender.toLowerCase();
                     cellB = rowPosition.createCell((short) 1);
                     cellB.setCellValue("");
                 }
-                String cellLastName = cellB.getStringCellValue();
+                cellLastName[row] = cellB.getStringCellValue();
 
                 //get FIRST NAME
                 XSSFCell cellC = rowPosition.getCell((short) 2);  //last name
@@ -1115,7 +1150,7 @@ memberGender=memberGender.toLowerCase();
                     cellC = rowPosition.createCell((short) 2);
                     cellC.setCellValue("");
                 }
-                String cellFirstName = cellC.getStringCellValue();
+               cellFirstName[row] = cellC.getStringCellValue();
 
 
                 //get GENDER
@@ -1248,44 +1283,140 @@ memberGender=memberGender.toLowerCase();
                 System.out.println(cellDateofEmployment);
                 System.out.println(cellDateofEnrolment);
 
-                coloumnData.add(cellEmployeeID);
-                coloumnData.add(cellLastName);
-                coloumnData.add(cellFirstName);
-                coloumnData.add(cellGender);
-                coloumnData.add(cellMaritalStatus);
-                coloumnData.add(cellDateofBirth);
-                coloumnData.add(cellDateofEmployment);
-                coloumnData.add(cellDateofEnrolment);
-                coloumnData.add(Cell_PensionableSalary);
 
-                //   writeRow[row] = sheetTemplate.createRow( readFromRow);
-                XSSFRow WriteRow = sheetTemplate.createRow(readFromRow);
+                //when we are at the first year
+             //   if(x==0) {
+                    coloumnData.add(cellEmployeeID[0]);
+                    coloumnData.add(cellLastName[0]);
+                    coloumnData.add(cellFirstName[0]);
+                    coloumnData.add(cellGender);
+                    coloumnData.add(cellMaritalStatus);
+                    coloumnData.add(cellDateofBirth);
+                    coloumnData.add(cellDateofEmployment);
+                    coloumnData.add(cellDateofEnrolment);
+                    coloumnData.add(Cell_PensionableSalary);
 
-                System.out.println("createRow->" + readFromRow);
-                for (int colPosition = 0; colPosition < coloumnData.size(); colPosition++) {
+                    //   writeRow[row] = sheetTemplate.createRow( readFromRow);
+                    XSSFRow WriteRow = sheetTemplate.createRow(readFromRow);
 
-                    writeCell = WriteRow.createCell(colPosition);
-                    System.out.println("createCell->" + colPosition);
+                //    System.out.println("createRow->" + readFromRow);
 
-                    if (coloumnData.get(colPosition) instanceof Date) {
-                        Date d = (Date) coloumnData.get(colPosition);
-                        writeCell.setCellValue(d);
-                        writeCell.setCellStyle(cellStyle);
-                    }
+                //write first set of data to MAIN ROW
+                    for (int colPosition = 0; colPosition < coloumnData.size(); colPosition++) {
+
+                        writeCell = WriteRow.createCell(colPosition);
+
+                        System.out.println("createCell->" + colPosition);
+
+                        if (coloumnData.get(colPosition) instanceof Date) {
+                            Date d = (Date) coloumnData.get(colPosition);
+                            writeCell.setCellValue(d);
+                            writeCell.setCellStyle(cellStyle);
+                        }
 
    /*                 else if(coloumnData.get(colPosition) instanceof Boolean)
                         writeCell.setCellValue((Boolean)coloumnData.get(colPosition));*/
-                    else if (coloumnData.get(colPosition) instanceof String)
-                        writeCell.setCellValue((String) coloumnData.get(colPosition));
-                    else if (coloumnData.get(colPosition) instanceof Double)
-                        writeCell.setCellValue((Double) coloumnData.get(colPosition));
+                        else if (coloumnData.get(colPosition) instanceof String) writeCell.setCellValue((String) coloumnData.get(colPosition));
+                        else if (coloumnData.get(colPosition) instanceof Double) writeCell.setCellValue((Double) coloumnData.get(colPosition));
 
-                }
-                coloumnData.clear();
-            }
-            StartYear++;
-            }//end loop years
+                    }
+                    coloumnData.clear();
 
+
+                }//end of loop running for 1st year
+int InitialMembers = numOfActives;
+            for (int initial = 0 ; initial < InitialMembers; initial++) {
+
+                //GET OTHER ACTIVE MEMBERS FROM OTHER YEARS
+                //   else{
+                for (int x = 0; x < years; x++) {
+                    StartYear++;
+                    System.out.println("StartYear" + StartYear);
+                    System.out.println("years" + years);
+                    System.out.println("x-" + x);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(StartYear, StartMonth, StartDay);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
+                    //     String formattedDate = sdf.format(cal.getTime());
+                    String formattedDate = "2014";
+                    String Recon = ("Actives at End of Plan Yr " + formattedDate);
+
+//GET RECON SHEET
+                    XSSFSheet Reconsheet = workbookData.getSheet(Recon);
+
+                    for (int row = 0, readFromRow = 7; row < numOfActives; row++, readFromRow++) {
+
+                        XSSFRow rowPosition = Reconsheet.getRow(readFromRow);
+
+                        //get employee id
+                        XSSFCell cellA = rowPosition.getCell(0);  //employee number
+                        if (cellA == null) {
+                            cellA = rowPosition.createCell((short) 0);
+                            cellA.setCellValue("");
+                        }
+                        String result = cellA.getStringCellValue();
+                        cellEmployeeID[row] = result.replaceAll("[-]", "");
+
+                        //get LAST NAME
+                        XSSFCell cellB = rowPosition.getCell((short) 1);  //last name
+                        if (cellB == null) {
+                            cellB = rowPosition.createCell((short) 1);
+                            cellB.setCellValue("");
+                        }
+                        cellLastName[row] = cellB.getStringCellValue();
+
+                        //get FIRST NAME
+                        XSSFCell cellC = rowPosition.getCell((short) 2);  //last name
+                        if (cellC == null) {
+                            cellC = rowPosition.createCell((short) 2);
+                            cellC.setCellValue("");
+                        }
+                        cellFirstName[row] = cellC.getStringCellValue();
+
+
+                        if (!(cellEmployeeID[initial].equals(cellEmployeeID[row]))) {
+                            //  cumulativeRow++;
+
+               /*         newList.add(Cell_PensionableSalary);
+                        newList.add(Cell_MemberBasic_Contribution_During_Year);
+                        newList.add(Cell_MemberVoluntary_Contribution_During_Year);
+                        newList.add(Cell_Employer_Contribution_During_Year);*/
+
+                            newList.add(cellEmployeeID[row]);
+                            newList.add(cellLastName[row]);
+                            newList.add(cellFirstName[row]);
+
+
+                            //write new data to cell
+                            XSSFRow WriteRow = sheetTemplate.createRow(cumulativeRow++);
+
+                            //    System.out.println("createRow->" + readFromRow);
+
+                            for (int colPosition = 0; colPosition < newList.size(); colPosition++) {
+
+                                writeCell = WriteRow.createCell(colPosition);
+
+                                //     System.out.println("createCell->" + colPosition);
+
+                                if (newList.get(colPosition) instanceof Date) {
+                                    Date d = (Date) newList.get(colPosition);
+                                    writeCell.setCellValue(d);
+                                    writeCell.setCellStyle(cellStyle);
+                                } else if (newList.get(colPosition) instanceof String) writeCell.setCellValue((String) newList.get(colPosition));
+                                else if (newList.get(colPosition) instanceof Double) writeCell.setCellValue((Double) newList.get(colPosition));
+
+                            }
+                            newList.clear();
+
+                        }
+                    }
+
+                    //   }
+
+
+                }//end loop years
+            }//end of looping through each of members
                 //write the data
                 FileOutputStream outFile = new FileOutputStream(new File(workingDir + "\\Actives Sheet.xlsx"));
                 workbookTemplate.write(outFile);
@@ -3804,15 +3935,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return list;
     }// end of view active sheet
 
-    public String result=null;
 
-    public void setResult(String x){
-        this.result=x;
-    }
-
-    public String getResult(){
-        return this.result;
-    }
 
     public ArrayList View_Retired_Members(String workingDir, String endDate) throws IndexOutOfBoundsException {
         ArrayList<String> list= new ArrayList<>();
@@ -4336,32 +4459,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         return list;
     }// end of view
 
-    public double[] getInterestRates(String workingDir, int numOfYears) throws IOException {
-    //    ArrayList list = new ArrayList();
-//System.out.print(numOfYears);
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(workingDir + "\\Interest Rates.xlsx");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-        XSSFSheet sheet =workbook.getSheet("rates");
-XSSFCell [] cell = new XSSFCell[numOfYears];
-double [] values = new double[numOfYears];
-
-        for(int row=1,I=0;I<numOfYears;row++,I++) {
-            XSSFRow interestRow = sheet.getRow(row);
-
-            cell[I] = interestRow.getCell(1);
-        //    list.add(cell[I].getNumericCellValue(),I);
-            values[I]=cell[I].getNumericCellValue();
-
-        }
-
-            return values;
-    }
 
     public double getExcessShortFall(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
         DecimalFormat DF = new DecimalFormat("#.##");//#.##
