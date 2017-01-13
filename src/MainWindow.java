@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-       imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-  //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+  //     imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");

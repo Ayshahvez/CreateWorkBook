@@ -1090,12 +1090,19 @@ memberGender=memberGender.toLowerCase();
 
         //    XSSFSheet sheetTemplate = workbookTemplate.getSheet("Actives");
         ArrayList list = new ArrayList();
+
+        //INDEXES
         int PensionableSalaryIndex=8;
         int membersAgeIndex=PensionableSalaryIndex+years;
         int PensionableServiceIndex = membersAgeIndex+1;
-        int memberBasicStartIndex = PensionableSalaryIndex+1;
+        int memberBasicStartIndex = PensionableServiceIndex+1;
         int memberVoluntaryStartIndex = memberBasicStartIndex+1;
         int employerBasicStartIndex = memberVoluntaryStartIndex+1;
+
+
+        int memberBasicContribution_Index = PensionableServiceIndex+5;
+        int memberVoluntaryContribution_Index = memberBasicContribution_Index+1;
+        int employerContribution_Index = memberVoluntaryContribution_Index+1;
 
         for (int x = 0; x < years; x++) {
 
@@ -1105,7 +1112,7 @@ memberGender=memberGender.toLowerCase();
             String formattedDate = sdf.format(cal.getTime());
             //  String formattedDate = "2014";
             String Recon = ("Actives at End of Plan Yr " + formattedDate);
-            System.out.println("Actives at End of Plan Yr " + formattedDate);
+         //   System.out.println("Actives at End of Plan Yr " + formattedDate);
 
 //GET RECON SHEET
             XSSFSheet Reconsheet = workbookRecon.getSheet(Recon);
@@ -1115,7 +1122,7 @@ memberGender=memberGender.toLowerCase();
          //   XSSFRow[] rowWrite = new XSSFRow[currentNumberofActiveMembers];
             XSSFRow rowWrite = null;
             Cell cellWrite = null;
-            System.out.println("currentNumberofActiveMembers" + currentNumberofActiveMembers);
+        //    System.out.println("currentNumberofActiveMembers" + currentNumberofActiveMembers);
             for (int row = 0, readFromRecon = 7; row < currentNumberofActiveMembers; row++, readFromRecon++) {
 
                 XSSFRow rowPosition = Activesheet.getRow(readFromRecon);
@@ -1145,12 +1152,12 @@ memberGender=memberGender.toLowerCase();
                 }
                 String cellFirstName = cellC.getStringCellValue();
 
-                System.out.println("currentNumberofReconMembers" + currentNumberofReconMembers);
+            //    System.out.println("currentNumberofReconMembers" + currentNumberofReconMembers);
 
 
                 for (int readFromReconRow = 7, iterate = 0; iterate < currentNumberofReconMembers; readFromReconRow++,iterate++) {
                     XSSFRow reconRow = Reconsheet.getRow(readFromReconRow);
-                    System.out.println("readFromReconRow" + readFromReconRow);
+              //      System.out.println("readFromReconRow" + readFromReconRow);
 
                     //get employee id
                     XSSFCell reconCellA = reconRow.getCell(0);  //employee number
@@ -1223,6 +1230,31 @@ memberGender=memberGender.toLowerCase();
                     }
                     double ReconCell_EmployerContribution_atStart = ReconCellK.getNumericCellValue();
 
+                    //employee basic contribution
+                    XSSFCell ReconCellM= reconRow.getCell((short) 12);  //last name
+                    if (ReconCellM == null) {
+                        ReconCellM = reconRow.createCell((short) 12);
+                        ReconCellM.setCellValue(0.00);
+                    }
+                    double ReconCell_EmployeeBasic_Contribution = ReconCellM.getNumericCellValue();
+
+                    //employee voluntary contribution
+                    XSSFCell ReconCellN= reconRow.getCell((short) 13);  //last name
+                    if (ReconCellN == null) {
+                        ReconCellN = reconRow.createCell((short) 13);
+                        ReconCellN.setCellValue(0.00);
+                    }
+                    double ReconCell_EmployeeVoluntary_Contribution = ReconCellN.getNumericCellValue();
+
+
+                    //employer contribution
+                    XSSFCell ReconCellO= reconRow.getCell((short) 14);  //last name
+                    if (ReconCellO == null) {
+                        ReconCellO = reconRow.createCell((short) 14);
+                        ReconCellO.setCellValue(0.00);
+                    }
+                    double ReconCell_Employer_Contribution = ReconCellO.getNumericCellValue();
+
 
 
                     if(cellEmployeeID.equals(ReconcellEmployeeID)){
@@ -1246,15 +1278,27 @@ memberGender=memberGender.toLowerCase();
                         cellWrite.setCellValue(Double.parseDouble(dF.format((Utility.betweenDates(ReconCellDateofEnrolment, endDate)/365.25))));
 
                  //write memebr initial
-                        cellWrite = rowWrite.createCell(memberBasicStartIndex);
-                        cellWrite.setCellValue(ReconCell_MemberBasicContribution_atStart);
+                        if(x==0) {
+                            cellWrite = rowWrite.createCell(memberBasicStartIndex);
+                            cellWrite.setCellValue(ReconCell_MemberBasicContribution_atStart);
 
-                        cellWrite = rowWrite.createCell(memberVoluntaryStartIndex);
-                        cellWrite.setCellValue(ReconCell_MemberVoluntaryContribution_atStart);
+                            cellWrite = rowWrite.createCell(memberVoluntaryStartIndex);
+                            cellWrite.setCellValue(ReconCell_MemberVoluntaryContribution_atStart);
 
-                        cellWrite = rowWrite.createCell(employerBasicStartIndex);
-                        cellWrite.setCellValue(ReconCell_EmployerContribution_atStart);
+                            cellWrite = rowWrite.createCell(employerBasicStartIndex);
+                            cellWrite.setCellValue(ReconCell_EmployerContribution_atStart);
 
+
+                        }
+
+                        cellWrite = rowWrite.createCell((memberBasicContribution_Index));
+                        cellWrite.setCellValue(ReconCell_EmployeeBasic_Contribution);
+
+                          cellWrite = rowWrite.createCell(memberVoluntaryContribution_Index);
+                           cellWrite.setCellValue(ReconCell_EmployeeVoluntary_Contribution);
+
+                            cellWrite = rowWrite.createCell(employerContribution_Index);
+                          cellWrite.setCellValue(ReconCell_Employer_Contribution);
                             }
 
                 }//end of looping through each member in each year period
@@ -1265,6 +1309,9 @@ memberGender=memberGender.toLowerCase();
 
             }
 StartYear++;
+            memberVoluntaryContribution_Index+=9;//9 for fees  || prob 8 for no fees
+            memberBasicContribution_Index+=9;
+            employerContribution_Index+=9;
         }//end of looping through the years
 
 
@@ -1441,7 +1488,7 @@ int cumulativeRow=InitialnumOfActives+7;
 
                         writeCell = WriteRow.createCell(colPosition);
 
-                        System.out.println("createCell->" + colPosition);
+                      //  System.out.println("createCell->" + colPosition);
 
                         if (coloumnData.get(colPosition) instanceof Date) {
                             Date d = (Date) coloumnData.get(colPosition);
@@ -1473,9 +1520,9 @@ int yearsRemaining = years-1;
                     int newStartYear = StartYear+1;
 
                   //  StartYear++;
-                    System.out.println("StartYear" + (newStartYear+x));
-                    System.out.println("years" + years);
-                    System.out.println("x-" + x);
+             //       System.out.println("StartYear" + (newStartYear+x));
+              //      System.out.println("years" + years);
+               //     System.out.println("x-" + x);
 
 
                     Calendar cal = Calendar.getInstance();
