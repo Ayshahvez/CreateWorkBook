@@ -65,6 +65,8 @@ public class Utility extends Component {
 
     public static long betweenDates(Date firstDate, Date secondDate) throws IOException
     {
+        System.out.println("firstDate"+firstDate);
+        System.out.println("secondDate"+secondDate);
         return ChronoUnit.DAYS.between(firstDate.toInstant(), secondDate.toInstant());
     }
 
@@ -173,12 +175,12 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
- //File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
-   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
+ File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
+  // File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
     if(f.exists()) {
         // do something
-   //content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
-     content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
+   content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
+   //  content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
     }
     return content;
 }
@@ -259,5 +261,33 @@ public class Utility extends Component {
         return cnt;
     }
 
+    public static int getNumberOfTermineeMembersInSheet(XSSFWorkbook workbook, XSSFSheet hsheet) throws IOException {
+
+        int num = hsheet.getLastRowNum();
+        num += 1;
+        int cnt = 0;
+        for (int l = 12; l < num; l++) {//start to read from row 13
+            Row r = hsheet.getRow(l); // 2nd row = row 1
+            boolean hasData = true;
+
+            if (r == null) {
+                // Row has never been used
+                hasData = false;
+            } else {
+                // Check to see if all cells in the row are blank (empty)
+                hasData = false;
+                for (Cell c : r) {
+                    if (c.getCellType() != Cell.CELL_TYPE_BLANK) {
+                        hasData = true;
+                        cnt++;
+                        break;
+                    }
+                }
+            }
+        }
+        //  System.out.println("num last row->"+num);
+        //  System.out.println("Successful count->"+cnt);
+        return cnt;
+    }
 
 }

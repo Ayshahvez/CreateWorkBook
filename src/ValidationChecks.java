@@ -688,7 +688,9 @@ npe.printStackTrace();
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet DemoSheet = workbook.getSheet("DEMO");
         int check=0;
-        int NoMembers = DemoSheet.getPhysicalNumberOfRows();
+       // int NoMembers = DemoSheet.getPhysicalNumberOfRows();
+        int NoMembers = Utility.getNumberOfMembersInSheet(workbook,DemoSheet);
+
 
         for (int row = 0; row < NoMembers; row++) {
             int temp = row;

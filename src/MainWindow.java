@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-  //     imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+      imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+  //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -1059,11 +1059,13 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                     //    try {
                          //   excelReader.Create_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        //   excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                       //   excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        //
+
                             excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         try {
                             excelReader.Write_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                               excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -1095,13 +1097,14 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 if (new File(filePathWorkingDir + "\\Template_Active_Sheet.xlsx ").exists()) {
 
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                       result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
+                    //   result = excelReader.Create_Actives_Sheet(filePathWorkingDir);
 
                         //    result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
 
                         try {
-                                 excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                 //here
+                            //     excelReader.Create_Fees_Activee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Write_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                            excelReader.Create_Fees_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                            excelReader.WriteFeesActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
