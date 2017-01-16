@@ -975,13 +975,15 @@ double check =  0.05*ReconCell_PensionableSalary;
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
-        years += 1;
+        years += 2;
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
 
-
+String Recon=null;
+int numofActives;
+int startRow;
         for (int x = 0; x < years; x++) {
 
             Calendar cal = Calendar.getInstance();
@@ -989,19 +991,32 @@ double check =  0.05*ReconCell_PensionableSalary;
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
             String getYear = year.format(cal.getTime());
 
+if(x<(years-1)){
+          Recon = ("Actives at End of Plan Yr " + getYear);
+    XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+    numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+    startRow=7;
+}
+            else{
+               Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+    XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+    numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
+    startRow=11;
+            }
 
-            String Recon = ("Actives at End of Plan Yr " + getYear);
             stringBuilder.append("Notice: Results of the Duplicate Quality Check for " + Recon + "\n");
 //GET RECON SHEET
             XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-            int numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+
 
 //loop through each member in current active sheet
             int check = 0;
             int FindIt = 0;
             boolean once = true;
-
-            for (int readFromRow = 7, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
+System.out.println("Recon "+Recon );
+            System.out.println("startRow "+startRow );
+            System.out.println("numofActives "+numofActives );
+            for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
 
@@ -1055,7 +1070,7 @@ double check =  0.05*ReconCell_PensionableSalary;
                 Date ReconCellDateofEnrolment = ReconCellH.getDateCellValue();
 
 FindIt=0;
-                for (int readFromRow2 = 7, rowIterator2 = 0; rowIterator2 < numofActives; readFromRow2++, rowIterator2++) {
+                for (int readFromRow2 = startRow, rowIterator2 = 0; rowIterator2 < numofActives; readFromRow2++, rowIterator2++) {
 
                     XSSFRow getRow2 = reconSheet.getRow(readFromRow2);
 
@@ -1167,11 +1182,14 @@ break;
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
-        years += 1;
+        years += 2;
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
+        String Recon=null;
+        int numofActives;
+        int startRow;
 
         for (int x = 0; x < years; x++) {
             int check = 0;
@@ -1181,15 +1199,30 @@ break;
             String getYear = year.format(cal.getTime());
 
 
-            String Recon = ("Actives at End of Plan Yr " + getYear);
+            if(x<(years-1)){
+                Recon = ("Actives at End of Plan Yr " + getYear);
+                XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+                startRow=7;
+            }
+            else{
+                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+                XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
+                startRow=11;
+            }
+
+
             stringBuilder.append("Notice: Results of the Age Data Quality Check for " + Recon + "\n");
 //GET RECON SHEET
             XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-            int numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+
 
 //loop through each member in current active sheet
-
-            for (int readFromRow = 7, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
+            System.out.println("Recon "+Recon );
+            System.out.println("startRow "+startRow );
+            System.out.println("numofActives "+numofActives );
+            for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
 
@@ -1241,6 +1274,9 @@ break;
                     // ReconCellF.setCellValue("");
                 }
                 Date ReconCellDateofEnrolment = ReconCellH.getDateCellValue();
+
+                System.out.println("ReconCellDOB"+ReconCellDOB);
+                System.out.println("ReconCellDateofEnrolment"+ReconCellDateofEnrolment);
 
                 int memberAge = Utility.getAge(ReconCellDOB, ReconCellDateofEnrolment);
 
@@ -1299,9 +1335,13 @@ break;
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        String Recon=null;
+        int numofActives;
+        int startRow;
+        XSSFSheet reconSheet;
 
         int years = Utility.getDiffYears(startDate, endDate);
-        years += 1;
+        years += 2;//
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
@@ -1315,15 +1355,25 @@ break;
             String getYear = year.format(cal.getTime());
 
 
-            String Recon = ("Actives at End of Plan Yr " + getYear);
+            if(x<(years-1)){
+                Recon = ("Actives at End of Plan Yr " + getYear);
+               reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+                startRow=7;
+            }
+            else{
+                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+                 reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
+                startRow=11;
+            }
+
             stringBuilder.append("Notice: Results of the Date of Birth Data Quality Check for "+Recon+"\n");
-//GET RECON SHEET
-            XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-            int numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+
 
 //loop through each member in current active sheet
 
-            for (int readFromRow = 7, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
+            for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
 
@@ -1451,12 +1501,15 @@ break;
         }
 
         int years = Utility.getDiffYears(startDate, endDate);
-        years += 1;
+        years += 2;
 
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
-
+        String Recon=null;
+        int numofActives;
+        int startRow;
+        XSSFSheet reconSheet;
         for (int x = 0; x < years; x++) {
             int Check=0;
             Calendar cal = Calendar.getInstance();
@@ -1464,16 +1517,25 @@ break;
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
             String getYear = year.format(cal.getTime());
 
+            if(x<(years-1)){
+                Recon = ("Actives at End of Plan Yr " + getYear);
+                reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+                startRow=7;
+            }
+            else{
+                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+                reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
+                startRow=11;
+            }
 
-            String Recon = ("Actives at End of Plan Yr " + getYear);
+
             stringBuilder.append("Notice: Results of the Plan Entry Data Quality Check for "+Recon+"\n");
-//GET RECON SHEET
-            XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-            int numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
 
 //loop through each member in current active sheet
 
-            for (int readFromRow = 7, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
+            for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
 
