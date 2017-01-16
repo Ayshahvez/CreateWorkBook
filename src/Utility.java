@@ -175,12 +175,12 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
- File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
-  // File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
+ //File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
+   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
     if(f.exists()) {
         // do something
-   content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
-   //  content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
+ //  content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
+     content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
     }
     return content;
 }
@@ -232,7 +232,7 @@ public class Utility extends Component {
         return content;
     }
 
-    public static int getNumberOfMembersInSheet(XSSFWorkbook workbook, XSSFSheet hsheet) throws IOException {
+    public static int getNumberOfMembersInSheet(XSSFSheet hsheet) throws IOException {
 
         int num = hsheet.getLastRowNum();
         num += 1;
@@ -261,12 +261,12 @@ public class Utility extends Component {
         return cnt;
     }
 
-    public static int getNumberOfTermineeMembersInSheet(XSSFWorkbook workbook, XSSFSheet hsheet) throws IOException {
+    public static int getNumberOfTermineeMembersInSheet(XSSFSheet hsheet) throws IOException {
 
         int num = hsheet.getLastRowNum();
         num += 1;
         int cnt = 0;
-        for (int l = 12; l < num; l++) {//start to read from row 13
+        for (int l = 11; l < num; l++) {//start to read from row 13
             Row r = hsheet.getRow(l); // 2nd row = row 1
             boolean hasData = true;
 

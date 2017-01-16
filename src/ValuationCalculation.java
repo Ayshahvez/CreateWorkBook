@@ -775,7 +775,7 @@ public class ValuationCalculation {
         double solvencyLevel=0.00;
 
         try{
-            FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Balance_Sheet.xlsx");
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Templates\\Template_Balance_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetVal_Bal = workbookR.getSheetAt(0);
 
@@ -960,7 +960,7 @@ public class ValuationCalculation {
 
 
         try{
-            FileInputStream fileR = new FileInputStream(workingDir + "\\Template_Inc_Exp_Sheet.xlsx");
+            FileInputStream fileR = new FileInputStream(workingDir + "\\Templates\\Template_Inc_Exp_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetInc_Exp = workbookR.getSheetAt(0);
 

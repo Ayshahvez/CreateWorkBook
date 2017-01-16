@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-      imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-  //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+  //    imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -692,7 +692,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                   ArrayList al = validationChecks.Check_Plan_EntryDate_empDATE(filePathWorkingDir);
+                   ArrayList al = validationChecks.check_Plan_EntryDate_empDATE(PensionPlanStartDate, PensionPlanEndDate,filePathWorkingDir);
                    result=validationChecks.getResult();
                    new AlToTable(al,"Check Plan Entry Date");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
@@ -721,7 +721,8 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                     else {
                         JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
 
-                        ArrayList al= validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                      //  ArrayList al= validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        ArrayList al= validationChecks.check_FivePercent_PensionableSalary(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         String result = validationChecks.getResult();
                         new AlToTable(al,"Check Pensionable Salary");
                         resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
@@ -744,7 +745,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
                         try {
-                           ArrayList al = validationChecks.Check_Age(filePathWorkingDir, Age);
+                           ArrayList al = validationChecks.check_Age(PensionPlanStartDate, PensionPlanEndDate,filePathWorkingDir, Age);
                            result = validationChecks.getResult();
                            new AlToTable(al,"Check Age");
                             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
@@ -766,7 +767,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Now Performing Date of Birth Check, Press Ok to Continue", "Date of Birth Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                  ArrayList al = validationChecks.Check_DateofBirth(filePathWorkingDir);
+                  ArrayList al = validationChecks.check_DateofBirth(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                   result = validationChecks.getResult();
                   new AlToTable(al,"Check Date of Birth");
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
@@ -787,7 +788,8 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
                 String result = null;
                 try {
-                   ArrayList<String > al = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                 //  ArrayList<String > al = validationChecks.Check_For_Duplicates(filePathWorkingDir);
+                    ArrayList<String > al = validationChecks.check_For_Duplicates(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                     result = validationChecks.getResult();
                     resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                     new AlToTable(al,"View Duplicates");
@@ -1136,8 +1138,9 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
                             try {
-                                excelReader.Create_Fees_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                             //   excelReader.Create_Fees_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                excelReader.Write_Terminee_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                               excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             } catch (IOException e1) {
                                 e1.printStackTrace();
@@ -1171,7 +1174,8 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
                             try {
-                                excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                              //  excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                excelReader.Write_Terminee_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                 excelReader.Create_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                 excelReader.WriteTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             } catch (IOException e1) {

@@ -1120,7 +1120,7 @@ public class TemplateSheets {
             }
 
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Inc_Exp_Sheet.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Inc_Exp_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
