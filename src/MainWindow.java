@@ -74,7 +74,7 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenu menuSingleCheck;
 
     JMenu MenuTemplateSheet;
-    private JMenuItem MenuItemCreateSeperatedTemplate;
+  //  private JMenuItem MenuItemCreateSeperatedTemplate;
     private JMenu MenuValidationChecks;
     private JMenu MenuCreateWorkBook;
 
@@ -117,7 +117,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem MenuItemCreateFeesTermineeSheet;
 
     private JMenu MenuMembers;
-    private JMenuItem MenuItemSeperateMembers;
+    //private JMenuItem MenuItemSeperateMembers;
     private JMenuItem MenuItemViewActiveMember;
     private JMenuItem MenuItemViewTermineeMember;
     private JMenuItem MenuItemViewRetiredMember;
@@ -237,8 +237,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-      imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-   //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+      //imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+     imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -252,7 +252,7 @@ public class MainWindow extends JFrame implements ActionListener {
         //TEMPLATE SHEETS
         MenuTemplateSheet = new JMenu("Template Sheet");
         MenuCreateTemplateSheet = new JMenu("Create Template Sheet");
-        MenuItemCreateSeperatedTemplate = new JMenuItem("Create Template for Seperated Workbook");
+    //    MenuItemCreateSeperatedTemplate = new JMenuItem("Create Template for Seperated Workbook");
         MenuLoadTemplateSheet = new JMenu("Load Template Sheet");
         MenuItemLoadOutputTemplate = new JMenuItem("Load Template for Active and Terminated Members");
 
@@ -297,7 +297,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuLoadWorkbook = new JMenu("Load WorkBook");
         MenuItemLoadTemplateActiveSheet = new JMenuItem("Load Template Sheet for Active Members");
         MenuItemLoadTemplateTermineeSheet = new JMenuItem("Load Template Sheet for Terminee Members");
-        MenuItemSeperateMembers = new JMenuItem("Separate Active & Terminee Members into a new WorkBook");
+    //    MenuItemSeperateMembers = new JMenuItem("Separate Active & Terminee Members into a new WorkBook");
 
 
 
@@ -315,7 +315,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
 
-        MenuCreateWorkBook.add(MenuItemSeperateMembers);
+//        MenuCreateWorkBook.add(MenuItemSeperateMembers);
         MenuCreateWorkBook.add(MenuCreateWorkbookFees);
         MenuCreateWorkBook.add(MenuCreateWorkbookNoFees);
 
@@ -328,7 +328,7 @@ public class MainWindow extends JFrame implements ActionListener {
         MenuTemplateSheet.add(MenuCreateTemplateSheet);
         //    MenuTemplateSheet.add(MenuLoadTemplateSheet);
 
-        MenuCreateTemplateSheet.add(MenuItemCreateSeperatedTemplate);
+    //    MenuCreateTemplateSheet.add(MenuItemCreateSeperatedTemplate);
 
         MenuCreateTemplateSheet.add(MenuFeesTemplate);
         MenuCreateTemplateSheet.add(MenuNoFeesTemplate);
@@ -816,7 +816,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
         }
 */
 
-        if (e.getSource().equals(MenuItemSeperateMembers)) {
+/*        if (e.getSource().equals(MenuItemSeperateMembers)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
@@ -835,7 +835,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                    JOptionPane.showMessageDialog(null, "Please ensure you Create The Template for the Seperated Members WorkBook", "Notice", JOptionPane.PLAIN_MESSAGE);
                }
         }
-        }
+        }*/
 
         if (e.getSource().equals(MenuItemPensionPlanName)) {
             if (filePathWorkingDir != null) {
@@ -901,7 +901,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
             }
         }
 
-        if(e.getSource().equals(MenuItemCreateSeperatedTemplate)) {
+     /*   if(e.getSource().equals(MenuItemCreateSeperatedTemplate)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please Ensure you Set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
@@ -910,7 +910,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                     JOptionPane.showMessageDialog(null, "The Template Workbook for Separated Active and Terminee Members was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
                 }
             }
-        }
+        }*/
         //FEES
         if (e.getSource().equals(MenuItemCreateFeesActiveSheetTemplate)) {
             //   File f = new File(WorkingDir + "//Updated_Actives_Sheet.xlsx");
@@ -1228,7 +1228,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
 
-                if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
+                if (new File(filePathWorkingDir + "\\Input Sheet.xlsx").exists()) {
                     ArrayList<String> al=  excelReader.View_Terminee_Members(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
                     String result = excelReader.getResult();
                     if(!al.isEmpty()) {
@@ -1239,7 +1239,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
                         JOptionPane.showMessageDialog(null, "Based on your Query, there were no Retired Members found as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please ensure the Input sheet is present in your working directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
@@ -1252,7 +1252,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Seperated Members.xlsx").exists()) {
 
-                    ArrayList<String> al=  excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
+                    ArrayList<String> al=  excelReader.View_Terminated_Members(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
                     String result = excelReader.getResult();
                     if(!al.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminated Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -1354,7 +1354,7 @@ else{
 
         //MEMBERS LISTENERS
         MenuItemCreateIncExpTemplate.addActionListener(this);
-        MenuItemCreateSeperatedTemplate.addActionListener(this);
+     //   MenuItemCreateSeperatedTemplate.addActionListener(this);
         MenuItemViewActiveMember.addActionListener(this);
         MenuItemViewTermineeMember.addActionListener(this);
         MenuItemViewAllMembers.addActionListener(this);
@@ -1377,7 +1377,7 @@ else{
         CheckAll.addActionListener(this);
 
 //        LoadValDataWorkBook.addActionListener(this);
-        MenuItemSeperateMembers.addActionListener(this);
+  //      MenuItemSeperateMembers.addActionListener(this);
         MenuItemPensionPlanName.addActionListener(this);
         MenuItemStartDate.addActionListener(this);
         MenuItemEndDate.addActionListener(this);
