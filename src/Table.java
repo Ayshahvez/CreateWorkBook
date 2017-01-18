@@ -924,8 +924,6 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             int lastcol = sheetTerminee.getLastRowNum();
             lastcol-=3;
 
-       //     System.out.println("lastcol"+lastcol);
-         //   System.out.println("cellnumber"+cellNumbers);
 
             row = sheetTerminee.getRow(lastcol);
             XSSFCell cellNonVestedEmployer = row.getCell(cellNumbers);
