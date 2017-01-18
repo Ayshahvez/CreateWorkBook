@@ -10,16 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fce0561-5f05-4bda-91b2-64b559aec56a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ValuationCalculation.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExcelReader.java" afterPath="$PROJECT_DIR$/src/ExcelReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainWindow.java" afterPath="$PROJECT_DIR$/src/MainWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Table.java" afterPath="$PROJECT_DIR$/src/Table.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TemplateSheets.java" afterPath="$PROJECT_DIR$/src/TemplateSheets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Utility.java" afterPath="$PROJECT_DIR$/src/Utility.java" />
     </list>
     <ignored path="CreateWorkBook.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,8 +85,8 @@
       <file leaf-file-name="Table.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Table.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="918" column="13" lean-forward="false" selection-start-line="918" selection-start-column="13" selection-end-line="918" selection-end-column="13" />
+            <state relative-caret-position="319">
+              <caret line="928" column="0" lean-forward="true" selection-start-line="928" selection-start-column="0" selection-end-line="928" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#Table#0" expanded="false" />
                 <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
@@ -701,7 +695,14 @@
       <option name="project" value="LOCAL" />
       <updated>1484603968475</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Work in Progress">
+      <created>1484746419237</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1484746419237</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1451,8 +1452,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="918" column="13" lean-forward="false" selection-start-line="918" selection-start-column="13" selection-end-line="918" selection-end-column="13" />
+        <state relative-caret-position="319">
+          <caret line="928" column="0" lean-forward="true" selection-start-line="928" selection-start-column="0" selection-end-line="928" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#Table#0" expanded="false" />
             <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
