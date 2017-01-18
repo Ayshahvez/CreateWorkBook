@@ -1,8 +1,10 @@
 import javafx.scene.control.Cell;
+import org.apache.commons.codec.language.bm.Languages;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.*;
 
 import javax.swing.*;
 import java.io.*;
@@ -1740,4 +1742,66 @@ if(CellGender.equals("f"))  entrantCountfemale++;
 
     }
 
+    public void CreateTable(String workingDir) throws IOException {
+        //Blank Document
+        XWPFDocument document= new XWPFDocument();
+
+        //Write the Document in file system
+        FileOutputStream out = new FileOutputStream(new File(workingDir+"\\create_table.docx"));
+
+        //create table
+        XWPFTable table = document.createTable();
+      //  create second row
+        XWPFTableRow tableRowTwo = table.getRow(0);
+        tableRowTwo.getCell(0).setText("Plan Year");
+        tableRowTwo.addNewTableCell().setText("Gross fund Yield(GFY)");
+        tableRowTwo.addNewTableCell().setText("Adjusted Fund Yield (AFY)");
+        tableRowTwo.addNewTableCell().setText("Net Fund Yield (NFY)");
+        tableRowTwo.addNewTableCell().setText("Plan Year Inflation");
+        tableRowTwo.addNewTableCell().setText("Real Adjusted Fund Yield");
+        tableRowTwo.addNewTableCell().setText("Actual Credited Interest");
+        //create third row
+        XWPFTableRow tableRowThree = table.createRow();
+        tableRowThree.getCell(0).setText("test");
+        tableRowThree.getCell(1).setText("test");
+        tableRowThree.getCell(2).setText("test");
+        tableRowThree.getCell(3).setText("test");
+        tableRowThree.getCell(4).setText("test");
+        tableRowThree.getCell(5).setText("test");
+        tableRowThree.getCell(6).setText("test");
+
+        //create Paragraph
+        XWPFParagraph paragraph = document.createParagraph();
+
+        //Set Bold an Italic
+        XWPFRun paragraphOneRunOne = paragraph.createRun();
+        paragraphOneRunOne.setBold(true);
+        paragraphOneRunOne.setText("1.1 \tThe Trustees of the Real Estate Board Pension Plan has engaged the services of GFRAM Consulting to conduct an actuarial review of the Real Estate Board Pension Plan as at 2015 January 31. Our Actuarial Services Agreement was effective 2015 June 25 between GFRAM Consulting Limited and the Trustees of the Real Estate Board.");
+        paragraphOneRunOne.addBreak();
+        paragraphOneRunOne.addBreak();
+        //Set text Position
+        XWPFRun paragraphOneRunTwo = paragraph.createRun();
+        paragraphOneRunTwo.setText("1.2 \tThe review period is for three (3) years from 2012 February 1 to 2015 January 31. The main purpose of this Valuation is to express a Certified Actuarial Opinion on the Funded Status of the Fund as at 2015.1.31, and to make appropriate recommendations based on an analysis of the operation of the Fund and the Valuation results.");
+    //    paragraphOneRunTwo.setTextPosition(100);
+        paragraphOneRunTwo.addBreak();
+        paragraphOneRunTwo.addBreak();
+        //Set Strike through and Font Size and Subscript
+        XWPFRun paragraphOneRunThree = paragraph.createRun();
+      //  paragraphOneRunThree.setStrike(true);
+      //  paragraphOneRunThree.setFontSize(20);
+     //   paragraphOneRunThree.setSubscript(VerticalAlign.SUBSCRIPT);
+        paragraphOneRunThree.setText(" 1.3\tOne of the conditions for continued tax-exemption of the Fund under Section 44 of the Income Tax Act is the submission of triennial actuarial reviews to the Tax Administration Jamaica (TAJ).  This Report is also required under The Pensions (Superannuation Funds and Retirement Schemes) Act, 2004 (the 2004 Pensions Act) administered by the Financial Services Commission (FSC). ");
+paragraphOneRunThree.addBreak();
+        paragraphOneRunThree.addBreak();
+
+XWPFRun paragraphOneRunFour = paragraph.createRun();
+paragraphOneRunFour.setText("1.4\tOur calculation of the liabilities of the Plan has been carried out in accordance with Generally Accepted Actuarial Principles. Further, this Report was prepared in compliance with the applicable Actuarial Standards of Practice (ASOP) as promulgated by the Actuarial Standards Board, and satisfies Practice Standard APS1 of the Caribbean Actuarial Association - Pension Scheme Actuarial Valuation Reports. Our analyses were conducted with reference to the membership data, financial information, Trust Deeds and Plan Rules (including supplements) that were supplied by Guardian Life Limited (Guardian) on behalf of the Trustees. ");
+
+
+
+
+        document.write(out);
+        out.close();
+        System.out.println("create_table.docx written successully");
+    }
 }

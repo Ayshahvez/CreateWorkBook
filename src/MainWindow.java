@@ -439,6 +439,7 @@ public class MainWindow extends JFrame implements ActionListener {
         if(e.getSource().equals(MenuItemCreateTableAnalysisofFundYield)){
             try {
                 table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                table.CreateTable(filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

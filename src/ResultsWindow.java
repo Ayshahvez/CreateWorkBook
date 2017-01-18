@@ -23,7 +23,7 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
 
         aSet = sc.addAttribute(aSet, StyleConstants.FontFamily, "serif"); //Consales font will be used
         aSet = sc.addAttribute(aSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-        aSet = sc.addAttribute(aSet, StyleConstants.FontSize, 21);    //font size of 23 will be used
+        aSet = sc.addAttribute(aSet, StyleConstants.FontSize, 18);    //font size of 23 will be used
 
         if (isBold) aSet = sc.addAttribute(aSet, StyleConstants.Bold, Boolean.TRUE);   //text will be bold
         else aSet = sc.addAttribute(aSet, StyleConstants.Bold, Boolean.FALSE);
