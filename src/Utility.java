@@ -163,7 +163,6 @@ public class Utility extends Component {
                     System.out.println("Error no selection");
             }
 
-
             fr.write(content); // warning: this will REPLACE your old file content!
             fr.close();
 
@@ -289,5 +288,4 @@ public class Utility extends Component {
         //  System.out.println("Successful count->"+cnt);
         return cnt;
     }
-
 }

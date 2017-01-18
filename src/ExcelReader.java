@@ -1855,7 +1855,6 @@ StartYear++;
         outFile.close();
     }
 
-
     public void Write_Members_Monetary_Fees_Values(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
@@ -1892,7 +1891,7 @@ StartYear++;
         years += 1;
 
         //get access to the actives template
-        FileInputStream fileTemplate = new FileInputStream(workingDir + "\\Temp_Actives_Sheet.xlsx");
+        FileInputStream fileTemplate = new FileInputStream(workingDir + "\\Actives_Sheet.xlsx");
         XSSFWorkbook workbookTemplate = new XSSFWorkbook(fileTemplate);
         XSSFSheet Activesheet = workbookTemplate.getSheet("Actives");
 
@@ -2140,7 +2139,7 @@ StartYear++;
         }//end of looping through the years
 
 
-        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\temp2_Actives_Sheet.xlsx"));
+        FileOutputStream outFile = new FileOutputStream(new File(workingDir+"\\Actives_Sheet.xlsx"));
         workbookTemplate.write(outFile);
         fileTemplate.close();
         fileRecon.close();
@@ -2489,7 +2488,7 @@ InitialcellEmployeeID = new String[currentNumber];
                     InitialMembers = currentNumber;
             }//end of looping through each of members
                 //write the data
-                FileOutputStream outFile = new FileOutputStream(new File(workingDir + "\\Temp_Actives_Sheet.xlsx"));
+                FileOutputStream outFile = new FileOutputStream(new File(workingDir + "\\Actives_Sheet.xlsx"));
                 workbookTemplate.write(outFile);
                 fileTemplate.close();
                 outFile.close();
@@ -2730,7 +2729,7 @@ InitialcellEmployeeID = new String[currentNumber];
         DecimalFormat dF = new DecimalFormat("#.##");//#.##
 
         //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\temp2_Actives_Sheet.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Accumulated_Actives_Sheet.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet ActiveSheet = workbook.getSheet("Actives");
 
@@ -5223,7 +5222,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                 //    }
                 Date cellDateofEnrolment = cellH.getDateCellValue();
 
-                stringBuilder.append("Employee ID: " +    InitialcellEmployeeID[row] + "\n");
+                stringBuilder.append("\nEmployee ID: " +    InitialcellEmployeeID[row] + "\n");
                 stringBuilder.append("Last Name: " +    InitialcellLastName[row] + "\n");
                 stringBuilder.append("First Name: " +InitialcellFirstName[row] + "\n");
                 stringBuilder.append("Date of Birth: " + datetemp.format(cellDateofBirth)+ "\n");
@@ -5332,9 +5331,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                         stringBuilder.append("Date of Birth: " + datetemp.format(ReconCellDOB)+ "\n");
                         stringBuilder.append("Employment Date: " + datetemp.format(ReconCelldateofEmployment) + "\n");
                         stringBuilder.append("Plan Entry Date: " + datetemp.format(ReconCellDateofEnrolment) + "\n");
-                //        stringBuilder.append("Status Date: " + datetemp.format(c) + "\n");
-                    //    stringBuilder.append("Status: " + ReconCellStatus + "\n");
-                   //     stringBuilder.append("-------------------------------------------------------\n");
+
                         list.add(cellEmployeeID[rowIterator2]+ "," +  cellLastName[rowIterator2] + "," + cellFirstName[rowIterator2] + "," +datetemp.format(ReconCellDOB) + "," + datetemp.format(ReconCelldateofEmployment) + "," + datetemp.format(ReconCellDateofEnrolment));
 
                     }
@@ -5864,14 +5861,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         int StartMonth = startMonth;
         int StartDay = startDay;
 
- /*       int EndYear = 2015;
-        int EndMonth = 12;
-        int EndDay=31;
-
-        int StartYear=2004;
-        int StartMonth=01;
-        int StartDay= 01;*/
-
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         Date startDate = null;
         Date endDate = null;
@@ -5893,7 +5882,6 @@ years+=1;
         }
      double   totalInvestmentIncome = cellTotalInvestmentIncome.getNumericCellValue();
 
-
         //get the Total expenses
      Row= sheet.getRow(36);
         XSSFCell cellTotalExpenses= Row.getCell(years+1);
@@ -5904,57 +5892,63 @@ years+=1;
         double   totalExpenses = cellTotalExpenses.getNumericCellValue();
 
         //calculate Net investment income
-
         double netInvestmentIncome = totalInvestmentIncome - totalExpenses;
 
         double interestCreditedActives =0;
-double interestCreditedTerminees=0;
+        double interestCreditedTerminees=0;
+
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
 
         for(int x=0;x<years;x++) {
             Calendar cal = Calendar.getInstance();
             cal.set(StartYear, StartMonth, StartDay);
-            SimpleDateFormat sdf = new SimpleDateFormat("yy"); // Just the year, with 2 digits
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy"); // Just the year, with 4 digits
             String formattedDate = sdf.format(cal.getTime());
 
-            String StartDate = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
-            String EndDate = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
-            String Recon = ("Recon "+formattedDate);
-            interestCreditedActives+=Double.valueOf(dF.format(ActiveSumReader(StartDate, EndDate, Recon)));
-            interestCreditedTerminees+=Double.valueOf(dF.format(TermineeSumReader(StartDate, EndDate, Recon)));
+            String startofCurrentYear = StartDay + "-" + StartMonth + "-" + StartYear; //"01-01-05";
+            String endofCurrentYear = EndDay + "-" + EndMonth + "-" + StartYear;//"31-12-05";
 
-         //   System.out.println(StartYear+ " Activees Sum: " +   Double.valueOf(dF.format(ActiveSumReader(StartDate, EndDate, Recon))));
-         //   System.out.println(StartYear+ " Terminees Sum: " + Double.valueOf(dF.format(TermineeSumReader(StartDate, EndDate, Recon))));
+            String Recon = ("Actives at End of Plan Yr "+formattedDate);
 
+            interestCreditedTerminees+=Double.valueOf(dF.format(TermineeSumReader(PensionPlanEndDate,startofCurrentYear, endofCurrentYear, Recon,workingDir)));
+double temp = Double.valueOf(dF.format(TermineeSumReader(PensionPlanEndDate,startofCurrentYear, endofCurrentYear, Recon,workingDir)));
+            interestCreditedActives+=(Double.valueOf(dF.format(ActiveSumReader(PensionPlanEndDate,startofCurrentYear, endofCurrentYear, Recon,workingDir)))-temp);
+
+/*            System.out.println("startofCurrentYear "+startofCurrentYear);
+            System.out.println("endofCurrentYear "+endofCurrentYear);
+            System.out.println("interestCreditedActives"+Double.valueOf(dF.format(ActiveSumReader(PensionPlanEndDate,startofCurrentYear, endofCurrentYear, Recon,workingDir)-temp)));
+         System.out.println("interestCreditedTerminees"+  Double.valueOf(dF.format(TermineeSumReader(PensionPlanEndDate,startofCurrentYear, endofCurrentYear, Recon,workingDir))));*/
             StartYear++;
         }
 
         double sumActiveTermineeInterest = interestCreditedActives+interestCreditedTerminees;
      double result = netInvestmentIncome - sumActiveTermineeInterest;
-/*        System.out.println("Total expenses: "+totalExpenses);
-        System.out.println(" totalInvestmentIncome: "+totalInvestmentIncome);
-        System.out.println("netInvestmentIncome: "+netInvestmentIncome);
-        System.out.println("result: "+result);
-        System.out.println("interestCreditedActives: "+interestCreditedActives);
-        System.out.println("interestCreditedTerminees: "+interestCreditedTerminees);
-        System.out.println("sumActiveTermineeInterest: "+sumActiveTermineeInterest);*/
         return Double.parseDouble(DF.format(result));
     }
 
-    public double TermineeSumReader(String StartDate, String EndDate, String Recon) throws IndexOutOfBoundsException {
+    public double TermineeSumReader(String PensionPlanEndDate, String startofCurrentYear, String endofCurrentYear, String Recon, String workingDir) throws IndexOutOfBoundsException {
+
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
 
         double TActiveSum = 0;
         try {
-        //    FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\Valuation Data.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Input Sheet.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
-            XSSFSheet Demosheet = workbook.getSheet("DEMO");
+            XSSFSheet sheetTerminated = workbook.getSheet("Terminated up to "+EndYear+"."+EndMonth+"."+EndDay);
             XSSFSheet Reconsheet = workbook.getSheet(Recon);
-            String T = EndDate;
-            String start = StartDate;
 
-            int DEMOrowCount = Demosheet.getPhysicalNumberOfRows();
-            int ReconrowCount = Reconsheet.getPhysicalNumberOfRows() + 1;
+
+            int numOfTerminees =Utility.getNumberOfTermineeMembersInSheet(sheetTerminated);
+         int numOfActives = Utility.getNumberOfMembersInSheet(Reconsheet);
 
 
             double ActiveSum = 0;
@@ -5962,68 +5956,74 @@ double interestCreditedTerminees=0;
             double TermineeSum = 0;
 
             int count = 0;
-            for (int row = 0; row < DEMOrowCount; row++) {  //start looping through demo records
-                int Row = row;
+            for (int readFromTerminee = 11, row=0;row < numOfTerminees; readFromTerminee++,row++) {  //start looping through demo records
 
-                if (Row == 0) {
-                    row = 1;  //start reading from second row
+                XSSFRow getTermineeRow = sheetTerminated.getRow(readFromTerminee);
+
+                //get employee id
+                XSSFCell reconCellA = getTermineeRow.getCell(0);  //employee number
+                if (reconCellA == null) {
+                    reconCellA = getTermineeRow.createCell((short) 0);
+                    reconCellA.setCellValue("");
                 }
+                String resultRecon = reconCellA.getStringCellValue();
+                String ReconcellEmployeeID = resultRecon.replaceAll("[-]", "");
 
-                XSSFRow row1 = Demosheet.getRow(row);
-
-                XSSFCell cellA1 = row1.getCell((short) 0);
-                String result = cellA1.getStringCellValue();
-
-                String a1Val = result.replaceAll("[-]", "");
-
-                XSSFCell cellC1 = row1.getCell((short) 2);
-                String c1Val = cellC1.getStringCellValue();
-
-                XSSFCell cellD1 = row1.getCell((short) 3);
-                String d1Val = cellD1.getStringCellValue();
-
-                XSSFCell cellI1 = row1.getCell((short) 8);
-                Date celli1 = cellI1.getDateCellValue();
-                SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-
-                //Date cellValue = datetemp.parse(i1Val);
-                String i1Val = sdf.format(celli1);
-                Date date1 = null;
-                Date date2 = null;
-                Date Startdate = null;
-
-                try {
-                    date1 = sdf.parse(i1Val);
-                    date2 = sdf.parse(T);
-                    Startdate = sdf.parse(start);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                //get LAST NAME
+                XSSFCell ReconCellB = getTermineeRow.getCell((short) 1);  //last name
+                if (ReconCellB == null) {
+                    ReconCellB = getTermineeRow.createCell((short) 1);
+                    ReconCellB.setCellValue("");
                 }
+                String ReconCellLastName = ReconCellB.getStringCellValue();
 
-                XSSFCell cellJ1 = row1.getCell((short) 9);
-                String j1Val = cellJ1.getStringCellValue();
+                //get FIRST NAME
+                XSSFCell ReconCellC = getTermineeRow.getCell((short) 2);  //first name
+                if (ReconCellC == null) {
+                    ReconCellC = getTermineeRow.createCell((short) 2);
+                    ReconCellC.setCellValue("");
+                }
+                String ReconCellFirstName = ReconCellC.getStringCellValue();
+
+                //get status Date/ dTE OF TERMINATION
+                XSSFCell ReconCellF = getTermineeRow.getCell((short) 8);
+                if (ReconCellF == null) {
+                    ReconCellF = getTermineeRow.createCell((short) 8);
+                    // ReconCellF.setCellValue("");
+                }
+                Date ReconCellStatusdate= ReconCellF.getDateCellValue();
+
+                //get date of employment
+                XSSFCell ReconCellG = getTermineeRow.getCell((short) 9);
+                if (ReconCellG == null) {
+                    ReconCellG = getTermineeRow.createCell((short) 9);
+                    // ReconCellF.setCellValue("");
+                }
+                String ReconCellStatus = ReconCellG.getStringCellValue();
 
 
-                //  count = 0;
+           //loop through each member in active sheet and check i
+                for (int readFromActive = 7, activeRow=0; activeRow < numOfActives; readFromActive++,activeRow++) {
+                    XSSFRow Reconrow = Reconsheet.getRow(readFromActive);
 
-                //***********TERMINATIONS********************************
-                for (int Col = 6; Col < ReconrowCount; Col++) {
-                    XSSFRow Reconrow = Reconsheet.getRow(Col);
-
-                    XSSFCell ReconCellA1 = Reconrow.getCell((short) 0);
+                    XSSFCell reconCellA2 = Reconrow.getCell((short) 0);
                     //Update the value of cell
-                    if (ReconCellA1 == null) {
-                        ReconCellA1 = Reconrow.createCell(0);
+                    if (reconCellA2 == null) {
+                        reconCellA2 = Reconrow.createCell(0);
                     }
-                    String ReconA1Val = ReconCellA1.getStringCellValue();
+                    String ReconA1Val = reconCellA2.getStringCellValue();
 
-                    XSSFCell ReconCellB1 = Reconrow.getCell((short) 1);
+                    String ReconcellEmployeeID2 = ReconA1Val.replaceAll("[-]", "");
+
+
+
+                    XSSFCell reconCellB = Reconrow.getCell((short) 1);
                     //Update the value of cell
-                    if (ReconCellB1 == null) {
-                        ReconCellB1 = Reconrow.createCell(1);
+                    if (reconCellB == null) {
+                        reconCellB = Reconrow.createCell(1);
                     }
-                    String ReconB1Val = ReconCellB1.getStringCellValue();
+                    String ReconB1Val = reconCellB.getStringCellValue();
+
 
                     XSSFCell ReconCellC1 = Reconrow.getCell((short) 2);
                     //Update the value of cell
@@ -6032,45 +6032,51 @@ double interestCreditedTerminees=0;
                     }
                     String ReconC1Val = ReconCellC1.getStringCellValue();
 
-                    XSSFCell ReconCellT1 = Reconrow.getCell((short) 19);
+
+                    XSSFCell ReconCellQ = Reconrow.getCell((short) 16);
+                    if (ReconCellQ == null) {
+                        ReconCellQ = Reconrow.createCell(16);
+                    }
+                    double ReconCell_EmployeeBasicInterest = ReconCellQ.getNumericCellValue();
+
+
+                    XSSFCell ReconCellR= Reconrow.getCell((short) 17);
+                    if (ReconCellR == null) {
+                        ReconCellR = Reconrow.createCell(17);
+                    }
+                    double ReconCell_EmployeeOptionalInterest = ReconCellR.getNumericCellValue();
+
+
+                    XSSFCell ReconCellS= Reconrow.getCell((short) 18);
                     //Update the value of cell
-                    if (ReconCellT1 == null) {
-                        ReconCellT1 = Reconrow.createCell(19);
+                    if (ReconCellS == null) {
+                        ReconCellS = Reconrow.createCell(18);
                     }
-                    double ReconT1Val = ReconCellT1.getNumericCellValue();
+                    double ReconCell_EmployerRequiredInterest = ReconCellS.getNumericCellValue();
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 
-                    XSSFCell ReconCellU1 = Reconrow.getCell((short) 20);
-                    //Update the value of cell
-                    if (ReconCellU1 == null) {
-                        ReconCellU1 = Reconrow.createCell(20);
-                    }
-                    //  else{
-                    double ReconU1Val = ReconCellU1.getNumericCellValue();
-                    //   }
+                    Date StartofCurrentYear = null;
+                    Date  EndofCurrentYear=null;
 
-                    XSSFCell ReconCellV1 = Reconrow.getCell((short) 21);
-                    //Update the value of cell
-                    if (ReconCellV1 == null) {
-                        ReconCellV1 = Reconrow.createCell(21);
+                    try {
+                        StartofCurrentYear = sdf.parse(startofCurrentYear);
+                        EndofCurrentYear = sdf.parse(endofCurrentYear);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
 
-                    double ReconV1Val = ReconCellV1.getNumericCellValue();
-
-
-                    if (j1Val.equals("RETIREMENT") || j1Val.equals("DEATH") && (date1.after(Startdate) && date1.before(date2)) && a1Val.equals(ReconA1Val)) {
-                        j1Val = "TERMINATED";
-
+                    if (ReconCellStatus.equals("R") || ReconCellStatus.equals("D")  && (ReconCellStatusdate.after(StartofCurrentYear) && ReconCellStatusdate.before(EndofCurrentYear)) && ReconcellEmployeeID.equals(ReconcellEmployeeID2)) {
+                        ReconCellStatus = "T";
                     }
 
-                    //  if (c1Val.equals(ReconC1Val) && d1Val.equals(ReconB1Val)) {
-                    if (j1Val.equals("TERMINATED") && !a1Val.equals("ASSE88888") && a1Val.equals(ReconA1Val) && c1Val.equals(ReconC1Val) && d1Val.equals(ReconB1Val) && (date1.after(Startdate) && date1.before(date2))) {
-                        TActiveSum += ReconT1Val + ReconU1Val + ReconV1Val;
-
+                    if (ReconCellStatus.equals("T") && !ReconcellEmployeeID.equals("ASSE88888") && ReconcellEmployeeID.equals(ReconcellEmployeeID2)&& (ReconCellStatusdate.after(StartofCurrentYear) && ReconCellStatusdate.before(EndofCurrentYear))) {
+                        TActiveSum += ReconCell_EmployeeBasicInterest + ReconCell_EmployeeOptionalInterest + ReconCell_EmployerRequiredInterest;
                     }
-                    //   Roww++;
+
                     count++;
                 }
+
 
             }
 
@@ -6085,91 +6091,104 @@ double interestCreditedTerminees=0;
         return TActiveSum;
     }
 
-    public double ActiveSumReader(String StartDate, String EndDate, String Recon) throws IndexOutOfBoundsException {
+    public double ActiveSumReader(String PensionPlanEndDate, String startofCurrentYear, String endofCurrentYear, String Recon, String workingDir) throws IndexOutOfBoundsException {
 
-        double ActiveSum = 0;
+        String ED[] = PensionPlanEndDate.split("/");
+        int endMonth = Integer.parseInt(ED[0]);
+        int endDay = Integer.parseInt(ED[1]);
+        int endYear = Integer.parseInt(ED[2]);
+
+        int EndYear = endYear;
+        int EndMonth = endMonth;
+        int EndDay = endDay;
+
+
+        double TActiveSum = 0;
         try {
-           // FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Valuation Data.xlsx");
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\Valuation Data.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(workingDir+"\\Input Sheet.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 
-            XSSFSheet Demosheet = workbook.getSheet("DEMO");
+            XSSFSheet sheetTerminated = workbook.getSheet("Terminated up to "+EndYear+"."+EndMonth+"."+EndDay);
             XSSFSheet Reconsheet = workbook.getSheet(Recon);
-            String T = EndDate;
-            String start = StartDate;
 
 
-            int DEMOrowCount = Demosheet.getPhysicalNumberOfRows();
-            int ReconrowCount = Reconsheet.getPhysicalNumberOfRows() + 1;
+            int numOfTerminees =Utility.getNumberOfTermineeMembersInSheet(sheetTerminated);
+            int numOfActives = Utility.getNumberOfMembersInSheet(Reconsheet);
 
+System.out.println("numOfActives"+numOfActives);
+            double ActiveSum = 0;
 
-            ActiveSum = 0;
-            //    double TActiveSum = 0;
             double TermineeSum = 0;
-
             int count = 0;
-            for (int row = 0; row < DEMOrowCount; row++) {
-                int Row = row;
 
-                if (Row == 0) {
-                    row = 1;  //start reading from second row
+            for (int readFromTerminee = 11, row=0;row < numOfTerminees; readFromTerminee++,row++) {  //start looping through demo records
+                TActiveSum = 0;
+                boolean isTerminated =false;
+                XSSFRow getTermineeRow = sheetTerminated.getRow(readFromTerminee);
+
+                //get employee id
+                XSSFCell reconCellA = getTermineeRow.getCell(0);  //employee number
+                if (reconCellA == null) {
+                    reconCellA = getTermineeRow.createCell((short) 0);
+                    reconCellA.setCellValue("");
                 }
-                XSSFRow row1 = Demosheet.getRow(row);
+                String resultRecon = reconCellA.getStringCellValue();
+                String ReconcellEmployeeID = resultRecon.replaceAll("[-]", "");
 
-                XSSFCell cellA1 = row1.getCell((short) 0);
-                String result = cellA1.getStringCellValue();
-
-                String a1Val = result.replaceAll("[-]", "");
-
-
-                XSSFCell cellC1 = row1.getCell((short) 2);
-                String c1Val = cellC1.getStringCellValue();
-
-                XSSFCell cellD1 = row1.getCell((short) 3);
-                String d1Val = cellD1.getStringCellValue();
-
-                XSSFCell cellI1 = row1.getCell((short) 8);
-                Date celli1 = cellI1.getDateCellValue();
-                SimpleDateFormat datetemp = new SimpleDateFormat("dd-MMM-yy");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-
-                //Date cellValue = datetemp.parse(i1Val);
-                String i1Val = sdf.format(celli1);
-                Date date1 = null;
-                Date date2 = null;
-                Date Startdate = null;
-
-                try {
-                    date1 = sdf.parse(i1Val);
-                    date2 = sdf.parse(T);
-                    Startdate = sdf.parse(start);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                //get LAST NAME
+                XSSFCell ReconCellB = getTermineeRow.getCell((short) 1);  //last name
+                if (ReconCellB == null) {
+                    ReconCellB = getTermineeRow.createCell((short) 1);
+                    ReconCellB.setCellValue("");
                 }
+                String ReconCellLastName = ReconCellB.getStringCellValue();
 
-                XSSFCell cellJ1 = row1.getCell((short) 9);
-                String j1Val = cellJ1.getStringCellValue();
+                //get FIRST NAME
+                XSSFCell ReconCellC = getTermineeRow.getCell((short) 2);  //first name
+                if (ReconCellC == null) {
+                    ReconCellC = getTermineeRow.createCell((short) 2);
+                    ReconCellC.setCellValue("");
+                }
+                String ReconCellFirstName = ReconCellC.getStringCellValue();
 
-                String temp = j1Val;
+                //get status Date/ dTE OF TERMINATION
+                XSSFCell ReconCellF = getTermineeRow.getCell((short) 8);
+                if (ReconCellF == null) {
+                    ReconCellF = getTermineeRow.createCell((short) 8);
+                    // ReconCellF.setCellValue("");
+                }
+                Date ReconCellStatusdate= ReconCellF.getDateCellValue();
 
-                count = 0;
+                //get date of employment
+                XSSFCell ReconCellG = getTermineeRow.getCell((short) 9);
+                if (ReconCellG == null) {
+                    ReconCellG = getTermineeRow.createCell((short) 9);
+                    // ReconCellF.setCellValue("");
+                }
+                String ReconCellStatus = ReconCellG.getStringCellValue();
 
-                for (int Col = 6; Col < ReconrowCount; Col++) {
-                    XSSFRow Reconrow = Reconsheet.getRow(Col);
 
-                    XSSFCell ReconCellA1 = Reconrow.getCell((short) 0);
+                //loop through each member in active sheet and check i
+                for (int readFromActive = 7, activeRow=0; activeRow < numOfActives; readFromActive++,activeRow++) {
+
+                    XSSFRow Reconrow = Reconsheet.getRow(readFromActive);
+
+                    XSSFCell reconCellA2 = Reconrow.getCell((short) 0);
                     //Update the value of cell
-                    if (ReconCellA1 == null) {
-                        ReconCellA1 = Reconrow.createCell(0);
+                    if (reconCellA2 == null) {
+                        reconCellA2 = Reconrow.createCell(0);
                     }
-                    String ReconA1Val = ReconCellA1.getStringCellValue();
+                    String ReconA1Val = reconCellA2.getStringCellValue();
+                    String ReconcellEmployeeID2 = ReconA1Val.replaceAll("[-]", "");
 
-                    XSSFCell ReconCellB1 = Reconrow.getCell((short) 1);
+
+                    XSSFCell reconCellB = Reconrow.getCell((short) 1);
                     //Update the value of cell
-                    if (ReconCellB1 == null) {
-                        ReconCellB1 = Reconrow.createCell(1);
+                    if (reconCellB == null) {
+                        reconCellB = Reconrow.createCell(1);
                     }
-                    String ReconB1Val = ReconCellB1.getStringCellValue();
+                    String ReconB1Val = reconCellB.getStringCellValue();
+
 
                     XSSFCell ReconCellC1 = Reconrow.getCell((short) 2);
                     //Update the value of cell
@@ -6178,45 +6197,51 @@ double interestCreditedTerminees=0;
                     }
                     String ReconC1Val = ReconCellC1.getStringCellValue();
 
-                    XSSFCell ReconCellT1 = Reconrow.getCell((short) 19);
+
+                    XSSFCell ReconCellQ = Reconrow.getCell((short) 16);
+                    if (ReconCellQ == null) {
+                        ReconCellQ = Reconrow.createCell(16);
+                    }
+                    double ReconCell_EmployeeBasicInterest = ReconCellQ.getNumericCellValue();
+
+
+                    XSSFCell ReconCellR= Reconrow.getCell((short) 17);
+                    if (ReconCellR == null) {
+                        ReconCellR = Reconrow.createCell(17);
+                    }
+                    double ReconCell_EmployeeOptionalInterest = ReconCellR.getNumericCellValue();
+
+
+                    XSSFCell ReconCellS= Reconrow.getCell((short) 18);
                     //Update the value of cell
-                    if (ReconCellT1 == null) {
-                        ReconCellT1 = Reconrow.createCell(19);
+                    if (ReconCellS == null) {
+                        ReconCellS = Reconrow.createCell(18);
                     }
-                    double ReconT1Val = ReconCellT1.getNumericCellValue();
+                    double ReconCell_EmployerRequiredInterest = ReconCellS.getNumericCellValue();
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 
-                    XSSFCell ReconCellU1 = Reconrow.getCell((short) 20);
-                    //Update the value of cell
-                    if (ReconCellU1 == null) {
-                        ReconCellU1 = Reconrow.createCell(20);
+                    Date StartofCurrentYear = null;
+                    Date  EndofCurrentYear=null;
+
+                    try {
+                        StartofCurrentYear = sdf.parse(startofCurrentYear);
+                        EndofCurrentYear = sdf.parse(endofCurrentYear);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                    //  else{
-                    double ReconU1Val = ReconCellU1.getNumericCellValue();
-                    //   }
+                   // if (ReconCellStatusdate.after(StartofCurrentYear) || (ReconCellStatusdate.before(EndofCurrentYear))) {
+                 //  isTerminated = true;
+                //    }
 
-                    XSSFCell ReconCellV1 = Reconrow.getCell((short) 21);
-                    //Update the value of cell
-                    if (ReconCellV1 == null) {
-                        ReconCellV1 = Reconrow.createCell(21);
-                    }
+                //    if (!isTerminated)
+                  //      {
+                            TActiveSum += ReconCell_EmployeeBasicInterest + ReconCell_EmployeeOptionalInterest + ReconCell_EmployerRequiredInterest;
+                      //  }
+                  // }
 
-                    double ReconV1Val = ReconCellV1.getNumericCellValue();
-
-
-                    if (j1Val.equals("DEATH") || j1Val.equals("DEFERRED") || j1Val.equals("RETIREMENT") || j1Val.equals("TERMINATED") && date1.after(date2) || date1.equals(date2)) {
-                        j1Val = "ACTIVE";
-                    }
-
-                    //  if (c1Val.equals(ReconC1Val) && d1Val.equals(ReconB1Val)) {
-                    if (j1Val.equals("ACTIVE") && !a1Val.equals("ASSE88888") && a1Val.equals(ReconA1Val) && c1Val.equals(ReconC1Val) && d1Val.equals(ReconB1Val) && !(date1.after(Startdate) && date1.before(date2))) {
-
-                        ActiveSum += ReconT1Val + ReconU1Val + ReconV1Val;
-
-                    }
+                    count++;
                 }
-
-                j1Val = temp;
 
             }
 
@@ -6228,7 +6253,7 @@ double interestCreditedTerminees=0;
             e.printStackTrace();
 
         }
-        return ActiveSum;
+        return TActiveSum;
     }
 
     //seperate actives

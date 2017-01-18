@@ -7,10 +7,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -623,11 +620,14 @@ public class TemplateSheets {
 
             }
 
+            if (new File(workingDir + "\\f.txt").exists()) {
+                new File(workingDir + "\\f.txt").delete();
+            }
 
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
                     //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
-                    new File(workingDir + "\\Template_Terminee_Sheet.xlsx"));
+                    new File(workingDir + "\\Templates\\Template_Terminee_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -836,11 +836,13 @@ public class TemplateSheets {
 
             }
 
-
+            FileWriter fr = new FileWriter(workingDir + "//f.txt");
+            fr.write("");
+            fr.close();
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
                     //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
-                    new File(workingDir + "\\Template_Terminee_Sheet.xlsx"));
+                    new File(workingDir + "\\Templates\\Template_Terminee_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -917,10 +919,14 @@ public class TemplateSheets {
 
 
         try {
+            if (new File(workingDir + "\\f.txt").exists()) {
+                new File(workingDir + "\\f.txt").delete();
+            }
+
             //Write the workbook in file system
             FileOutputStream out = new FileOutputStream(
                     //  new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Template_Terminee_Sheet.xlsx"));
-                    new File(workingDir + "\\Template_Separated.xlsx"));
+                    new File(workingDir + "\\Templates\\Template_Separated.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -1226,7 +1232,7 @@ public class TemplateSheets {
             }
 
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Balance_Sheet.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Balance_Sheet.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -1291,7 +1297,7 @@ public class TemplateSheets {
 
 
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Summary_of_Active_Membership.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Summary_of_Active_Membership.xlsx"));
             workbook.write(out);
             out.close();
             workbook.close();
@@ -1368,7 +1374,7 @@ public class TemplateSheets {
         }
 
         //Write the workbook in file system
-        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Movements_in_Active_Membership.xlsx"));
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Movements_in_Active_Membership.xlsx"));
         workbook.write(out);
         out.close();
         workbook.close();
@@ -1441,7 +1447,7 @@ public class TemplateSheets {
         }
 
         //Write the workbook in file system
-        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Gains_Losses.xlsx"));
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Gains_Losses.xlsx"));
         workbook.write(out);
         out.close();
         workbook.close();
@@ -1516,7 +1522,7 @@ public class TemplateSheets {
 
 
         //Write the workbook in file system
-        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Template_Analysis_of_Fund_Yield.xlsx"));
+        FileOutputStream out = new FileOutputStream(new File(workingDir + "\\Templates\\Template_Analysis_of_Fund_Yield.xlsx"));
         workbook.write(out);
         out.close();
         workbook.close();
