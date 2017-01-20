@@ -1,9 +1,6 @@
 import javafx.scene.control.Cell;
 import org.apache.commons.codec.language.bm.Languages;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.swing.*;
@@ -1036,6 +1033,7 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             FileInputStream fileR = new FileInputStream(workingDir + "\\Templates\\Template_Balance_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetVal_Bal = workbookR.getSheetAt(0);
+            XSSFCellStyle style = workbookR.createCellStyle();
 
             FileInputStream file = new FileInputStream(workingDir + "\\Income_Expenditure_Table.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(file);

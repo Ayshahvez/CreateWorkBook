@@ -439,7 +439,7 @@ public class MainWindow extends JFrame implements ActionListener {
         if(e.getSource().equals(MenuItemCreateTableAnalysisofFundYield)){
             try {
                 table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                table.CreateTable(filePathWorkingDir);
+           //     table.CreateTable(filePathWorkingDir);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -1252,7 +1252,7 @@ if(e.getSource().equals(MenuItemCreateIncExpTemplate)){
 
                 if (new File(filePathWorkingDir + "\\Input Sheet.xlsx").exists()) {
 
-                    ArrayList<String> al=  excelReader.View_Terminated_Members(filePathWorkingDir, PensionPlanEndDate);
+                    ArrayList<String> al=  excelReader.View_Terminated_Members(PensionPlanStartDate,PensionPlanEndDate,filePathWorkingDir);
                     String result = excelReader.getResult();
                     if(!al.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Please wait for the list of the Terminated Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
