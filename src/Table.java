@@ -1,5 +1,6 @@
 import javafx.scene.control.Cell;
 import org.apache.commons.codec.language.bm.Languages;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 
@@ -1039,6 +1040,8 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheetAt(0);
 
+
+
 //GET DATA FROM TEMPLATE
 
             XSSFRow Row= sheetVal_Bal.getRow(5);
@@ -1142,6 +1145,7 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             file.close();
             outFile.close();
 
+            ExcelReader.AddsheetintoExistingworkbook(workingDir,"Balance_Sheet_Table.xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1149,7 +1153,8 @@ if(CellGender.equals("f"))  entrantCountfemale++;
         }
         catch(NullPointerException e){
             e.printStackTrace();
-
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,4 +1,5 @@
 import com.sun.org.apache.regexp.internal.RE;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -6526,6 +6527,22 @@ System.out.println("numOfActives"+numOfActives);
 
         }
         return String.valueOf(stringBuilder);
+    }
+
+    public static void AddsheetintoExistingworkbook(String workDir, String sheetname) throws IOException, InvalidFormatException {
+
+        //***************************Add a sheet into Existing workbook***********************************************
+
+
+        String path=workDir+ "\\Tables\\All_Tables.xlsx";
+       FileInputStream fileinp = new FileInputStream(path);
+      XSSFWorkbook  workbook = new XSSFWorkbook(fileinp);
+        workbook.createSheet(sheetname);
+
+      FileOutputStream  fileOut = new FileOutputStream(path);
+        workbook.write(fileOut);
+        fileOut.close();
+        System.out.println("File is written successfully");
     }
 
 }
