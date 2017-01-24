@@ -1087,7 +1087,7 @@ System.out.println("numOfActives:" + numOfActives);
         years += 1;
 
         //get access to the actives template
-        FileInputStream fileTemplate = new FileInputStream(workingDir + "\\Temp_Actives_Sheet.xlsx");
+        FileInputStream fileTemplate = new FileInputStream(workingDir + "\\Actives_Sheet.xlsx");
         XSSFWorkbook workbookTemplate = new XSSFWorkbook(fileTemplate);
         XSSFSheet Activesheet = workbookTemplate.getSheet("Actives");
 
@@ -3024,7 +3024,7 @@ e.printStackTrace();
             int num = rowCount;
             //  int noOfColumns = sheet.getRow(num).getLastCellNum();
 
-            FileInputStream fileR = new FileInputStream(workingDir+"\\Template_Terminee_Sheet.xlsx");
+            FileInputStream fileR = new FileInputStream(workingDir+"\\Templates\\Template_Terminee_Sheet.xlsx");
             XSSFWorkbook workbookR = new XSSFWorkbook(fileR);
             XSSFSheet sheetR = workbookR.getSheetAt(0);
 
@@ -4156,7 +4156,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
 
 
         //OPEN ACTIVE SHEET
-        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\temp2_Actives_Sheet.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(workingDir +"\\Actives_Sheet.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet ActiveSheet = workbook.getSheet("Actives");
 
@@ -5621,7 +5621,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         int EndDay = endDay;
         ArrayList<String> list= new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("The following is a list of Deceased Members present as at"+PensionPlanEndDate+" \n\n");
+        stringBuilder.append("The following is a list of Deceased Members present as at "+PensionPlanEndDate+" \n\n");
         SimpleDateFormat dF1 = new SimpleDateFormat();
         dF1.applyPattern("dd-MMM-yy");
         try {
@@ -5855,7 +5855,6 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
         this.setResult(String.valueOf(stringBuilder));
         return list;
     }// end of view active sheet
-
 
     public double getExcessShortFall(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException{
         DecimalFormat DF = new DecimalFormat("#.##");//#.##

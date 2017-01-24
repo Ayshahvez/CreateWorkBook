@@ -1145,15 +1145,13 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             file.close();
             outFile.close();
 
-            ExcelReader.AddsheetintoExistingworkbook(workingDir,"Balance_Sheet_Table.xlsx");
+//            ExcelReader.AddsheetintoExistingworkbook(workingDir,"Balance_Sheet_Table.xlsx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        catch(NullPointerException e){
-            e.printStackTrace();
-        } catch (InvalidFormatException e) {
+        catch(NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -1217,7 +1215,6 @@ if(CellGender.equals("f"))  entrantCountfemale++;
 
         int years = Utility.getDiffYears(startDate, endDate);
         years+=1;
-
 
         try{
             FileInputStream fileR = new FileInputStream(workingDir + "\\Templates\\Template_Inc_Exp_Sheet.xlsx");
@@ -1301,9 +1298,11 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             if(cellFundAtBeginning==null){
                 cellFundAtBeginning=Row.createCell(1);
                 cellFundAtBeginning.setCellValue(0.00);
+                fundAtBeginning[0] =0;
             }
-            fundAtBeginning[0] = cellFundAtBeginning.getNumericCellValue();
-
+            else {
+                fundAtBeginning[0] = cellFundAtBeginning.getNumericCellValue();
+            }
 
 //GET DATA FROM TEMPLATE
             for (int x = 0; x <years; x++) {
@@ -1507,7 +1506,6 @@ if(CellGender.equals("f"))  entrantCountfemale++;
                 listInterest.add(empInterest[x]);
 
 
-
                 for (int b = 0; b < listEBO.size(); b++) {
                     XSSFRow row = sheetInc_Exp.getRow(9);
                     row.createCell(1+x).setCellValue((Double)listEBO.get(b));
@@ -1548,10 +1546,7 @@ if(CellGender.equals("f"))  entrantCountfemale++;
                     fundAtEndofPeriod[x]= priorYearAdjustment[x]+fundAtBeginning[x]+netIncome[x];
                     row.createCell(1+x).setCellValue((Double)fundAtEndofPeriod[x]);
                 }
-
-                System.out.print("totalInvestmentIncome[x]"+totalInvestmentIncome[x]);
-                System.out.print("fundAtBeginning[x]"+fundAtBeginning[x]);
-                System.out.print("fundAtEndofPeriod[x]"+fundAtEndofPeriod[x]);
+if(fundAtBeginning[x]==0)  fundAtBeginning[x]=0.00001;
                 grossFundYield[x]= ((2*totalInvestmentIncome[x]) / (fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]))* 100;
                 adjuestedFundYield[x]= ((2* ((totalInvestmentIncome[x]-investmentExpenses[x]))) / ((fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]+investmentExpenses[x]))) * 100;
                 netFundYield[x]= ((2* (totalInvestmentIncome[x]-totalExpenses[x])) / ((fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]-totalExpenses[x]))) *100;
@@ -1591,11 +1586,12 @@ if(CellGender.equals("f"))  entrantCountfemale++;
                     row.createCell(1+x).setCellValue(Double.parseDouble(dF.format(totalInvestmentIncome[x])));
 
                     //FUND YIELD
-                    System.out.println("grossFundYield[x]"+grossFundYield[x]);
+                  //  System.out.println("grossFundYield[x]"+grossFundYield[x]);
                     row = sheetInc_Exp.getRow(39);
                     row.createCell(1+x).setCellValue(Double.parseDouble(dF.format(grossFundYield[x])));
 
                     row = sheetInc_Exp.getRow(40);
+                  //  if(row==null) row.createCell()
                     row.createCell(1+x).setCellValue(Double.parseDouble(dF.format(adjuestedFundYield[x])));
 
                     row = sheetInc_Exp.getRow(41);
@@ -1727,6 +1723,7 @@ if(CellGender.equals("f"))  entrantCountfemale++;
 
                 StartYear++;//incrememnt year at end of loping year
             }//end of looping through each year
+
 
             FileOutputStream outFile = new FileOutputStream(new File(workingDir +"\\Tables\\Income_Expenditure_Table.xlsx"));
             workbookR.write(outFile);

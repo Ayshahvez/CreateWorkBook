@@ -416,7 +416,7 @@ public class ValidationChecks {
                                         test = "true";
                                         System.out.println("TEST: Pensionable Salary: $" + dF.format(d[x]));
                                         System.out.println("Result: 5% of " + dF.format(d[x] + " is " + check));
-                                        stringBuilder.append("Result: Contribution is " + dF.format(((h1 / d[x]) * 100)) + "% of " + dF.format(d[x]) + "\n");
+                                        stringBuilder.append("Result: Contribution is " + dF.format((h1 / d[x]) * 100) + "% of " + dF.format(d[x]) + "\n");
                                         System.out.println("Decision: " + test);
 
                                     } else {

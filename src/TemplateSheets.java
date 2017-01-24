@@ -1130,7 +1130,7 @@ public class TemplateSheets {
             workbook.write(out);
             out.close();
             workbook.close();
-            System.out.println("Template_Inc_Exp_Sheet.xlsx written successfully");
+         //   System.out.println("Template_Inc_Exp_Sheet.xlsx written successfully");
         } catch (NoSuchFileException e1) {
             JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
@@ -1301,7 +1301,7 @@ public class TemplateSheets {
             workbook.write(out);
             out.close();
             workbook.close();
-            System.out.println("Template_Summary_of_Active_Membership.xlsx written successfully");
+          //  System.out.println("Template_Summary_of_Active_Membership.xlsx written successfully");
         } catch (NoSuchFileException e1) {
             JOptionPane.showMessageDialog(null, "Please ensure the Plan Requirements are set, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
