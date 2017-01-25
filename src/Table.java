@@ -912,9 +912,9 @@ if(CellGender.equals("f"))  entrantCountfemale++;
             //get Excess(Shortfall) of Net Investment Income over Interested Credited
      double excessShortfall=  new ExcelReader().getExcessShortFall(PensionPlanStartDate,PensionPlanEndDate,workingDir);
       int cellNumbers=0;
-            if (new File(workingDir + "\\f.txt").exists()) {
+            if (new File(workingDir + "\\Program Files\\f.txt").exists()) {
                 cellNumbers=18+ (years*9)+4+9; //fees
-            }else if(!new File(workingDir + "\\f.txt").exists()) {
+            }else if(!new File(workingDir + "\\Program Files\\f.txt").exists()) {
                 cellNumbers=18+ (years*8)+4+9; //fees
             }
 
@@ -1804,4 +1804,5 @@ paragraphOneRunFour.setText("1.4\tOur calculation of the liabilities of the Plan
         out.close();
         System.out.println("create_table.docx written successully");
     }
+
 }

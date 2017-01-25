@@ -777,8 +777,6 @@ public class ValidationChecks {
         DecimalFormat dF = new DecimalFormat("#.####");//#.##
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MMM-yy");
 
-
-
         String SD[] = PensionPlanStartDate.split("/");
         int startMonth = Integer.parseInt(SD[0]);
         int startDay = Integer.parseInt(SD[1]);
@@ -901,7 +899,7 @@ int Check=0;
                 }
                 double ReconCell_EmployeeBasic_Contribution = ReconCellM.getNumericCellValue();
 
-double check =  0.05*ReconCell_PensionableSalary;
+                double check =  0.05*ReconCell_PensionableSalary;
                 check = Double.parseDouble(dF.format(check));
 
                 if(check != ReconCell_EmployeeBasic_Contribution){
@@ -917,12 +915,8 @@ double check =  0.05*ReconCell_PensionableSalary;
 
                     list.add(ReconcellEmployeeID+","+ReconCellLastName+","+ReconCellFirstName+","+dateF.format(ReconCellDOB)+","+dateF.format(ReconCelldateofEmployment)+","+dateF.format(ReconCellDateofEnrolment));
 
-
                         test = "false";
-                        stringBuilder.append("Result: "+ReconCellLastName+" Contribution of: $"+ReconCell_EmployeeBasic_Contribution+" is " + dF.format( ReconCell_EmployeeBasic_Contribution/ReconCell_PensionableSalary) +"% of $" +dF.format(ReconCell_PensionableSalary) + "\n");
-
-
-
+                        stringBuilder.append("Result: "+ReconCellLastName+" Contribution of: $"+ReconCell_EmployeeBasic_Contribution+" is " + dF.format(( ReconCell_EmployeeBasic_Contribution/ReconCell_PensionableSalary)*100) +"% of $" +dF.format(ReconCell_PensionableSalary) + "\n");
                 }
 
             }//end of looping through current active sheet

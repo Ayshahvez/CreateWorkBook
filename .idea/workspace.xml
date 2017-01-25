@@ -11,15 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6fce0561-5f05-4bda-91b2-64b559aec56a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/MainWindow.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/TemplateSheets.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/Utility.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CreateWorkBook/ValidationChecks.class" afterPath="$PROJECT_DIR$/out/production/CreateWorkBook/ValidationChecks.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CreateWorkBook.iml" afterPath="$PROJECT_DIR$/CreateWorkBook.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ExcelReader.java" afterPath="$PROJECT_DIR$/src/ExcelReader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainWindow.java" afterPath="$PROJECT_DIR$/src/MainWindow.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Table.java" afterPath="$PROJECT_DIR$/src/Table.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TemplateSheets.java" afterPath="$PROJECT_DIR$/src/TemplateSheets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Utility.java" afterPath="$PROJECT_DIR$/src/Utility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ValidationChecks.java" afterPath="$PROJECT_DIR$/src/ValidationChecks.java" />
     </list>
@@ -51,8 +47,8 @@
       <file leaf-file-name="ExcelReader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="6277" column="0" lean-forward="true" selection-start-line="6277" selection-start-column="0" selection-end-line="6277" selection-end-column="0" />
+            <state relative-caret-position="783">
+              <caret line="1053" column="140" lean-forward="false" selection-start-line="1053" selection-start-column="140" selection-end-line="1053" selection-end-column="140" />
               <folding>
                 <element signature="docComment;class#ExcelReader#0" expanded="false" />
                 <element signature="method#getInterestRates#0;class#ExcelReader#0" expanded="false" />
@@ -107,8 +103,8 @@
       <file leaf-file-name="ValidationChecks.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ValidationChecks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="1469" column="41" lean-forward="false" selection-start-line="1469" selection-start-column="41" selection-end-line="1469" selection-end-column="41" />
+            <state relative-caret-position="561">
+              <caret line="1462" column="0" lean-forward="false" selection-start-line="1462" selection-start-column="0" selection-end-line="1462" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#ValidationChecks#0" expanded="false" />
                 <element signature="method#Check_For_Duplicates#0;class#ValidationChecks#0" expanded="false" />
@@ -129,9 +125,10 @@
       <file leaf-file-name="Utility.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Utility.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+            <state relative-caret-position="1479">
+              <caret line="171" column="5" lean-forward="false" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="method#getFilePath#0;class#Utility#0" expanded="false" />
                 <element signature="method#getWorkingDir#0;class#Utility#0" expanded="false" />
                 <element signature="method#getStartDate#0;class#Utility#0" expanded="false" />
@@ -157,14 +154,13 @@
       <file leaf-file-name="Table.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Table.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="1156" column="5" lean-forward="true" selection-start-line="1156" selection-start-column="5" selection-end-line="1156" selection-end-column="5" />
+            <state relative-caret-position="3016">
+              <caret line="919" column="0" lean-forward="false" selection-start-line="919" selection-start-column="0" selection-end-line="919" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#Table#0" expanded="false" />
                 <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
                 <element signature="method#Create_Table_Movement_in_Active_Membership#0;class#Table#0" expanded="false" />
                 <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
-                <element signature="method#Create_Table_Gains_and_Losses#0;class#Table#0" expanded="false" />
                 <element signature="method#Create_Balance_Sheet_Table#0;class#Table#0" expanded="false" />
                 <element signature="method#getInflationRates#0;class#Table#0" expanded="false" />
                 <element signature="method#Create_Income_Expenditure_Table#0;class#Table#0" expanded="false" />
@@ -177,8 +173,8 @@
       <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="1501" column="47" lean-forward="false" selection-start-line="1501" selection-start-column="39" selection-end-line="1501" selection-end-column="47" />
+            <state relative-caret-position="27724">
+              <caret line="1223" column="75" lean-forward="false" selection-start-line="1223" selection-start-column="75" selection-end-line="1223" selection-end-column="75" />
               <folding>
                 <element signature="method#MainWindow#0;class#MainWindow#0" expanded="false" />
                 <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
@@ -201,14 +197,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ViewTerminee</find>
-      <find>Defe</find>
-      <find>Deceased</find>
-      <find>Templates</find>
-      <find>MenuItemCreateTableSummaryofActiveMembership</find>
-      <find>seper</find>
-      <find>Create_Template_Analysis_of_Fund_Yield</find>
-      <find>temp2_Actives_Sheet</find>
       <find>del</find>
       <find>Actives_Sheet</find>
       <find>Table</find>
@@ -231,12 +219,22 @@
       <find>MenuItemCreateFeesActiveSheet</find>
       <find>Template</find>
       <find>FeesActives</find>
+      <find>dp.</find>
+      <find>Vali</find>
+      <find>readFile</find>
+      <find>read</find>
+      <find>\\PN.txt</find>
+      <find>.txt</find>
+      <find>f.txt</find>
+      <find>f</find>
     </findStrings>
     <replaceStrings>
       <replace>DatePicker</replace>
       <replace>Valuation Data</replace>
       <replace>Seperated Members.xlsx</replace>
       <replace>MenuCreateTable</replace>
+      <replace>\\Program Files\\PN.txt</replace>
+      <replace>\\Program Files\\WD.txt</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -267,20 +265,20 @@
         <option value="$PROJECT_DIR$/src/ValuationCalculation.java" />
         <option value="$PROJECT_DIR$/src/ResultsWindow.java" />
         <option value="$PROJECT_DIR$/src/tableWindow.java" />
-        <option value="$PROJECT_DIR$/src/Utility.java" />
         <option value="$PROJECT_DIR$/src/TemplateSheets.java" />
+        <option value="$PROJECT_DIR$/src/ExcelReader.java" />
         <option value="$PROJECT_DIR$/src/ValidationChecks.java" />
         <option value="$PROJECT_DIR$/src/Table.java" />
-        <option value="$PROJECT_DIR$/src/ExcelReader.java" />
+        <option value="$PROJECT_DIR$/src/Utility.java" />
         <option value="$PROJECT_DIR$/src/MainWindow.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1456" />
-    <option name="height" value="876" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -743,26 +741,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25979114" sideWeight="0.41180557" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22715405" sideWeight="0.51319444" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35770234" sideWeight="0.4513889" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3567384" sideWeight="0.4513889" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22715405" sideWeight="0.48680556" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38958332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23107049" sideWeight="0.50142044" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -776,8 +772,10 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Analyze Dataflow from" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25934315" sideWeight="0.41180557" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16111112" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23107049" sideWeight="0.50142044" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -960,7 +958,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Utility.java</url>
-          <line>238</line>
+          <line>234</line>
           <properties />
           <option name="timeStamp" value="99" />
         </line-breakpoint>
@@ -984,7 +982,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Utility.java</url>
-          <line>267</line>
+          <line>263</line>
           <properties />
           <option name="timeStamp" value="108" />
         </line-breakpoint>
@@ -1014,7 +1012,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ValidationChecks.java</url>
-          <line>941</line>
+          <line>935</line>
           <properties />
           <option name="timeStamp" value="115" />
         </line-breakpoint>
@@ -1330,7 +1328,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1338,9 +1335,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-261">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9906#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1366,30 +1360,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tableWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/tableWindow.java" />
+    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2204">
-          <caret line="79" column="1" lean-forward="true" selection-start-line="79" selection-start-column="1" selection-end-line="88" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="27724">
+          <caret line="1223" column="75" lean-forward="false" selection-start-line="1223" selection-start-column="75" selection-end-line="1223" selection-end-column="75" />
+          <folding>
+            <element signature="method#MainWindow#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#initiliazeComponents#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
+            <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ResultsWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="6" column="28" lean-forward="false" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        <state relative-caret-position="3016">
+          <caret line="919" column="0" lean-forward="false" selection-start-line="919" selection-start-column="0" selection-end-line="919" selection-end-column="0" />
           <folding>
-            <element signature="method#ResultsWindow#0;class#ResultsWindow#0" expanded="false" />
-            <element signature="method#appendToPane#0;class#ResultsWindow#0" expanded="false" />
+            <element signature="docComment;class#Table#0" expanded="false" />
+            <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
+            <element signature="method#Create_Table_Movement_in_Active_Membership#0;class#Table#0" expanded="false" />
+            <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
+            <element signature="method#Create_Balance_Sheet_Table#0;class#Table#0" expanded="false" />
+            <element signature="method#getInflationRates#0;class#Table#0" expanded="false" />
+            <element signature="method#Create_Income_Expenditure_Table#0;class#Table#0" expanded="false" />
+            <element signature="method#CreateTable#0;class#Table#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        <state relative-caret-position="1479">
+          <caret line="171" column="5" lean-forward="false" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#getFilePath#0;class#Utility#0" expanded="false" />
             <element signature="method#getWorkingDir#0;class#Utility#0" expanded="false" />
             <element signature="method#getStartDate#0;class#Utility#0" expanded="false" />
@@ -1411,42 +1419,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="1156" column="5" lean-forward="true" selection-start-line="1156" selection-start-column="5" selection-end-line="1156" selection-end-column="5" />
-          <folding>
-            <element signature="docComment;class#Table#0" expanded="false" />
-            <element signature="method#Create_Table_Summary_of_Active_Membership#0;class#Table#0" expanded="false" />
-            <element signature="method#Create_Table_Movement_in_Active_Membership#0;class#Table#0" expanded="false" />
-            <element signature="method#Create_Table_Analysis_of_Fund_Yield#0;class#Table#0" expanded="false" />
-            <element signature="method#Create_Table_Gains_and_Losses#0;class#Table#0" expanded="false" />
-            <element signature="method#Create_Balance_Sheet_Table#0;class#Table#0" expanded="false" />
-            <element signature="method#getInflationRates#0;class#Table#0" expanded="false" />
-            <element signature="method#Create_Income_Expenditure_Table#0;class#Table#0" expanded="false" />
-            <element signature="method#CreateTable#0;class#Table#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="1501" column="47" lean-forward="false" selection-start-line="1501" selection-start-column="39" selection-end-line="1501" selection-end-column="47" />
-          <folding>
-            <element signature="method#MainWindow#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#setWindowProperties#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#initiliazeComponents#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#addComponentsTopanels#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#addPanelsToWindow#0;class#MainWindow#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ExcelReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="6277" column="0" lean-forward="true" selection-start-line="6277" selection-start-column="0" selection-end-line="6277" selection-end-column="0" />
+        <state relative-caret-position="783">
+          <caret line="1053" column="140" lean-forward="false" selection-start-line="1053" selection-start-column="140" selection-end-line="1053" selection-end-column="140" />
           <folding>
             <element signature="docComment;class#ExcelReader#0" expanded="false" />
             <element signature="method#getInterestRates#0;class#ExcelReader#0" expanded="false" />
@@ -1484,10 +1460,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ResultsWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="6" column="28" lean-forward="false" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="method#ResultsWindow#0;class#ResultsWindow#0" expanded="false" />
+            <element signature="method#appendToPane#0;class#ResultsWindow#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ValidationChecks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="1469" column="41" lean-forward="false" selection-start-line="1469" selection-start-column="41" selection-end-line="1469" selection-end-column="41" />
+        <state relative-caret-position="561">
+          <caret line="1462" column="0" lean-forward="false" selection-start-line="1462" selection-start-column="0" selection-end-line="1462" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#ValidationChecks#0" expanded="false" />
             <element signature="method#Check_For_Duplicates#0;class#ValidationChecks#0" expanded="false" />

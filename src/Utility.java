@@ -1,13 +1,11 @@
-import com.jacob.activeX.ActiveXComponent;
-import com.jacob.com.ComThread;
-import org.apache.poi.hpsf.Variant;
+
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.ws.Dispatch;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -25,9 +23,7 @@ import static java.util.Calendar.DATE;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
-/**
- * Created by Ayshahvez on 12/7/2016.
- */
+
 public class Utility extends Component {
 
     public String getFilePath(){
@@ -146,20 +142,20 @@ public class Utility extends Component {
             FileWriter fr = null;
             switch (type) {
                 case "WD":
-                    fr = new FileWriter(workingDir + "//WD.txt");
+                    fr = new FileWriter(workingDir + "//Program Files//WD.txt");
 
                     break;
 
                 case "PN":
-                    fr = new FileWriter(workingDir + "//PN.txt");
+                    fr = new FileWriter(workingDir + "//Program Files//PN.txt");
                     break;
 
                 case "SD":
-                    fr = new FileWriter(workingDir + "//SD.txt");
+                    fr = new FileWriter(workingDir + "//Program Files//SD.txt");
                     break;
 
                 case "ED":
-                    fr = new FileWriter(workingDir + "//ED.txt");
+                    fr = new FileWriter(workingDir + "//Program Files//ED.txt");
                     break;
 
                 default:
@@ -177,44 +173,44 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
- File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
- //  File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt");
+ //File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
+   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt");
     if(f.exists()) {
         // do something
-   content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
-    // content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\WD.txt"))));
+ //  content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
+    content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt"))));
     }
     return content;
 }
 
     public String read(String workingDir) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(workingDir + "\\WD.txt")));
+        return new String(Files.readAllBytes(Paths.get(workingDir + "\\Program Files\\WD.txt")));
     }
 
     public String readFile(String type,String workingDir) throws IOException {
         String content = null;
 
-        File f = new File(workingDir+"\\"+type+".txt");
+        File f = new File(workingDir+"\\Program Files\\"+type+".txt");
         if(f.exists()) {
             try {
                 switch (type) {
                     case "WD":
-                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//WD.txt")));
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "\\Program Files\\WD.txt")));
                   //      System.out.print(content);
                         break;
 
                     case "PN":
-                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//PN.txt")));
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "\\Program Files\\PN.txt")));
                     //    System.out.print(content);
                         break;
 
                     case "SD":
-                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//SD.txt")));
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "\\Program Files\\SD.txt")));
                         System.out.print(content);
                         break;
 
                     case "ED":
-                        content = new String(Files.readAllBytes(Paths.get(workingDir + "//ED.txt")));
+                        content = new String(Files.readAllBytes(Paths.get(workingDir + "\\Program Files\\ED.txt")));
                     //    System.out.print(content);
                         break;
 
