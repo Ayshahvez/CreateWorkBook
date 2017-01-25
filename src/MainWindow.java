@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Ayshahvez konowalchuk xbox one XL NARUTO on 12/11/2016.
- */
 
 public class MainWindow extends JFrame implements ActionListener {
     Desktop dt = Desktop.getDesktop();
@@ -232,8 +229,8 @@ public class MainWindow extends JFrame implements ActionListener {
         westPanel = new JPanel(new FlowLayout());
 
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-      //  imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-          imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
+       //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -1387,7 +1384,7 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
-        if (e.getSource().equals(MenuItemViewAllMembers)) {
+     /*   if (e.getSource().equals(MenuItemViewAllMembers)) {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
@@ -1402,7 +1399,7 @@ public class MainWindow extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Please ensure you Create the Workbook with Active and Terminee Members separated", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
-        }
+        }*/
 
 
         if (e.getSource().equals(MenuItemViewRetiredMember)) {

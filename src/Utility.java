@@ -173,12 +173,12 @@ public class Utility extends Component {
 
    public String read() throws IOException {
         String content = null;
- //File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt");
-   File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt");
+ File f = new File("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\Program Files\\WD.txt");
+   //File f = new File("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt");
     if(f.exists()) {
         // do something
- //  content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\WD.txt")));
-    content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt"))));
+  content = new String(Files.readAllBytes(Paths.get("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\Program Files\\WD.txt")));
+   // content = new String(Files.readAllBytes(Paths.get(("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\Program Files\\WD.txt"))));
     }
     return content;
 }

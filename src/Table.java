@@ -1170,7 +1170,7 @@ if(CellGender.equals("f"))  entrantCountfemale++;
         XSSFCell [] cell = new XSSFCell[numOfYears];
         double [] values = new double[numOfYears];
 
-        for(int row=2,I=0;I<numOfYears;row++,I++) {
+        for(int row=1,I=0;I<numOfYears;row++,I++) {
             XSSFRow interestRow = sheet.getRow(row);
 
             cell[I] = interestRow.getCell(1);
@@ -1552,6 +1552,7 @@ if(fundAtBeginning[x]==0)  fundAtBeginning[x]=0.00001;
                 netFundYield[x]= ((2* (totalInvestmentIncome[x]-totalExpenses[x])) / ((fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]-totalExpenses[x]))) *100;
 
                 planYearInflation[x]=inflationRates[x]*100;
+                System.out.println(inflationRates[x]);
                 realAdjustedFundYield[x]=adjuestedFundYield[x]-planYearInflation[x];
 
                 //put fund at end of period to beginning of next year period
