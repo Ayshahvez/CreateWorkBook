@@ -1546,7 +1546,8 @@ if(CellGender.equals("f"))  entrantCountfemale++;
                     fundAtEndofPeriod[x]= priorYearAdjustment[x]+fundAtBeginning[x]+netIncome[x];
                     row.createCell(1+x).setCellValue((Double)fundAtEndofPeriod[x]);
                 }
-if(fundAtBeginning[x]==0)  fundAtBeginning[x]=0.00001;
+
+                if(fundAtBeginning[x]==0)  fundAtBeginning[x]=0.00001;
                 grossFundYield[x]= ((2*totalInvestmentIncome[x]) / (fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]))* 100;
                 adjuestedFundYield[x]= ((2* ((totalInvestmentIncome[x]-investmentExpenses[x]))) / ((fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]+investmentExpenses[x]))) * 100;
                 netFundYield[x]= ((2* (totalInvestmentIncome[x]-totalExpenses[x])) / ((fundAtBeginning[x]+fundAtEndofPeriod[x]-totalInvestmentIncome[x]-totalExpenses[x]))) *100;

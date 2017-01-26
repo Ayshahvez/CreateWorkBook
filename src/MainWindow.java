@@ -448,8 +448,12 @@ public class MainWindow extends JFrame implements ActionListener {
                     }
                 } else {
                     if(new File(filePathWorkingDir+"\\Templates\\Template_Analysis_of_Fund_Yield.xlsx").exists()) {
-                        table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        JOptionPane.showMessageDialog(null, "Analysis of Fund Yield Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        if(new File(filePathWorkingDir+"\\Interest Rates.xlsx").exists()) {
+                            table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            JOptionPane.showMessageDialog(null, "Analysis of Fund Yield Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Error!. Please ensure the 'Interest Rates.xlsx' is present in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        }
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Please ensure the Template for the Analysis of Fund Yield Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -632,9 +636,12 @@ public class MainWindow extends JFrame implements ActionListener {
                         }
                     } else {
                         if(new File(filePathWorkingDir+"\\Templates\\Template_Inc_Exp_Sheet.xlsx").exists()) {
-
-                            table.Create_Income_Expenditure_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        JOptionPane.showMessageDialog(null, "Income and Expenditure Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            if(new File(filePathWorkingDir+"\\Inflation Rates.xlsx").exists()) {
+                                table.Create_Income_Expenditure_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                JOptionPane.showMessageDialog(null, "Income and Expenditure Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Please Ensure the 'Inflation Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            }
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Please ensure the Template for the Income and Expenditure Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -1196,16 +1203,13 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
-
         if (e.getSource().equals(MenuItemCreateFeesActiveSheet)) {
             String result = null;
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Templates\\Template_Active_Sheet.xlsx ").exists()) {
-
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-
 
                         try {
                             excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
@@ -1222,7 +1226,6 @@ public class MainWindow extends JFrame implements ActionListener {
                     } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Active Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1230,39 +1233,43 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
 
-
         if (e.getSource().equals(MenuItemCreateFeesTermineeSheet)) {
             String result = null;
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
-                    if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                        result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
-                            try {
-                             //   excelReader.Create_Fees_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                excelReader.Write_Terminee_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                               excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                            excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        //    resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                            JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        }
-                    } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    }
+                    if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
+                        if (new File(filePathWorkingDir + "\\nfy Rates.xlsx").exists()) {
+                        if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                            result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
+                                try {
 
-                } else {
+                                    excelReader.Write_Terminee_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            }
+                        } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                            JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                            JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error!, Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+
+                    }
+                }
+else{
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Terminee Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
-
             }
         }
 
@@ -1273,14 +1280,16 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
+                    if (new File(filePathWorkingDir + "\\nfy Rates.xlsx").exists()) {
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
                         result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
                             try {
-                              //  excelReader.Create_Terminee_Contribution(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                excelReader.Write_Terminee_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                excelReader.Create_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                excelReader.WriteTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+
+                                    excelReader.Write_Terminee_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    excelReader.Create_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    excelReader.WriteTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
@@ -1296,9 +1305,12 @@ public class MainWindow extends JFrame implements ActionListener {
                     }
 
                 } else {
+                        JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+
+                }
+                }else{
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Terminee Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
-
             }
         }
 

@@ -3920,6 +3920,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                             break;
                         }
                     }
+
                     //write to the vesting column
                     double vestSign=0;
                     cellR = ActiveRow.createCell(UnderOverIndex+2);
@@ -3931,6 +3932,7 @@ String L = "31-Dec-"+e;//end of plan year of enrolment
                     cellR = ActiveRow.createCell(UnderOverIndex+3);
 
                     double erVal=1;
+
                     netFundYieldRates=getNetFundYieldRates(workingDir,years,cellEndofPlanYearofTerminaton);
 
                     Double[] values = new Double[netFundYieldRates.size()];
