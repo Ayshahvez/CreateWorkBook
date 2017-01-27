@@ -1032,7 +1032,7 @@ public class Table {
             XSSFSheet sheetVal_Bal = workbookR.getSheetAt(0);
             XSSFCellStyle style = workbookR.createCellStyle();
 
-            FileInputStream file = new FileInputStream(workingDir + "\\Income_Expenditure_Table.xlsx");
+            FileInputStream file = new FileInputStream(workingDir + "\\Tables\\Income_Expenditure_Table.xlsx");
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheetAt(0);
 
