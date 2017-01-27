@@ -26,6 +26,7 @@ public class MainWindow extends JFrame implements ActionListener {
     Date endDate = null;
 
     //  WorkingDir
+
     private String WorkingDir = utility.read();
     String filePathWorkingDir = WorkingDir;
     String PensionPlanName = null;// utility.readFile("PN",filePathWorkingDir);
@@ -135,7 +136,6 @@ public class MainWindow extends JFrame implements ActionListener {
     JMenu MenuCreateTable;
     JMenuItem MenuItemCreateIncExpTemplate;
     JMenuItem MenuItemCreateBalSheetTemplate;
-
     JMenuItem MenuItemCreateIncExpTable;
     JMenuItem MenuItemCreateBalSheetTable;
 
@@ -228,9 +228,10 @@ public class MainWindow extends JFrame implements ActionListener {
         eastPanel = new JPanel(new FlowLayout());
         westPanel = new JPanel(new FlowLayout());
 
+        imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\Program Files\\dp.png"));
         //  imgLabel = new JLabel(new ImageIcon(filePathWorkingDir+"\\dp.png"));
-        imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\dp.png"));
-       //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
+       // imgLabel = new JLabel(new ImageIcon("C:\\Users\\akonowalchuk\\OneDrive\\GFRAM\\Program Files\\dp.png"));
+        //   imgLabel = new JLabel(new ImageIcon("C:\\Users\\Ayshahvez\\OneDrive\\GFRAM\\dp.png"));
 
         //PLAN REQUIREMENTS
         MenuSetPlanRequirements = new JMenu("Plan Requirements");
@@ -418,19 +419,18 @@ public class MainWindow extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    if(new File(filePathWorkingDir+"\\Templates\\Template_Summary_of_Active_Membership.xlsx").exists()) {
+                    if (new File(filePathWorkingDir + "\\Templates\\Template_Summary_of_Active_Membership.xlsx").exists()) {
 
-                        if(new File(filePathWorkingDir+"\\Accumulated_Actives_Sheet.xlsx").exists()) {
+                        if (new File(filePathWorkingDir + "\\Accumulated_Actives_Sheet.xlsx").exists()) {
                             table.Create_Table_Summary_of_Active_Membership(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             JOptionPane.showMessageDialog(null, "Summary of Active Membership Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "The Active Sheet was not found, Please Create it before you proceed!", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
 
-                }
-                    else{
-                    JOptionPane.showMessageDialog(null, "Please ensure the Template for the Summary of Active Membership is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please ensure the Template for the Summary of Active Membership is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -447,15 +447,14 @@ public class MainWindow extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    if(new File(filePathWorkingDir+"\\Templates\\Template_Analysis_of_Fund_Yield.xlsx").exists()) {
-                        if(new File(filePathWorkingDir+"\\Interest Rates.xlsx").exists()) {
+                    if (new File(filePathWorkingDir + "\\Templates\\Template_Analysis_of_Fund_Yield.xlsx").exists()) {
+                        if (new File(filePathWorkingDir + "\\Interest Rates.xlsx").exists()) {
                             table.Create_Table_Analysis_of_Fund_Yield(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             JOptionPane.showMessageDialog(null, "Analysis of Fund Yield Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "Error!. Please ensure the 'Interest Rates.xlsx' is present in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Please ensure the Template for the Analysis of Fund Yield Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
@@ -474,11 +473,10 @@ public class MainWindow extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    if(new File(filePathWorkingDir+"\\Templates\\Template_Movements_in_Active_Membership.xlsx").exists()) {
-                    table.Create_Table_Movement_in_Active_Membership(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                    JOptionPane.showMessageDialog(null, "Movement in Active Membership Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    }
-                    else{
+                    if (new File(filePathWorkingDir + "\\Templates\\Template_Movements_in_Active_Membership.xlsx").exists()) {
+                        table.Create_Table_Movement_in_Active_Membership(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        JOptionPane.showMessageDialog(null, "Movement in Active Membership Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    } else {
                         JOptionPane.showMessageDialog(null, "Please ensure the Template for the Movements in Active Membership is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
@@ -555,7 +553,7 @@ public class MainWindow extends JFrame implements ActionListener {
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-    }
+        }
 
 
         if (e.getSource().equals(MenuItemCreateTemplateGainsLosses)) {
@@ -574,10 +572,10 @@ public class MainWindow extends JFrame implements ActionListener {
                         dt.open(new File(filePathWorkingDir + "\\Templates\\Template_Gains_Losses.xlsx"));
                     }
                 }
-                } catch(IOException e1){
-                    e1.printStackTrace();
-                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
+        }
 
         if (e.getSource().equals(MenuItemCreateBalSheetTemplate)) {
             try {
@@ -595,12 +593,12 @@ public class MainWindow extends JFrame implements ActionListener {
                         dt.open(new File(filePathWorkingDir + "\\Templates\\Template_Balance_Sheet.xlsx"));
                     }
                 }
-                } catch(IOException e1){
-                    e1.printStackTrace();
-                } catch(ParseException e1){
-                    e1.printStackTrace();
-                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
             }
+        }
 
         if (e.getSource().equals(MenuItemCreateIncExpTemplate)) {
             try {
@@ -619,9 +617,9 @@ public class MainWindow extends JFrame implements ActionListener {
                         dt.open(new File(filePathWorkingDir + "\\Templates\\Template_Inc_Exp_Sheet.xlsx"));
                     }
                 }
-                } catch(IOException e1){
-                    e1.printStackTrace();
-                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
 
 
@@ -635,17 +633,16 @@ public class MainWindow extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
-                        if(new File(filePathWorkingDir+"\\Templates\\Template_Inc_Exp_Sheet.xlsx").exists()) {
-                            if(new File(filePathWorkingDir+"\\Inflation Rates.xlsx").exists()) {
+                        if (new File(filePathWorkingDir + "\\Templates\\Template_Inc_Exp_Sheet.xlsx").exists()) {
+                            if (new File(filePathWorkingDir + "\\Inflation Rates.xlsx").exists()) {
                                 table.Create_Income_Expenditure_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                                 JOptionPane.showMessageDialog(null, "Income and Expenditure Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                            }else{
+                            } else {
                                 JOptionPane.showMessageDialog(null, "Please Ensure the 'Inflation Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                             }
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Please ensure the Template for the Income and Expenditure Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Please ensure the Template for the Income and Expenditure Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Income and Expenditure Template before Proceeding", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -665,13 +662,12 @@ public class MainWindow extends JFrame implements ActionListener {
                     }
                 } else {
 
-                    if(new File(filePathWorkingDir+"\\Templates\\Template_Balance_Sheet.xlsx").exists()) {
+                    if (new File(filePathWorkingDir + "\\Templates\\Template_Balance_Sheet.xlsx").exists()) {
                         table.Create_Balance_Sheet_Table(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                    JOptionPane.showMessageDialog(null, "The Valuation Balance Sheet Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                }
-                    else{
-                    JOptionPane.showMessageDialog(null, "Please ensure the Template for the Balance Sheet Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
-                }
+                        JOptionPane.showMessageDialog(null, "The Valuation Balance Sheet Table Was Successfully Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please ensure the Template for the Balance Sheet Table is Created", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -820,12 +816,14 @@ public class MainWindow extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Now Performing Employee Plan Entry Check, Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Processes any Member whose Plan Entry Date is before their Employment Date. Press Ok to Continue", "Plan Entry Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
                         try {
                             ArrayList al = validationChecks.check_Plan_EntryDate_empDATE(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             result = validationChecks.getResult();
-                            new AlToTable(al, "Check Plan Entry Date");
+                            if (!al.isEmpty()) {
+                                new AlToTable(al, "Check Plan Entry Date");
+                            }
                             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         } catch (IOException e1) {
                             e1.printStackTrace();
@@ -855,12 +853,14 @@ public class MainWindow extends JFrame implements ActionListener {
                                 JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Now Performing Pensionable Salary and Contributing Check, Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Processes any Member whose Contribution does not match up to 5% of their Pensionable Salary. Press Ok to Continue", "Pensionable Check", JOptionPane.PLAIN_MESSAGE);
 
                             //  ArrayList al= validationChecks.Check_FivePercent_PS(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             ArrayList al = validationChecks.check_FivePercent_PensionableSalary(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             String result = validationChecks.getResult();
-                            new AlToTable(al, "Check Pensionable Salary");
+                            if (!al.isEmpty()) {
+                                new AlToTable(al, "Check Pensionable Salary");
+                            }
                             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         }
                     }
@@ -887,12 +887,14 @@ public class MainWindow extends JFrame implements ActionListener {
                     planEntryAge = JOptionPane.showInputDialog(this, "Please Input the Required Age it takes a Member to be eligible for the Plan", "Age", JOptionPane.PLAIN_MESSAGE);
                     int Age = Integer.parseInt(planEntryAge);
                     if (Age >= 18 && Age <= 70) {
-                        JOptionPane.showMessageDialog(null, "Please Wait while the Members' Ages are Checked at their Plan Entry Date", "Age Check", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Processes each Member’s age at the time when enrolling to the Pension Plan. Press OK to Continue", "Age Check", JOptionPane.PLAIN_MESSAGE);
                         String result = null;
                         try {
                             ArrayList al = validationChecks.check_Age(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir, Age);
                             result = validationChecks.getResult();
-                            new AlToTable(al, "Check Age");
+                            if (!al.isEmpty()) {
+                                new AlToTable(al, "Check Age");
+                            }
                             resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         } catch (IOException e1) {
                             e1.printStackTrace();
@@ -914,15 +916,17 @@ public class MainWindow extends JFrame implements ActionListener {
                     if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() && new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() && new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please refresh the Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Now Performing Date of Birth Check, Press Ok to Continue", "Date of Birth Check", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Processes any Member whose Date of Birth is after their Plan Entry Date to the Pension Plan or after their Employment Date. Press Ok to Continue", "Date of Birth Check", JOptionPane.PLAIN_MESSAGE);
                     String result = null;
                     try {
                         ArrayList al = validationChecks.check_DateofBirth(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         result = validationChecks.getResult();
-                        new AlToTable(al, "Check Date of Birth");
+                        if (!al.isEmpty()) {
+                            new AlToTable(al, "Check Date of Birth");
+                        }
                         resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -945,14 +949,16 @@ public class MainWindow extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please ensure you Input the Plan Requiremenets Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Now Performing Duplicate Check, Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Processes any Redundant Member. Press Ok to Continue", "Duplicate Check", JOptionPane.PLAIN_MESSAGE);
                     String result = null;
                     try {
                         //  ArrayList<String > al = validationChecks.Check_For_Duplicates(filePathWorkingDir);
                         ArrayList<String> al = validationChecks.check_For_Duplicates(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         result = validationChecks.getResult();
                         resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                        new AlToTable(al, "View Duplicates");
+                        if (!al.isEmpty()) {
+                            new AlToTable(al, "View Duplicates");
+                        }
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -1104,7 +1110,7 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
 
-       //create template sheet for active members
+        //create template sheet for active members
         if (e.getSource().equals(MenuItemCreateNoFeesTermineeSheetTemplate)) {
             if (PensionPlanStartDate == null && PensionPlanEndDate == null && PensionPlanName == null) {
                 JOptionPane.showMessageDialog(null, "Please Ensure you Input the Plan Name, Plan Start Date and Plan End Date", "Notice", JOptionPane.PLAIN_MESSAGE);
@@ -1177,29 +1183,30 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Templates\\Template_Active_Sheet.xlsx ").exists()) {
-
-                    if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                    if (new File(filePathWorkingDir + "\\Interest Rates.xlsx ").exists()) {
+                        if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
 
                             excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        try {
-                            excelReader.Write_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                            excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                               excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                            try {
+                                excelReader.Write_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                excelReader.Create_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                excelReader.WriteActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            JOptionPane.showMessageDialog(null, "The Active Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                        } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                            JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                            JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
-
-                        JOptionPane.showMessageDialog(null, "The Active Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
-                    } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'Interest Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Active Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
-
             }
         }
 
@@ -1209,23 +1216,27 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Templates\\Template_Active_Sheet.xlsx ").exists()) {
+                    if (new File(filePathWorkingDir + "\\Interest Rates.xlsx ").exists()) {
                     if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
 
                         try {
                             excelReader.Write_Members_To_Active_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                             excelReader.Write_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                           excelReader.Create_Fees_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                           excelReader.WriteFeesActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.Create_Fees_Active_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                            excelReader.WriteFeesActivesTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
-                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                     //   resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
                         JOptionPane.showMessageDialog(null, "The Active Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
                     } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
                         JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'Interest Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                }
                 } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Active Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
@@ -1238,41 +1249,42 @@ public class MainWindow extends JFrame implements ActionListener {
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                    if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
+                if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
+                    if (new File(filePathWorkingDir + "\\Interest Rates.xlsx").exists()) {
                         if (new File(filePathWorkingDir + "\\nfy Rates.xlsx").exists()) {
-                        if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                            result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                            if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
-                                try {
+                            if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                                result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
+                                    try {
+                                        excelReader.Write_Terminee_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                        excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                        excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                        JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
 
-                                    excelReader.Write_Terminee_Members_Monetary_Fees_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                    excelReader.Create_Fees_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                    excelReader.WriteFeesTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                    JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
-
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
                                 }
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                                JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                                JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                             }
-                        } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                            JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                            JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                        }
 
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error!, Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error!, Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'Interest Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
 
                     }
-                }
-else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Terminee Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
-
 
         if (e.getSource().equals(MenuItemCreateTermineeSheet)) {
             String result = null;
@@ -1280,35 +1292,37 @@ else{
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
                 if (new File(filePathWorkingDir + "\\Templates\\Template_Terminee_Sheet.xlsx ").exists()) {
-                    if (new File(filePathWorkingDir + "\\nfy Rates.xlsx").exists()) {
-                    if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
-                        result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                        if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
-                            try {
-
-                                    excelReader.Write_Terminee_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                    excelReader.Create_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                                    excelReader.WriteTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
+                    if (new File(filePathWorkingDir + "\\Interest Rates.xlsx").exists()) {
+                        if (new File(filePathWorkingDir + "\\nfy Rates.xlsx").exists()) {
+                            if (PensionPlanEndDate != null && PensionPlanStartDate != null) {
+                                result = excelReader.Create_Terminee_Sheet(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                if (new File(filePathWorkingDir + "\\Terminees_Sheet.xlsx").exists()) {
+                                    try {
+                                        excelReader.Write_Terminee_Members_Monetary_Values(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                        excelReader.Create_Terminee_Acc_Balances(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                        excelReader.WriteTermineeTotalRow(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    //        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+                                    JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
+                                }
+                            } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                                JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                                JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                             }
-                    //        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-                            JOptionPane.showMessageDialog(null, "The Terminee Sheet was created Successfully", "Success", JOptionPane.PLAIN_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(null, "Please Ensure the Date of Refunds were Inputted for the Terminated Members", "Notice", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
                         }
-                    } else if (new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || new File(filePathWorkingDir + "\\.txt").exists() || new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                    } else if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() || !new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
-                        JOptionPane.showMessageDialog(null, "Please Ensure you Input all The Plan Requirement Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'Interest Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+
                     }
-
                 } else {
-                        JOptionPane.showMessageDialog(null, "Error! Please Ensure the 'nfy Rates.xlsx' with the Rates exist in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
-
-                }
-                }else{
                     JOptionPane.showMessageDialog(null, "Please Ensure you Create the Template Sheet for the Terminee Sheet", "Notice", JOptionPane.PLAIN_MESSAGE);
                 }
             }
@@ -1318,32 +1332,32 @@ else{
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-                if(PensionPlanStartDate==null || PensionPlanEndDate == null || PensionPlanName==null) {
+                if (PensionPlanStartDate == null || PensionPlanEndDate == null || PensionPlanName == null) {
                     JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
-                }else{
-                if (new File(filePathWorkingDir + "\\Input Sheet.xlsx").exists()) {
-
-                    ArrayList<String> al = null;
-                    try {
-                        al = excelReader.View_Actives_Members(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    if (!al.isEmpty()) {
-                        String result = excelReader.getResult();
-                        JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
-                        resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
-
-                        new AlToTable(al, "View Active");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Based on your Query, there were no Retired Members found as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
-                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please ensure the Input Sheet is present in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
-                }
-            }
+                    if (new File(filePathWorkingDir + "\\Input Sheet.xlsx").exists()) {
 
-        }
+                        ArrayList<String> al = null;
+                        try {
+                            al = excelReader.View_Actives_Members(PensionPlanStartDate, PensionPlanEndDate, filePathWorkingDir);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        if (!al.isEmpty()) {
+                            String result = excelReader.getResult();
+                            JOptionPane.showMessageDialog(null, "Please wait for the list of the Active Members as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+                            resultsWindow.appendToPane(resultsWindow, result + "\n", LINES, true);
+
+                            new AlToTable(al, "View Active");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Based on your Query, there were no Retired Members found as at " + PensionPlanEndDate, "Success", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please ensure the Input Sheet is present in your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+
+            }
         }
 
         if (e.getSource().equals(MenuItemViewTermineeMember)) {
@@ -1374,7 +1388,7 @@ else{
             if (filePathWorkingDir == null) {
                 JOptionPane.showMessageDialog(null, "Please ensure you set your Working Directory", "Notice", JOptionPane.PLAIN_MESSAGE);
             } else {
-             //   if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists()&&!new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() && new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
+                //   if (!new File(filePathWorkingDir + "\\Program Files\\PN.txt").exists()&&!new File(filePathWorkingDir + "\\Program Files\\SD.txt").exists() && new File(filePathWorkingDir + "\\Program Files\\ED.txt").exists()) {
                 if (PensionPlanStartDate == null || PensionPlanEndDate == null || PensionPlanName == null) {
                     JOptionPane.showMessageDialog(null, "Please Refresh The Plan Requirements Data, Then try again", "Notice", JOptionPane.PLAIN_MESSAGE);
                 } else {
@@ -1470,7 +1484,7 @@ else{
         MenuItemCreateIncExpTable.addActionListener(this);
         MenuItemCreateBalSheetTemplate.addActionListener(this);
 
-      //  MenuItemCreateTableSummaryofActiveMembership.addActionListener(this);
+        //  MenuItemCreateTableSummaryofActiveMembership.addActionListener(this);
         MenuItemCreateTableMovementsinActiveMemberships.addActionListener(this);
         MenuItemCreateTableAnalysisofFundYield.addActionListener(this);
         MenuItemCreateTableGainsLosses.addActionListener(this);
@@ -1484,7 +1498,7 @@ else{
         MenuItemViewAllMembers.addActionListener(this);
         MenuItemViewRetiredMember.addActionListener(this);
         MenuItemViewDeceasedMember.addActionListener(this);
-     //   MenuItemViewDeferredMember.addActionListener(this);
+        //   MenuItemViewDeferredMember.addActionListener(this);
         MenuItemViewTerminatedMember.addActionListener(this);
 
         MenuItemClearScreen.addActionListener(this);
@@ -1501,7 +1515,7 @@ else{
         CheckAll.addActionListener(this);
 
 //        LoadValDataWorkBook.addActionListener(this);
-    //    MenuItemSeperateMembers.addActionListener(this);
+        //    MenuItemSeperateMembers.addActionListener(this);
         MenuItemPensionPlanName.addActionListener(this);
         MenuItemStartDate.addActionListener(this);
         MenuItemEndDate.addActionListener(this);

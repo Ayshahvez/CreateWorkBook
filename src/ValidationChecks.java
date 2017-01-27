@@ -25,6 +25,7 @@ import static java.util.Calendar.YEAR;
  * Created by Ayshahvez on 12/6/2016.
  */
 public class ValidationChecks {
+
     public String getResult() {
         return result;
     }
@@ -161,7 +162,8 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Duplicate check process has now been completed");
-        if (check == 0 && once) stringBuilder.append("\n\nNotice: There were no Duplicate records found in this list of Members");
+        if (check == 0 && once)
+            stringBuilder.append("\n\nNotice: There were no Duplicate records found in this list of Members");
         stringBuilder.append("\n\nNotice: The Duplicate check process has now been completed");
         //      return String.valueOf(stringBuilder + "\n");
         this.setResult(String.valueOf(stringBuilder));
@@ -451,7 +453,8 @@ public class ValidationChecks {
 
         }// END OF LOOP YEARS
         //   stringBuilder.append("-------------------------------------------------------\n");
-        if (Check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions throughout the Review Period");
+        if (Check == 0)
+            stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions throughout the Review Period");
         stringBuilder.append("\n\nNotice: The Pensionable Check Process has now been completed.\n");
         //  return String.valueOf(stringBuilder);
 
@@ -539,7 +542,8 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Plan Entry Check Process has now been completed.");
-        if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Emp. Date in respect to their Plane Entry Date\n");
+        if (check == 0)
+            stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Emp. Date in respect to their Plane Entry Date\n");
         stringBuilder.append("\nNotice: The Plan Entry Check Process has now been completed.\n");
 
         this.setResult(String.valueOf(stringBuilder));
@@ -667,7 +671,8 @@ public class ValidationChecks {
             npe.printStackTrace();
         }
         System.out.println("Notice: The Date of Birth Check Process has now been completed.");
-        if (check == 0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members");
+        if (check == 0)
+            stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members");
         stringBuilder.append("\n\nNotice: The Date of Birth Check Process has now been completed.\n");
 
         //   return String.valueOf(stringBuilder);
@@ -761,7 +766,8 @@ public class ValidationChecks {
 
         }
         System.out.println("Notice: The Age Check Process has now been completed.");
-        if (check == 0) stringBuilder.append("Notice: All Members' Ages have been checked in respect to their Plan Entry Date, No Discrepancy was found\n");
+        if (check == 0)
+            stringBuilder.append("Notice: All Members' Ages have been checked in respect to their Plan Entry Date, No Discrepancy was found\n");
         stringBuilder.append("\nNotice: The Age Check Process has now been completed.\n");
 
         this.setResult(String.valueOf(stringBuilder));
@@ -813,7 +819,7 @@ public class ValidationChecks {
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
 
         for (int x = 0; x < years; x++) {
-int Check=0;
+            int Check = 0;
             Calendar cal = Calendar.getInstance();
             cal.set(StartYear, StartMonth, StartDay);
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
@@ -821,7 +827,7 @@ int Check=0;
 
 
             String Recon = ("Actives at End of Plan Yr " + getYear);
-            stringBuilder.append("Notice: Results of the Pensionable Salary Data Quality Check for "+Recon+"\n");
+            stringBuilder.append("Notice: Results of the Pensionable Salary Data Quality Check for " + Recon + "\n");
 //GET RECON SHEET
             XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
             int numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
@@ -899,10 +905,10 @@ int Check=0;
                 }
                 double ReconCell_EmployeeBasic_Contribution = ReconCellM.getNumericCellValue();
 
-                double check =  0.05*ReconCell_PensionableSalary;
+                double check = 0.05 * ReconCell_PensionableSalary;
                 check = Double.parseDouble(dF.format(check));
 
-                if(check != ReconCell_EmployeeBasic_Contribution){
+                if (check != ReconCell_EmployeeBasic_Contribution) {
                     Check++;
 
                     String test = "";
@@ -913,17 +919,18 @@ int Check=0;
                     stringBuilder.append("Pensionable Salary: $" + dF.format(ReconCell_PensionableSalary) + "\n");
                     stringBuilder.append("Employee Basic: $" + ReconCell_EmployeeBasic_Contribution + "\n");
 
-                    list.add(ReconcellEmployeeID+","+ReconCellLastName+","+ReconCellFirstName+","+dateF.format(ReconCellDOB)+","+dateF.format(ReconCelldateofEmployment)+","+dateF.format(ReconCellDateofEnrolment));
+                    list.add(ReconcellEmployeeID + "," + ReconCellLastName + "," + ReconCellFirstName + "," + dateF.format(ReconCellDOB) + "," + dateF.format(ReconCelldateofEmployment) + "," + dateF.format(ReconCellDateofEnrolment));
 
-                        test = "false";
-                        stringBuilder.append("Result: "+ReconCellLastName+" Contribution of: $"+ReconCell_EmployeeBasic_Contribution+" is " + dF.format(( ReconCell_EmployeeBasic_Contribution/ReconCell_PensionableSalary)*100) +"% of $" +dF.format(ReconCell_PensionableSalary) + "\n");
+                    test = "false";
+                    stringBuilder.append("Result: " + ReconCellLastName + " Contribution of: $" + ReconCell_EmployeeBasic_Contribution + " is " + dF.format((ReconCell_EmployeeBasic_Contribution / ReconCell_PensionableSalary) * 100) + "% of $" + dF.format(ReconCell_PensionableSalary) + "\n");
                 }
 
             }//end of looping through current active sheet
-            if(Check==0) stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions for "+Recon);
-        //    stringBuilder.append("\n\nNotice: The Pensionable Check Process for "+Recon+"\n\n");
+            if (Check == 0)
+                stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Pensionable Salary and their Contributions for " + Recon);
+            //    stringBuilder.append("\n\nNotice: The Pensionable Check Process for "+Recon+"\n\n");
             stringBuilder.append("\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
-            this.setResult( String.valueOf(stringBuilder));
+            this.setResult(String.valueOf(stringBuilder));
             StartYear++;
 
         }//end of year looping through years
@@ -932,10 +939,10 @@ int Check=0;
 
     }
 
-    public ArrayList check_For_Duplicates(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir)  throws IOException{
+    public ArrayList check_For_Duplicates(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-     //   stringBuilder.append("Notice: The Duplicate Check Validates the list of Members for Repeated Records");
+        //   stringBuilder.append("Notice: The Duplicate Check Validates the list of Members for Repeated Records");
 
 
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MMM-yy");
@@ -975,9 +982,9 @@ int Check=0;
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
 
-String Recon=null;
-int numofActives;
-int startRow;
+        String Recon = null;
+        int numofActives;
+        int startRow;
         for (int x = 0; x < years; x++) {
 
             Calendar cal = Calendar.getInstance();
@@ -985,17 +992,16 @@ int startRow;
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
             String getYear = year.format(cal.getTime());
 
-if(x<(years-1)){
-          Recon = ("Actives at End of Plan Yr " + getYear);
-    XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-    numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
-    startRow=7;
-}
-            else{
-               Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
-    XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
-    numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
-    startRow=11;
+            if (x < (years - 1)) {
+                Recon = ("Actives at End of Plan Yr " + getYear);
+                XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
+                startRow = 7;
+            } else {
+                Recon = ("Terminated up to " + EndYear + "." + EndMonth + "." + EndDay);
+                XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
+                numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
+                startRow = 11;
             }
 
             stringBuilder.append("Notice: Results of the Duplicate Quality Check for " + Recon + "\n");
@@ -1007,9 +1013,9 @@ if(x<(years-1)){
             int check = 0;
             int FindIt = 0;
             boolean once = true;
-System.out.println("Recon "+Recon );
-            System.out.println("startRow "+startRow );
-            System.out.println("numofActives "+numofActives );
+            System.out.println("Recon " + Recon);
+            System.out.println("startRow " + startRow);
+            System.out.println("numofActives " + numofActives);
             for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
@@ -1063,7 +1069,7 @@ System.out.println("Recon "+Recon );
                 }
                 Date ReconCellDateofEnrolment = ReconCellH.getDateCellValue();
 
-FindIt=0;
+                FindIt = 0;
                 for (int readFromRow2 = startRow, rowIterator2 = 0; rowIterator2 < numofActives; readFromRow2++, rowIterator2++) {
 
                     XSSFRow getRow2 = reconSheet.getRow(readFromRow2);
@@ -1121,7 +1127,7 @@ FindIt=0;
                             stringBuilder.append("First Name: " + ReconCellFirstName + "\n");
                             stringBuilder.append("Date of Birth: " + dateF.format(ReconCellDOB) + "\n\n");
                             list.add(ReconcellEmployeeID + "," + ReconCellLastName + "," + ReconCellFirstName + "," + dateF.format(ReconCellDOB) + "," + dateF.format(ReconCelldateofEmployment) + "," + dateF.format(ReconCellDateofEnrolment));
-break;
+                            break;
                         }
 
                     }
@@ -1139,7 +1145,7 @@ break;
         return list;
     }
 
-    public ArrayList check_Age(String PensionPlanStartDate, String PensionPlanEndDate,String workingDir, int age) throws IOException {
+    public ArrayList check_Age(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir, int age) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -1181,7 +1187,7 @@ break;
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
-        String Recon=null;
+        String Recon = null;
         int numofActives;
         int startRow;
 
@@ -1193,17 +1199,16 @@ break;
             String getYear = year.format(cal.getTime());
 
 
-            if(x<(years-1)){
+            if (x < (years - 1)) {
                 Recon = ("Actives at End of Plan Yr " + getYear);
                 XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
-                startRow=7;
-            }
-            else{
-                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+                startRow = 7;
+            } else {
+                Recon = ("Terminated up to " + EndYear + "." + EndMonth + "." + EndDay);
                 XSSFSheet reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
-                startRow=11;
+                startRow = 11;
             }
 
 
@@ -1213,9 +1218,9 @@ break;
 
 
 //loop through each member in current active sheet
-            System.out.println("Recon "+Recon );
-            System.out.println("startRow "+startRow );
-            System.out.println("numofActives "+numofActives );
+            System.out.println("Recon " + Recon);
+            System.out.println("startRow " + startRow);
+            System.out.println("numofActives " + numofActives);
             for (int readFromRow = startRow, rowIterator = 0; rowIterator < numofActives; readFromRow++, rowIterator++) {
 
                 XSSFRow getRow = reconSheet.getRow(readFromRow);
@@ -1269,8 +1274,8 @@ break;
                 }
                 Date ReconCellDateofEnrolment = ReconCellH.getDateCellValue();
 
-                System.out.println("ReconCellDOB"+ReconCellDOB);
-                System.out.println("ReconCellDateofEnrolment"+ReconCellDateofEnrolment);
+                System.out.println("ReconCellDOB" + ReconCellDOB);
+                System.out.println("ReconCellDateofEnrolment" + ReconCellDateofEnrolment);
 
                 int memberAge = Utility.getAge(ReconCellDOB, ReconCellDateofEnrolment);
 
@@ -1282,22 +1287,23 @@ break;
                     stringBuilder.append("Date of Birth: " + dateF.format(ReconCellDOB) + "\n");
                     stringBuilder.append("Plan Entry: " + dateF.format(ReconCellDateofEnrolment) + "\n");
 
-                    list.add(ReconcellEmployeeID+","+ReconCellLastName+","+ReconCellFirstName+","+dateF.format(ReconCellDOB)+","+dateF.format(ReconCelldateofEmployment)+","+dateF.format(ReconCellDateofEnrolment));
+                    list.add(ReconcellEmployeeID + "," + ReconCellLastName + "," + ReconCellFirstName + "," + dateF.format(ReconCellDOB) + "," + dateF.format(ReconCelldateofEmployment) + "," + dateF.format(ReconCellDateofEnrolment));
                     check++;
                 }
 
 
             }
-            if(check==0) stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Ages for "+Recon);
+            if (check == 0)
+                stringBuilder.append("\nNotice: There were no Discrepancies found among the Members' Ages for " + Recon);
             stringBuilder.append("\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
-            this.setResult( String.valueOf(stringBuilder));
+            this.setResult(String.valueOf(stringBuilder));
             StartYear++;
         }
         this.setResult(String.valueOf(stringBuilder));
         return list;
     }
 
-    public ArrayList check_DateofBirth(String PensionPlanStartDate, String PensionPlanEndDate,String workingDir) throws IOException {
+    public ArrayList check_DateofBirth(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MMM-yy");
@@ -1329,7 +1335,7 @@ break;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String Recon=null;
+        String Recon = null;
         int numofActives;
         int startRow;
         XSSFSheet reconSheet;
@@ -1342,27 +1348,26 @@ break;
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
 
         for (int x = 0; x < years; x++) {
-            int Check=0;
+            int Check = 0;
             Calendar cal = Calendar.getInstance();
             cal.set(StartYear, StartMonth, StartDay);
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
             String getYear = year.format(cal.getTime());
 
 
-            if(x<(years-1)){
+            if (x < (years - 1)) {
                 Recon = ("Actives at End of Plan Yr " + getYear);
-               reconSheet = workbookInputSheet.getSheet(Recon);
+                reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
-                startRow=7;
-            }
-            else{
-                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
-                 reconSheet = workbookInputSheet.getSheet(Recon);
+                startRow = 7;
+            } else {
+                Recon = ("Terminated up to " + EndYear + "." + EndMonth + "." + EndDay);
+                reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
-                startRow=11;
+                startRow = 11;
             }
 
-            stringBuilder.append("Notice: Results of the Date of Birth Data Quality Check for "+Recon+"\n");
+            stringBuilder.append("Notice: Results of the Date of Birth Data Quality Check for " + Recon + "\n");
 
 
 //loop through each member in current active sheet
@@ -1445,23 +1450,24 @@ break;
                     stringBuilder.append("Employment Date: " + dateF.format(ReconCelldateofEmployment) + "\n");
 
                     //   list.add(cellEmployeeNumber+","+cellLastName+","+cellFirstName+","+dF.format(cellDOB)+","+dF.format(cellEmploymentDate)+","+dF.format(cellPlanEntry)+","+dF.format(cellStatusDate)+','+cellStatus);
-                    list.add(ReconcellEmployeeID+","+ReconCellLastName+","+ReconCellFirstName+","+dateF.format(ReconCellDOB)+","+dateF.format(ReconCelldateofEmployment)+","+dateF.format(ReconCellDateofEnrolment));
+                    list.add(ReconcellEmployeeID + "," + ReconCellLastName + "," + ReconCellFirstName + "," + dateF.format(ReconCellDOB) + "," + dateF.format(ReconCelldateofEmployment) + "," + dateF.format(ReconCellDateofEnrolment));
                     Check++;
 
-            }
+                }
 
 
-        }//end of looping through current active sheet
-            if(Check==0) stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members for "+Recon);
+            }//end of looping through current active sheet
+            if (Check == 0)
+                stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Date of Birth in this list of Members for " + Recon);
             //    stringBuilder.append("\n\nNotice: The Pensionable Check Process for "+Recon+"\n\n");
             stringBuilder.append("\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
-            this.setResult( String.valueOf(stringBuilder));
+            this.setResult(String.valueOf(stringBuilder));
             StartYear++;
-    }//end of year looping through years
+        }//end of year looping through years
         return list;
     }
 
-    public ArrayList check_Plan_EntryDate_empDATE(String PensionPlanStartDate, String PensionPlanEndDate,String workingDir) throws IOException{
+    public ArrayList check_Plan_EntryDate_empDATE(String PensionPlanStartDate, String PensionPlanEndDate, String workingDir) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MMM-yy");
@@ -1500,32 +1506,31 @@ break;
         //OPEN ACTIVE SHEET
         FileInputStream fileInputStream = new FileInputStream(workingDir + "\\Input Sheet.xlsx");
         XSSFWorkbook workbookInputSheet = new XSSFWorkbook(fileInputStream);
-        String Recon=null;
+        String Recon = null;
         int numofActives;
         int startRow;
         XSSFSheet reconSheet;
         for (int x = 0; x < years; x++) {
-            int Check=0;
+            int Check = 0;
             Calendar cal = Calendar.getInstance();
             cal.set(StartYear, StartMonth, StartDay);
             SimpleDateFormat year = new SimpleDateFormat("yyyy"); // Just the year, with 2 digits
             String getYear = year.format(cal.getTime());
 
-            if(x<(years-1)){
+            if (x < (years - 1)) {
                 Recon = ("Actives at End of Plan Yr " + getYear);
                 reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfMembersInSheet(reconSheet);
-                startRow=7;
-            }
-            else{
-                Recon = ("Terminated up to " + EndYear+"."+EndMonth+"."+EndDay);
+                startRow = 7;
+            } else {
+                Recon = ("Terminated up to " + EndYear + "." + EndMonth + "." + EndDay);
                 reconSheet = workbookInputSheet.getSheet(Recon);
                 numofActives = Utility.getNumberOfTermineeMembersInSheet(reconSheet);
-                startRow=11;
+                startRow = 11;
             }
 
 
-            stringBuilder.append("Notice: Results of the Plan Entry Data Quality Check for "+Recon+"\n");
+            stringBuilder.append("Notice: Results of the Plan Entry Data Quality Check for " + Recon + "\n");
 
 //loop through each member in current active sheet
 
@@ -1594,16 +1599,17 @@ break;
                     stringBuilder.append("Employment Date: " + dateF.format(ReconCelldateofEmployment) + "\n");
 
                     //   list.add(cellEmployeeNumber+","+cellLastName+","+cellFirstName+","+dF.format(cellDOB)+","+dF.format(cellEmploymentDate)+","+dF.format(cellPlanEntry)+","+dF.format(cellStatusDate)+','+cellStatus);
-                    list.add(ReconcellEmployeeID+","+ReconCellLastName+","+ReconCellFirstName+","+dateF.format(ReconCellDOB)+","+dateF.format(ReconCelldateofEmployment)+","+dateF.format(ReconCellDateofEnrolment));
+                    list.add(ReconcellEmployeeID + "," + ReconCellLastName + "," + ReconCellFirstName + "," + dateF.format(ReconCellDOB) + "," + dateF.format(ReconCelldateofEmployment) + "," + dateF.format(ReconCellDateofEnrolment));
                     Check++;
                 }
 
 
             }//end of looping through current active sheet
-            if(Check==0)  stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Employment Date in respect to their Plane Entry Date for "+Recon);
+            if (Check == 0)
+                stringBuilder.append("\nNotice: There were no Discrepancies found with the Members' Employment Date in respect to their Plane Entry Date for " + Recon);
             //    stringBuilder.append("\n\nNotice: The Pensionable Check Process for "+Recon+"\n\n");
             stringBuilder.append("\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
-            this.setResult( String.valueOf(stringBuilder));
+            this.setResult(String.valueOf(stringBuilder));
             StartYear++;
         }//end of year looping through years
         return list;

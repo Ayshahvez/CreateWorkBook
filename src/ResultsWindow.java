@@ -4,16 +4,16 @@ import javax.swing.text.*;
 
 public class ResultsWindow extends JTextPane {    //setting GUI properties such as colors and borders
 
-    public ResultsWindow () {
+    public ResultsWindow() {
         setBackground(new Color(255, 255, 243));
         setForeground(new Color(86, 98, 112));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 8, 5, 8));
-   //     set
+        //     set
     }
 
-    public void appendToPane (JTextPane tp, String msg, Color c, boolean isBold) { //append attributes and properties to pane
+    public void appendToPane(JTextPane tp, String msg, Color c, boolean isBold) { //append attributes and properties to pane
         setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-       StyledDocument doc = tp.getStyledDocument();
+        StyledDocument doc = tp.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
@@ -31,15 +31,15 @@ public class ResultsWindow extends JTextPane {    //setting GUI properties such 
         int len = tp.getDocument().getLength();
         tp.setCaretPosition(len);
         tp.setCharacterAttributes(aSet, false);
-      // tp.replaceSelection(msg+"\n");
-       // tp.insertIcon(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\page1.png"));
-        tp.setText(msg+"\n");
-      //  tp.setEditable(false);
+        // tp.replaceSelection(msg+"\n");
+        // tp.insertIcon(new ImageIcon("C:\\Users\\akonowalchuk\\GFRAM\\page1.png"));
+        tp.setText(msg + "\n");
+        //  tp.setEditable(false);
 
     }
 
-    public void ClearScreen(JTextPane tp){
-       tp.setText("");
+    public void ClearScreen(JTextPane tp) {
+        tp.setText("");
     }
 
 }
